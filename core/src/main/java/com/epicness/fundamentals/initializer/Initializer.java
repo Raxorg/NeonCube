@@ -49,6 +49,9 @@ public abstract class Initializer<A extends Assets, R extends Renderer<S>, S ext
         renderer.useStaticCamera();
         stuff.initializeStuff();
 
+        initialized = true;
+        sharedResources.registerInitializer(this);
+
         logic.initialLogic();
     }
 
