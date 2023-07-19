@@ -21,13 +21,12 @@ public class DecalMover extends GameLogicHandler {
     }
 
     @Override
-    protected void update(float delta) {
+    public void update(float delta) {
         time += delta;
         for (int i = 0; i < decals.size(); i++) {
             float angle = 360f / decals.size() * i + time;
             Decal decal = decals.get(i);
-            decal.setPosition(MathUtils.sinDeg(angle) * 1000f, MathUtils.cosDeg(angle) * 1000f, 0f);
-            decal.rotateY(delta*45f);
+            decal.setPosition(MathUtils.sinDeg(angle) * 300f, MathUtils.cosDeg(angle) * 300f, 0f);
         }
     }
 }

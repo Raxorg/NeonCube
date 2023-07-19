@@ -9,19 +9,19 @@ import static com.epicness.neoncube.game.GameConstants.TRIANGLE_SPEED;
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.fundamentals.stuff.Sprited;
 
-public class MovementHandler extends GameInputHandler {
+public class MovementHandler extends GameLogicHandler {
 
     private Sprited triangle;
     private Vector2 speed;
 
     @Override
-    public void init() {
+    protected void init() {
         triangle = stuff.getGameView().getTriangle();
         speed = new Vector2();
     }
 
     @Override
-    protected void update(float delta) {
+    public void update(float delta) {
         triangle.translate(speed.cpy().nor().scl(TRIANGLE_SPEED * delta));
     }
 

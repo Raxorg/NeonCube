@@ -15,12 +15,14 @@ public class CameraHandler extends GameLogicHandler {
     }
 
     @Override
-    protected void update() {
+    public void update() {
         cameraController.update();
     }
 
-    public void touchDragged(float x, float y) {
+    @Override
+    public boolean touchDragged(float x, float y) {
         cameraController.touchDragged((int) x, (int) y, 0);
+        return false;
     }
 
     public void keyPressed(int keycode) {

@@ -13,7 +13,6 @@ public class GameLogic extends Logic {
     public GameLogic() {
         registerHandler(cameraHandler = new CameraHandler());
         registerHandler(decalMover = new DecalMover());
-        registerHandler(new GameInputHandler());
         registerHandler(movementHandler = new MovementHandler());
     }
 

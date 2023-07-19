@@ -49,7 +49,7 @@ public class GameStuff extends Stuff<GameAssets> {
         cube = new ModelInstance(model);
 
         decals = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             decals.add(Decal.newDecal(5f * RATIO, 5f, new Sprite(), true));
         }
 
