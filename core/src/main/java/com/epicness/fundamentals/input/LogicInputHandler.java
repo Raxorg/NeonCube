@@ -9,9 +9,6 @@ import com.epicness.fundamentals.stuff.Stuff;
 public abstract class LogicInputHandler<A extends Assets, L extends Logic, R extends Renderer<S>, S extends Stuff<A>>
         extends LogicHandler<A, L, R, S> {
 
-    @Override
-    protected abstract void init();
-
     public void register() {
         input.addInputHandler(this);
     }
