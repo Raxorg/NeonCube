@@ -13,7 +13,7 @@ public class SharedInput implements InputProcessor {
 
     private final List<LogicInputHandler<?, ?, ?, ?>> inputHandlers;
     private OrthographicCamera staticCamera, dynamicCamera;
-    private boolean enabled;
+    private boolean enabled, inputConsumed;
     private Vector3 unprojected;
 
     public SharedInput() {
@@ -26,14 +26,19 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         if (!enabled) return false;
+        inputConsumed = false;
         // Static camera
         staticCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).mouseMoved(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).mouseMoved(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
         // Dynamic camera
         dynamicCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0, n = inputHandlers.size(); i < n; i++)
-            if (inputHandlers.get(i).mouseMovedDynamic(unprojected.x, unprojected.y)) return true;
+        for (int i = 0, n = inputHandlers.size(); i < n; i++) {
+            inputHandlers.get(i).mouseMovedDynamic(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -41,9 +46,12 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         if (!enabled) return false;
+        inputConsumed = false;
 
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).scrolled(amountX, amountY)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).scrolled(amountX, amountY);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -51,14 +59,19 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (pointer != 0 || !enabled) return false;
+        inputConsumed = false;
         // Static camera
         unprojected = staticCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchDown(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchDown(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
         // Dynamic camera
         unprojected = dynamicCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchDownDynamic(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchDownDynamic(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -66,14 +79,19 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (pointer != 0 || !enabled) return false;
+        inputConsumed = false;
         // Static camera
         unprojected = staticCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchDragged(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchDragged(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
         // Dynamic camera
         unprojected = dynamicCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchDraggedDynamic(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchDraggedDynamic(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -81,14 +99,19 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (pointer != 0 || !enabled) return false;
+        inputConsumed = false;
         // Static camera
         unprojected = staticCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchUp(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchUp(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
         // Dynamic camera
         unprojected = dynamicCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchUpDynamic(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchUpDynamic(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -96,14 +119,19 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
         if (pointer != 0 || !enabled) return false;
+        inputConsumed = false;
         // Static camera
         unprojected = staticCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchCancelled(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchCancelled(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
         // Dynamic camera
         unprojected = dynamicCamera.unproject(unprojected.set(screenX, screenY, 0f));
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).touchCancelledDynamic(unprojected.x, unprojected.y)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).touchCancelledDynamic(unprojected.x, unprojected.y);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -111,9 +139,12 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (!enabled) return false;
+        inputConsumed = false;
 
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).keyDown(keycode)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).keyDown(keycode);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -121,9 +152,12 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if (!enabled) return false;
+        inputConsumed = false;
 
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).keyUp(keycode)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).keyUp(keycode);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -131,9 +165,12 @@ public class SharedInput implements InputProcessor {
     @Override
     public boolean keyTyped(char character) {
         if (!enabled) return false;
+        inputConsumed = false;
 
-        for (int i = 0; i < inputHandlers.size(); i++)
-            if (inputHandlers.get(i).keyTyped(character)) return true;
+        for (int i = 0; i < inputHandlers.size(); i++) {
+            inputHandlers.get(i).keyTyped(character);
+            if (inputConsumed) return true;
+        }
 
         return false;
     }
@@ -148,6 +185,10 @@ public class SharedInput implements InputProcessor {
 
     public void addInputHandler(LogicInputHandler<?, ?, ?, ?> inputHandler) {
         inputHandlers.add(inputHandler);
+    }
+
+    public void consumeInput() {
+        inputConsumed = true;
     }
 
     // Structure
