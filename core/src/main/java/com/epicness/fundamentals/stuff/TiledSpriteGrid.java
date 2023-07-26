@@ -3,11 +3,11 @@ package com.epicness.fundamentals.stuff;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
-import com.epicness.fundamentals.renderer.ShapeBatch;
+import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
+import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
 
 public class TiledSpriteGrid {
 
@@ -34,7 +34,7 @@ public class TiledSpriteGrid {
         setPosition(0f, 0f);
     }
 
-    public void draw(Camera camera, SpriteBatch spriteBatch) {
+    public void draw(Camera camera, SpriteBatchDrawer spriteBatch) {
         // Scissors
         ScissorStack.calculateScissors(camera, spriteBatch.getTransformMatrix(), bounds, scissors);
         boolean pop = ScissorStack.pushScissors(scissors);
@@ -53,20 +53,20 @@ public class TiledSpriteGrid {
         }
     }
 
-    public void drawDebug(Camera camera, ShapeBatch shapeBatch) {
+    public void drawDebug(Camera camera, ShapeRendererDrawer shapeRenderer) {
         // Scissors
-        ScissorStack.calculateScissors(camera, shapeBatch.getTransformMatrix(), bounds, scissors);
+        ScissorStack.calculateScissors(camera, shapeRenderer.getTransformMatrix(), bounds, scissors);
         boolean pop = ScissorStack.pushScissors(scissors);
         // Background
-        background.drawDebug(shapeBatch);
+        background.drawDebug(shapeRenderer);
         // Sprites
         for (int column = 0; column < sprites.length; column++) {
             for (int row = 0; row < sprites[column].length; row++) {
-                sprites[column][row].drawDebug(shapeBatch);
+                sprites[column][row].drawDebug(shapeRenderer);
             }
         }
         // Returning to normal rendering
-        shapeBatch.flush();
+        shapeRenderer.flush();
         if (pop) {
             ScissorStack.popScissors();
         }

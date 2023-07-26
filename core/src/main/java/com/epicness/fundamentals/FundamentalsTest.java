@@ -10,25 +10,25 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
 import com.epicness.fundamentals.stuff.DualSprited;
 
 // Use this as the entry point for your game by
 // renaming (refactor) this class to your game's class
 public class FundamentalsTest extends Game {
 
-    SpriteBatch spriteBatch;
+    SpriteBatchDrawer spriteBatch;
     BitmapFont font;
     DualSprited x;
 
     @Override
     public void create() {
-        spriteBatch = new SpriteBatch();
+        spriteBatch = new SpriteBatchDrawer();
         font = new BitmapFont(Gdx.files.internal("fundamentals/fonts/pixelFont.fnt"));
         font.getData().setScale(4f);
         Sprite a = new Sprite(new Texture(WEIRDSHAPE_SPRITE.fileName));
-        x = new DualSprited(a,a);
+        x = new DualSprited(a, a);
         x.setSize(100f);
     }
 

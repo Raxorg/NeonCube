@@ -1,19 +1,8 @@
 package com.epicness.fundamentals.stuff.interfaces;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.epicness.fundamentals.renderer.ShapeBatch;
+public interface Drawable<D1 extends Drawer, D2 extends Drawer> {
 
-public interface Drawable {
+    void draw(D1 drawer);
 
-    void draw(SpriteBatch spriteBatch, ShapeBatch shapeBatch);
-
-    default void draw(SpriteBatch spriteBatch) {
-        draw(spriteBatch, null);
-    }
-
-    default void draw(ShapeBatch shapeBatch) {
-        draw(null, shapeBatch);
-    }
-
-    void drawDebug(ShapeBatch shapeBatch);
+    void drawDebug(D2 drawer);
 }

@@ -1,6 +1,5 @@
 package com.epicness.fundamentals.renderer;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.epicness.fundamentals.SharedScreen;
 import com.epicness.fundamentals.stuff.SharedStuff;
 import com.epicness.fundamentals.stuff.Stuff;
@@ -12,12 +11,12 @@ public abstract class Renderer<S extends Stuff<?>> {
     protected SharedStuff sharedStuff;
     protected S stuff;
     // Rendering related
-    protected final SpriteBatch spriteBatch;
-    protected final ShapeBatch shapeBatch;
+    protected final SpriteBatchDrawer spriteBatch;
+    protected final ShapeRendererDrawer shapeBatch;
 
     public Renderer() {
-        spriteBatch = new SpriteBatch();
-        shapeBatch = new ShapeBatch();
+        spriteBatch = new SpriteBatchDrawer();
+        shapeBatch = new ShapeRendererDrawer();
         shapeBatch.setAutoShapeType(true);
     }
 
@@ -33,11 +32,11 @@ public abstract class Renderer<S extends Stuff<?>> {
         shapeBatch.setProjectionMatrix(screen.getDynamicCamera().combined);
     }
 
-    public SpriteBatch getSpriteBatch() {
+    public SpriteBatchDrawer getSpriteBatch() {
         return spriteBatch;
     }
 
-    public ShapeBatch getShapeBatch() {
+    public ShapeRendererDrawer getShapeBatch() {
         return shapeBatch;
     }
 

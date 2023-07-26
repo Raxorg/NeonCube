@@ -25,7 +25,8 @@ public class MovementHandler extends GameLogicHandler {
         triangle.translate(speed.cpy().nor().scl(TRIANGLE_SPEED * delta));
     }
 
-    public void keyPressed(int keycode) {
+    @Override
+    public void keyDown(int keycode) {
         switch (keycode) {
             case I:
                 speed.y += 1f;
@@ -42,7 +43,8 @@ public class MovementHandler extends GameLogicHandler {
         }
     }
 
-    public void keyReleased(int keycode) {
+    @Override
+    public void keyUp(int keycode) {
         switch (keycode) {
             case I:
                 speed.y -= 1f;

@@ -19,12 +19,17 @@ public class Line implements Movable {
     private final Color color;
     public float width = 5f;
 
-    public Line(float ax, float ay, float bx, float by) {
+    public Line(float ax, float ay, float bx, float by, float width) {
         a = new Vector2(ax, ay);
         b = new Vector2(bx, by);
         angleDeg = AngleUtils.degreesBetweenPoints(b, a);
         length = a.dst(b);
         color = WHITE.cpy();
+        this.width = width;
+    }
+
+    public Line(float ax, float ay, float bx, float by) {
+        this(ax, ay, bx, by, 5f);
     }
 
     public Line(float x, float y, float length, float angle, boolean degrees) {

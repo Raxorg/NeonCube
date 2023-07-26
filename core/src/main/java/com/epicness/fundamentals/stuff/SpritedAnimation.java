@@ -5,13 +5,13 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.epicness.fundamentals.renderer.ShapeBatch;
+import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
+import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
 import com.epicness.fundamentals.stuff.interfaces.Buttonable;
-import com.epicness.fundamentals.stuff.interfaces.Drawable;
+import com.epicness.fundamentals.stuff.interfaces.CommonDrawable;
 
-public class SpritedAnimation implements Buttonable, Drawable {
+public class SpritedAnimation implements Buttonable, CommonDrawable {
 
     private final Animation<Sprited> animation;
     private float time;
@@ -25,13 +25,13 @@ public class SpritedAnimation implements Buttonable, Drawable {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch, ShapeBatch shapeBatch) {
+    public void draw(SpriteBatchDrawer spriteBatch) {
         animation.getKeyFrame(time).draw(spriteBatch);
     }
 
     @Override
-    public void drawDebug(ShapeBatch shapeBatch) {
-        animation.getKeyFrame(time).drawDebug(shapeBatch);
+    public void drawDebug(ShapeRendererDrawer shapeRenderer) {
+        animation.getKeyFrame(time).drawDebug(shapeRenderer);
     }
 
     @Override

@@ -7,12 +7,10 @@ import com.epicness.neoncube.menu.assets.MenuAssets;
 public class GameLogic extends Logic {
 
     private final CameraHandler cameraHandler;
-    private final DecalMover decalMover;
     private final MovementHandler movementHandler;
 
     public GameLogic() {
         registerHandler(cameraHandler = new CameraHandler());
-        registerHandler(decalMover = new DecalMover());
         registerHandler(movementHandler = new MovementHandler());
     }
 
@@ -27,7 +25,6 @@ public class GameLogic extends Logic {
     public void update(float delta) {
         sharedLogic.getTransitionHandler().update();
         cameraHandler.update();
-        decalMover.update(delta);
         movementHandler.update(delta);
     }
 }

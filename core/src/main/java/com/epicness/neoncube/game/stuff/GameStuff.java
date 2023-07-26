@@ -3,10 +3,8 @@ package com.epicness.neoncube.game.stuff;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
-import static com.epicness.fundamentals.SharedConstants.RATIO;
 
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -16,20 +14,19 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.stuff.Stuff;
+import com.epicness.fundamentals.stuff.interfaces.Drawable;
 import com.epicness.neoncube.game.assets.GameAssets;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameStuff extends Stuff<GameAssets> {
 
     private Environment environment;
     private ModelInstance cube;
-    private List<Decal> decals;
+    private DecalCube decalCube;
+    private DelayedRemovalArray<DelayedRemovalArray<Drawable>> drawableArrays;
     private GameView gameView;
 
     @Override
@@ -46,13 +43,12 @@ public class GameStuff extends Stuff<GameAssets> {
 
         ModelBuilder modelBuilder = new ModelBuilder();
         Model model = modelBuilder.createBox(5f, 5f, 5f, material, Position | Normal | TextureCoordinates);
+
         cube = new ModelInstance(model);
+        cube.transform.translate(0f, 5f, 0f);
 
-        decals = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            decals.add(Decal.newDecal(5f * RATIO, 5f, new Sprite(), true));
-        }
-
+        decalCube = new DecalCube();
+        drawableArrays = new DelayedRemovalArray<>();
         gameView = new GameView(sharedAssets, assets);
     }
 
@@ -64,8 +60,12 @@ public class GameStuff extends Stuff<GameAssets> {
         return cube;
     }
 
-    public List<Decal> getDecals() {
-        return decals;
+    public DecalCube getDecalCube() {
+        return decalCube;
+    }
+
+    public DelayedRemovalArray<DelayedRemovalArray<Drawable>> getDrawableArrays() {
+        return drawableArrays;
     }
 
     public GameView getGameView() {

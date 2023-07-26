@@ -8,16 +8,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.Renderer;
+import com.epicness.neoncube.game.stuff.DecalScreen;
 import com.epicness.neoncube.game.stuff.GameStuff;
 import com.epicness.neoncube.game.stuff.GameView;
 
@@ -27,7 +27,6 @@ public class GameRenderer extends Renderer<GameStuff> {
     private final ModelBatch modelBatch;
     private final DecalBatch decalBatch;
     private final FrameBuffer frameBuffer;
-    private final Matrix4 defaultProjectionMatrix;
     private Sprite gameSprite;
 
     public GameRenderer() {
@@ -37,7 +36,6 @@ public class GameRenderer extends Renderer<GameStuff> {
         decalBatch = new DecalBatch(new CameraGroupStrategy(perspectiveCamera));
 
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-        defaultProjectionMatrix = new SpriteBatch().getProjectionMatrix();
 
         gameSprite = new Sprite();
     }
@@ -58,27 +56,29 @@ public class GameRenderer extends Renderer<GameStuff> {
 
         renderToFrameBuffer();
 
-        for (int i = 0; i < stuff.getDecals().size(); i++) {
-            decalBatch.add(stuff.getDecals().get(i));
-        }
+        stuff.getDecalCube().draw(decalBatch);
         decalBatch.flush();
     }
 
     private void renderToFrameBuffer() {
         GameView gameView = stuff.getGameView();
         frameBuffer.bind();
-        ScreenUtils.clear(Color.CLEAR);
-        spriteBatch.setProjectionMatrix(defaultProjectionMatrix);
+        ScreenUtils.clear(Color.RED);
         spriteBatch.begin();
         gameView.draw(spriteBatch);
         spriteBatch.end();
         frameBuffer.end();
-        gameSprite = new Sprite(frameBuffer.getColorBufferTexture());
-        gameSprite.flip(false, true);
-        for (int i = 0; i < stuff.getDecals().size(); i++) {
-            stuff.getDecals().get(i).setTextureRegion(gameSprite);
+        // Update decals
+        DecalScreen[] screens = stuff.getDecalCube().getFaces();
+        Texture bufferTexture = frameBuffer.getColorBufferTexture();
+        for (int i = 0; i < screens.length; i++) {
+            gameSprite = new Sprite(
+                    bufferTexture,
+                    i * Gdx.graphics.getWidth(), 0,
+                    Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            gameSprite.flip(false, true);
+            screens[i].setSprite(gameSprite);
         }
-        useStaticCamera();
     }
 
     public PerspectiveCamera getPerspectiveCamera() {
