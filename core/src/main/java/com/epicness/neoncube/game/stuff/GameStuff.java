@@ -16,9 +16,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.stuff.Stuff;
-import com.epicness.fundamentals.stuff.interfaces.Drawable;
 import com.epicness.neoncube.game.assets.GameAssets;
 
 public class GameStuff extends Stuff<GameAssets> {
@@ -26,8 +24,7 @@ public class GameStuff extends Stuff<GameAssets> {
     private Environment environment;
     private ModelInstance cube;
     private DecalCube decalCube;
-    private DelayedRemovalArray<DelayedRemovalArray<Drawable>> drawableArrays;
-    private GameView gameView;
+    private CubeWorld cubeWorld;
 
     @Override
     public void initializeStuff() {
@@ -48,8 +45,7 @@ public class GameStuff extends Stuff<GameAssets> {
         cube.transform.translate(0f, 5f, 0f);
 
         decalCube = new DecalCube();
-        drawableArrays = new DelayedRemovalArray<>();
-        gameView = new GameView(sharedAssets, assets);
+        cubeWorld = new CubeWorld(sharedAssets, assets);
     }
 
     public Environment getEnvironment() {
@@ -64,11 +60,7 @@ public class GameStuff extends Stuff<GameAssets> {
         return decalCube;
     }
 
-    public DelayedRemovalArray<DelayedRemovalArray<Drawable>> getDrawableArrays() {
-        return drawableArrays;
-    }
-
-    public GameView getGameView() {
-        return gameView;
+    public CubeWorld getCubeWorld() {
+        return cubeWorld;
     }
 }

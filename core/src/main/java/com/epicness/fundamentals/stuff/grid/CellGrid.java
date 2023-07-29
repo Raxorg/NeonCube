@@ -2,9 +2,9 @@ package com.epicness.fundamentals.stuff.grid;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CellGrid extends Grid<SpriteBatchDrawer> {
+public class CellGrid extends Grid {
 
     private final Cell[][] cells;
 
@@ -19,8 +19,7 @@ public class CellGrid extends Grid<SpriteBatchDrawer> {
         }
     }
 
-    @Override
-    public void draw(SpriteBatchDrawer spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 cells[column][row].draw(spriteBatch);

@@ -4,14 +4,14 @@ import static com.badlogic.gdx.graphics.Texture.TextureFilter.Linear;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
+import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 import com.epicness.fundamentals.stuff.interfaces.Buttonable;
-import com.epicness.fundamentals.stuff.interfaces.CommonActor;
+import com.epicness.fundamentals.stuff.interfaces.Transformable;
 
-public class Sprited implements CommonActor, Buttonable {
+public class Sprited implements Buttonable, Transformable {
 
     private final Sprite sprite;
 
@@ -23,14 +23,12 @@ public class Sprited implements CommonActor, Buttonable {
         this.sprite.setRegion(sprite);
     }
 
-    @Override
-    public void draw(SpriteBatchDrawer spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         sprite.draw(spriteBatch);
     }
 
-    @Override
-    public void drawDebug(ShapeRendererDrawer shapeRendererDrawer) {
-        shapeRendererDrawer.rect(getBoundingRectangle());
+    public void drawDebug(ShapeRendererPlus shapeRenderer) {
+        shapeRenderer.rect(getBoundingRectangle());
     }
 
     @Override

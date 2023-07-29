@@ -3,11 +3,11 @@ package com.epicness.fundamentals.stuff;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
-import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
+import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 
 public class TiledSpriteGrid {
 
@@ -34,7 +34,7 @@ public class TiledSpriteGrid {
         setPosition(0f, 0f);
     }
 
-    public void draw(Camera camera, SpriteBatchDrawer spriteBatch) {
+    public void draw(Camera camera, SpriteBatch spriteBatch) {
         // Scissors
         ScissorStack.calculateScissors(camera, spriteBatch.getTransformMatrix(), bounds, scissors);
         boolean pop = ScissorStack.pushScissors(scissors);
@@ -53,7 +53,7 @@ public class TiledSpriteGrid {
         }
     }
 
-    public void drawDebug(Camera camera, ShapeRendererDrawer shapeRenderer) {
+    public void drawDebug(Camera camera, ShapeRendererPlus shapeRenderer) {
         // Scissors
         ScissorStack.calculateScissors(camera, shapeRenderer.getTransformMatrix(), bounds, scissors);
         boolean pop = ScissorStack.pushScissors(scissors);

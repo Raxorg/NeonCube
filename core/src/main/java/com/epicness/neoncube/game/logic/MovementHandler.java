@@ -1,10 +1,10 @@
 package com.epicness.neoncube.game.logic;
 
-import static com.badlogic.gdx.Input.Keys.I;
-import static com.badlogic.gdx.Input.Keys.J;
-import static com.badlogic.gdx.Input.Keys.K;
-import static com.badlogic.gdx.Input.Keys.L;
+import static com.epicness.neoncube.game.GameConstants.DOWN_KEY;
+import static com.epicness.neoncube.game.GameConstants.LEFT_KEY;
+import static com.epicness.neoncube.game.GameConstants.RIGHT_KEY;
 import static com.epicness.neoncube.game.GameConstants.TRIANGLE_SPEED;
+import static com.epicness.neoncube.game.GameConstants.UP_KEY;
 
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.fundamentals.stuff.Sprited;
@@ -16,7 +16,7 @@ public class MovementHandler extends GameLogicHandler {
 
     @Override
     protected void init() {
-        triangle = stuff.getGameView().getTriangle();
+        triangle = stuff.getCubeWorld().getTriangle();
         speed = new Vector2();
     }
 
@@ -28,16 +28,16 @@ public class MovementHandler extends GameLogicHandler {
     @Override
     public void keyDown(int keycode) {
         switch (keycode) {
-            case I:
+            case UP_KEY:
                 speed.y += 1f;
                 break;
-            case J:
+            case LEFT_KEY:
                 speed.x -= 1f;
                 break;
-            case K:
+            case DOWN_KEY:
                 speed.y -= 1f;
                 break;
-            case L:
+            case RIGHT_KEY:
                 speed.x += 1f;
                 break;
         }
@@ -46,16 +46,16 @@ public class MovementHandler extends GameLogicHandler {
     @Override
     public void keyUp(int keycode) {
         switch (keycode) {
-            case I:
+            case UP_KEY:
                 speed.y -= 1f;
                 break;
-            case J:
+            case LEFT_KEY:
                 speed.x += 1f;
                 break;
-            case K:
+            case DOWN_KEY:
                 speed.y += 1f;
                 break;
-            case L:
+            case RIGHT_KEY:
                 speed.x -= 1f;
                 break;
         }

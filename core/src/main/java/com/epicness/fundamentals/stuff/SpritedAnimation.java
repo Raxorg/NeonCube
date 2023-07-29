@@ -5,13 +5,13 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
+import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 import com.epicness.fundamentals.stuff.interfaces.Buttonable;
-import com.epicness.fundamentals.stuff.interfaces.CommonDrawable;
+import com.epicness.fundamentals.stuff.interfaces.Movable;
 
-public class SpritedAnimation implements Buttonable, CommonDrawable {
+public class SpritedAnimation implements Buttonable, Movable {
 
     private final Animation<Sprited> animation;
     private float time;
@@ -24,13 +24,11 @@ public class SpritedAnimation implements Buttonable, CommonDrawable {
         animation = new Animation<>(frameDuration, animationFrames);
     }
 
-    @Override
-    public void draw(SpriteBatchDrawer spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         animation.getKeyFrame(time).draw(spriteBatch);
     }
 
-    @Override
-    public void drawDebug(ShapeRendererDrawer shapeRenderer) {
+    public void drawDebug(ShapeRendererPlus shapeRenderer) {
         animation.getKeyFrame(time).drawDebug(shapeRenderer);
     }
 
@@ -43,20 +41,32 @@ public class SpritedAnimation implements Buttonable, CommonDrawable {
         return animation.getKeyFrames()[0].getBoundingRectangle();
     }
 
+    @Override
+    public float getX() {
+        return animation.getKeyFrames()[0].getX();
+    }
+
+    @Override
+    public void translateX(float amount) {
+        for (int i = 0; i < animation.getKeyFrames().length; i++) {
+            animation.getKeyFrames()[i].translateX(amount);
+        }
+    }
+
+    @Override
+    public float getY() {
+        return animation.getKeyFrames()[0].getY();
+    }
+
+    @Override
+    public void translateY(float amount) {
+        for (int i = 0; i < animation.getKeyFrames().length; i++) {
+            animation.getKeyFrames()[i].translateY(amount);
+        }
+    }
+
     public void addTime(float seconds) {
         time += seconds;
-    }
-
-    public void setY(float y) {
-        for (int i = 0; i < animation.getKeyFrames().length; i++) {
-            animation.getKeyFrames()[i].setY(y);
-        }
-    }
-
-    public void setPosition(float x, float y) {
-        for (int i = 0; i < animation.getKeyFrames().length; i++) {
-            animation.getKeyFrames()[i].setPosition(x, y);
-        }
     }
 
     public void setOriginBasedPosition(float x, float y) {

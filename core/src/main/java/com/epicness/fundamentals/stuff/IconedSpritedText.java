@@ -3,8 +3,8 @@ package com.epicness.fundamentals.stuff;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
 import com.epicness.fundamentals.stuff.interfaces.Buttonable;
 import com.epicness.fundamentals.stuff.interfaces.Movable;
 
@@ -22,7 +22,7 @@ public class IconedSpritedText implements Buttonable, Movable {
         icon = new Sprited(iconSprite);
     }
 
-    public void draw(SpriteBatchDrawer spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         background.draw(spriteBatch);
         label.draw(spriteBatch);
         icon.draw(spriteBatch);

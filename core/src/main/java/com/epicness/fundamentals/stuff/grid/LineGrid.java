@@ -1,10 +1,11 @@
 package com.epicness.fundamentals.stuff.grid;
 
 import com.badlogic.gdx.graphics.Color;
-import com.epicness.fundamentals.renderer.ShapeDrawerDrawer;
 import com.epicness.fundamentals.stuff.shapes.Line;
 
-public class LineGrid extends Grid<ShapeDrawerDrawer> {
+import space.earlygrey.shapedrawer.ShapeDrawer;
+
+public class LineGrid extends Grid {
 
     private final Line[] lines;
 
@@ -24,8 +25,7 @@ public class LineGrid extends Grid<ShapeDrawerDrawer> {
         }
     }
 
-    @Override
-    public void draw(ShapeDrawerDrawer shapeDrawer) {
+    public void draw(ShapeDrawer shapeDrawer) {
         for (int i = 0; i < lines.length; i++) {
             lines[i].draw(shapeDrawer);
         }

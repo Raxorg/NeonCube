@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.epicness.fundamentals.renderer.ShapeRendererDrawer;
-import com.epicness.fundamentals.renderer.SpriteBatchDrawer;
+import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 import com.epicness.fundamentals.stuff.interfaces.Buttonable;
-import com.epicness.fundamentals.stuff.interfaces.CommonActor;
+import com.epicness.fundamentals.stuff.interfaces.Transformable;
 
-public class DualSprited implements CommonActor, Buttonable {
+public class DualSprited implements Buttonable, Transformable {
 
     protected final Sprite background, foreground;
     private boolean backgroundButtonable;
@@ -30,14 +29,12 @@ public class DualSprited implements CommonActor, Buttonable {
         foreground.draw(spriteBatch);
     }
 
-    @Override
-    public void draw(SpriteBatchDrawer spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         drawBackground(spriteBatch);
         drawForeground(spriteBatch);
     }
 
-    @Override
-    public void drawDebug(ShapeRendererDrawer shapeRenderer) {
+    public void drawDebug(ShapeRendererPlus shapeRenderer) {
         shapeRenderer.rect(background.getBoundingRectangle());
         shapeRenderer.rect(foreground.getBoundingRectangle());
     }
