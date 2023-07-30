@@ -1,41 +1,39 @@
-package com.epicness.neoncube.game.logic;
+package com.epicness.neoncube.game.logic.player;
 
-import static com.epicness.neoncube.game.GameConstants.DOWN_KEY;
 import static com.epicness.neoncube.game.GameConstants.LEFT_KEY;
+import static com.epicness.neoncube.game.GameConstants.PLAYER_SPEED;
 import static com.epicness.neoncube.game.GameConstants.RIGHT_KEY;
-import static com.epicness.neoncube.game.GameConstants.TRIANGLE_SPEED;
-import static com.epicness.neoncube.game.GameConstants.UP_KEY;
 
 import com.badlogic.gdx.math.Vector2;
-import com.epicness.fundamentals.stuff.Sprited;
+import com.epicness.fundamentals.stuff.SpritedAnimation;
+import com.epicness.neoncube.game.logic.GameLogicHandler;
+import com.epicness.neoncube.game.stuff.Player;
 
 public class MovementHandler extends GameLogicHandler {
 
-    private Sprited triangle;
+    private Player player;
+    private SpritedAnimation animation;
     private Vector2 speed;
 
     @Override
     protected void init() {
-        triangle = stuff.getCubeWorld().getTriangle();
-        speed = new Vector2();
+        player = stuff.getCubeWorld().getPlayer();
+        animation = player.animation;
+        speed = player.speed;
     }
 
     @Override
     public void update(float delta) {
-        triangle.translate(speed.cpy().nor().scl(TRIANGLE_SPEED * delta));
+        player.translate(speed.cpy().nor().scl(PLAYER_SPEED * delta));
+        animation.addTime(delta);
+        animation.setFlipX(speed.x < 0);
     }
 
     @Override
     public void keyDown(int keycode) {
         switch (keycode) {
-            case UP_KEY:
-                speed.y += 1f;
-                break;
             case LEFT_KEY:
                 speed.x -= 1f;
-                break;
-            case DOWN_KEY:
-                speed.y -= 1f;
                 break;
             case RIGHT_KEY:
                 speed.x += 1f;
@@ -46,14 +44,8 @@ public class MovementHandler extends GameLogicHandler {
     @Override
     public void keyUp(int keycode) {
         switch (keycode) {
-            case UP_KEY:
-                speed.y -= 1f;
-                break;
             case LEFT_KEY:
                 speed.x += 1f;
-                break;
-            case DOWN_KEY:
-                speed.y += 1f;
                 break;
             case RIGHT_KEY:
                 speed.x -= 1f;

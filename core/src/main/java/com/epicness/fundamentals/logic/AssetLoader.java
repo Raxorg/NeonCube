@@ -33,7 +33,7 @@ public class AssetLoader {
                 continue;
             }
             if (assets.loadAssets()) {
-                assets.initializeAssets();
+                assets.initAssets();
             }
             return;
         }

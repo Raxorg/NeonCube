@@ -20,6 +20,7 @@ public class TransitionHandler {
                                 Initializer<?, ?, ?>... additionalInitializers) {
         this.nextInitializer = sharedResources.findInitializer(nextInitializer);
         List<Assets> assetsList = new ArrayList<>();
+        assetsList.add(this.nextInitializer.getAssets());
         for (int i = 0; i < additionalInitializers.length; i++) {
             Initializer<?, ?, ?> initializer = sharedResources.findInitializer(additionalInitializers[i]);
             assetsList.add(initializer.getAssets());
@@ -45,7 +46,6 @@ public class TransitionHandler {
             return;
         }
         nextInitializer.initialize(sharedResources);
-        nextInitializer.setInitialized();
     }
 
     public void setSharedResources(SharedResources sharedResources) {

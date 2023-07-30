@@ -4,11 +4,10 @@ import static com.badlogic.gdx.Input.Keys.A;
 import static com.badlogic.gdx.Input.Keys.D;
 import static com.badlogic.gdx.Input.Keys.S;
 import static com.badlogic.gdx.Input.Keys.W;
+import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
 import static com.epicness.fundamentals.SharedConstants.RATIO;
 
 public class GameConstants {
-
-    public static final float TRIANGLE_SPEED = 1000f;
 
     public static final int UP_KEY = W;
     public static final int LEFT_KEY = A;
@@ -17,4 +16,12 @@ public class GameConstants {
 
     public static final float DECAL_SCREEN_HEIGHT = 5f;
     public static final float DECAL_SCREEN_WIDTH = DECAL_SCREEN_HEIGHT * RATIO;
+
+    private static final float PLAYER_PNG_WIDTH = 82f;
+    private static final float PLAYER_PNG_HEIGHT = 110f;
+    private static final float PLAYER_RATIO = PLAYER_PNG_WIDTH / PLAYER_PNG_HEIGHT;
+    public static final float PLAYER_HEIGHT = 200f;
+    public static final float PLAYER_WIDTH = PLAYER_HEIGHT * PLAYER_RATIO;
+    public static final float PLAYER_SPEED = 1000f;
+    public static final float PLAYER_STARTING_X = CAMERA_HALF_WIDTH - PLAYER_WIDTH / 2f;
 }

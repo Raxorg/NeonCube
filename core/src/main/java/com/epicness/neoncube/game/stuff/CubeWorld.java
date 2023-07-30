@@ -12,23 +12,23 @@ import com.epicness.neoncube.game.assets.GameAssets;
 
 public class CubeWorld {
 
-    private final Sprited background, triangle;
+    private final Sprited background;
+    private final Player player;
 
     public CubeWorld(SharedAssets sharedAssets, GameAssets assets) {
         background = new Sprited(sharedAssets.getPixel());
         background.setSize(CAMERA_WIDTH * 4f, CAMERA_HEIGHT);
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.2f));
 
-        triangle = new Sprited(sharedAssets.getTriangle());
-        triangle.setSize(500f);
+        player = new Player(assets.getStickmanRunning(), assets.getStickmanIdle());
     }
 
     public void draw(SpriteBatch spriteBatch) {
         background.draw(spriteBatch);
-        triangle.draw(spriteBatch);
+        player.draw(spriteBatch);
     }
 
-    public Sprited getTriangle() {
-        return triangle;
+    public Player getPlayer() {
+        return player;
     }
 }

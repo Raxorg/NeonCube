@@ -65,10 +65,6 @@ public class SpritedAnimation implements Buttonable, Movable {
         }
     }
 
-    public void addTime(float seconds) {
-        time += seconds;
-    }
-
     public void setOriginBasedPosition(float x, float y) {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {
             animation.getKeyFrames()[i].setOriginBasedPosition(x, y);
@@ -103,8 +99,24 @@ public class SpritedAnimation implements Buttonable, Movable {
         }
     }
 
+    public void setFlip(boolean flipX, boolean flipY) {
+        for (int i = 0; i < animation.getKeyFrames().length; i++) {
+            animation.getKeyFrames()[i].setFlip(flipX, flipY);
+        }
+    }
+
+    public void setFlipX(boolean flipX) {
+        for (int i = 0; i < animation.getKeyFrames().length; i++) {
+            animation.getKeyFrames()[i].setFlipX(flipX);
+        }
+    }
+
     public void enableLooping() {
         animation.setPlayMode(LOOP);
+    }
+
+    public void addTime(float seconds) {
+        time += seconds;
     }
 
     public void resetTime() {

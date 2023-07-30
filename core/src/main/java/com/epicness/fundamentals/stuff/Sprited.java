@@ -153,8 +153,20 @@ public class Sprited implements Buttonable, Transformable {
         return sprite.isFlipX();
     }
 
+    public boolean isFlipY() {
+        return sprite.isFlipY();
+    }
+
     public void setFlip(boolean flipX, boolean flipY) {
         sprite.setFlip(flipX, flipY);
+    }
+
+    public void setFlipX(boolean flipX) {
+        setFlip(flipX, sprite.isFlipY());
+    }
+
+    public void setFlipY(boolean flipY) {
+        setFlip(sprite.isFlipX(), flipY);
     }
 
     public Color getColor() {
