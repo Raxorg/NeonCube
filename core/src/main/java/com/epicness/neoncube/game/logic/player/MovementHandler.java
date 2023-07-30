@@ -17,7 +17,7 @@ public class MovementHandler extends GameLogicHandler {
 
     @Override
     protected void init() {
-        player = stuff.getCubeWorld().getPlayer();
+        player = stuff.getStickmanWorld().getPlayer();
         animation = player.animation;
         speed = player.speed;
     }

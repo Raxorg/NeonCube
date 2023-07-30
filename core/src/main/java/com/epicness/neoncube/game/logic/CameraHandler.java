@@ -21,12 +21,12 @@ public class CameraHandler extends GameLogicHandler {
     @Override
     protected void init() {
         camera = renderer.getPerspectiveCamera();
-        camera.position.set(0f, 0f, 9f);
+        camera.position.set(0f, 0f, 10f);
         camera.update();
 
         pivot = new Vector2();
         free = false;
-        player = stuff.getCubeWorld().getPlayer();
+        player = stuff.getStickmanWorld().getPlayer();
         lastPlayerX = PLAYER_STARTING_X;
     }
 

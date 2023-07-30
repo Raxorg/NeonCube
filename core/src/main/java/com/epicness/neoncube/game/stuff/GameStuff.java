@@ -24,7 +24,7 @@ public class GameStuff extends Stuff<GameAssets> {
     private Environment environment;
     private ModelInstance cube;
     private DecalCube decalCube;
-    private CubeWorld cubeWorld;
+    private StickmanWorld stickmanWorld;
 
     @Override
     public void initializeStuff() {
@@ -45,7 +45,7 @@ public class GameStuff extends Stuff<GameAssets> {
         cube.transform.translate(0f, 5f, 0f);
 
         decalCube = new DecalCube();
-        cubeWorld = new CubeWorld(sharedAssets, assets);
+        stickmanWorld = new StickmanWorld(sharedAssets, assets);
     }
 
     public Environment getEnvironment() {
@@ -60,7 +60,7 @@ public class GameStuff extends Stuff<GameAssets> {
         return decalCube;
     }
 
-    public CubeWorld getCubeWorld() {
-        return cubeWorld;
+    public StickmanWorld getStickmanWorld() {
+        return stickmanWorld;
     }
 }

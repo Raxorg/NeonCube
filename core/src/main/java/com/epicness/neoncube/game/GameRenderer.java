@@ -1,6 +1,7 @@
 package com.epicness.neoncube.game;
 
 import static com.badlogic.gdx.graphics.Color.BLACK;
+import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.Constants.WINDOW_HEIGHT;
@@ -8,18 +9,16 @@ import static com.epicness.neoncube.Constants.WINDOW_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.epicness.fundamentals.SharedScreen;
 import com.epicness.fundamentals.renderer.Renderer;
 import com.epicness.neoncube.game.stuff.DecalScreen;
 import com.epicness.neoncube.game.stuff.GameStuff;
@@ -29,29 +28,30 @@ public class GameRenderer extends Renderer<GameStuff> {
     private final PerspectiveCamera perspectiveCamera;
     private final ModelBatch modelBatch;
     private final DecalBatch decalBatch;
-    private final FrameBuffer frameBuffer;
-    private final Sprite bufferSprite;
-    private Matrix4 normalProjectionMatrix, wideProjectionMatrix;
+    private final FrameBuffer[] frameBuffers;
+    private final Sprite[] bufferSprites;
+    private final OrthographicCamera decalCamera;
 
     public GameRenderer() {
-        perspectiveCamera = new PerspectiveCamera(67f, CAMERA_WIDTH, CAMERA_HEIGHT);
-        perspectiveCamera.far = 9000f;
+        perspectiveCamera = new PerspectiveCamera(90f, CAMERA_WIDTH, CAMERA_HEIGHT);
+        perspectiveCamera.far = 100f;
 
         modelBatch = new ModelBatch();
         decalBatch = new DecalBatch(new CameraGroupStrategy(perspectiveCamera));
-        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, WINDOW_WIDTH, WINDOW_HEIGHT, false);
 
-        bufferSprite = new Sprite();
-        bufferSprite.setSize(CAMERA_WIDTH, CAMERA_HEIGHT);
-    }
+        frameBuffers = new FrameBuffer[4];
+        for (int i = 0; i < frameBuffers.length; i++) {
+            frameBuffers[i] = new FrameBuffer(Pixmap.Format.RGBA8888, WINDOW_WIDTH, WINDOW_HEIGHT, false);
+        }
 
-    @Override
-    public void setScreen(SharedScreen screen) {
-        super.setScreen(screen);
-        screen.getStaticCamera().setToOrtho(false, CAMERA_WIDTH * 4f, CAMERA_HEIGHT);
-        wideProjectionMatrix = screen.getStaticCamera().combined.cpy();
-        screen.getStaticCamera().setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
-        normalProjectionMatrix = screen.getStaticCamera().combined;
+        bufferSprites = new Sprite[4];
+        for (int i = 0; i < bufferSprites.length; i++) {
+            bufferSprites[i] = new Sprite();
+            bufferSprites[i].setSize(CAMERA_WIDTH, CAMERA_HEIGHT);
+        }
+
+        decalCamera = new OrthographicCamera();
+        decalCamera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
     }
 
     @Override
@@ -68,34 +68,38 @@ public class GameRenderer extends Renderer<GameStuff> {
         modelBatch.render(stuff.getCube(), stuff.getEnvironment());
         modelBatch.end();
 
-        renderCubeWorld();
+        renderDecalCube();
 
         stuff.getDecalCube().draw(decalBatch);
         decalBatch.flush();
     }
 
-    private void renderCubeWorld() {
-        // Use wide projection
-        spriteBatch.setProjectionMatrix(wideProjectionMatrix);
-        // Render to frame buffer
-        frameBuffer.bind();
-        ScreenUtils.clear(Color.RED);
-        spriteBatch.begin();
-        stuff.getCubeWorld().draw(spriteBatch);
-        spriteBatch.end();
-        frameBuffer.end();
-        // Use normal projection
-        spriteBatch.setProjectionMatrix(normalProjectionMatrix);
-        // Render the texture from frame buffer
+    @SuppressWarnings("GDXJavaFlushInsideLoop")
+    private void renderDecalCube() {
         DecalScreen[] screens = stuff.getDecalCube().getFaces();
-        Texture bufferTexture = frameBuffer.getColorBufferTexture();
         for (int i = 0; i < screens.length; i++) {
-            bufferSprite.setRegion(bufferTexture);
-            bufferSprite.setRegionX(i * WINDOW_WIDTH / 4);
-            bufferSprite.setRegionWidth(WINDOW_WIDTH / 4);
+            FrameBuffer frameBuffer = frameBuffers[i];
+            Sprite bufferSprite = bufferSprites[i];
+            // Render to frame buffer
+            frameBuffer.bind();
+            ScreenUtils.clear(Color.RED);
+            // Move the camera and use its new projection matrix
+            spriteBatch.begin();
+            decalCamera.position.x = CAMERA_HALF_WIDTH + i * CAMERA_WIDTH;
+            decalCamera.update();
+            spriteBatch.setProjectionMatrix(decalCamera.combined);
+            stuff.getStickmanWorld().draw(spriteBatch);
+            useStaticCamera(); // For the HUD
+            // Draw HUD
+            spriteBatch.end();
+            frameBuffer.end();
+            // Set the frame buffer's texture as the decal's texture
+            bufferSprite.setRegion(frameBuffer.getColorBufferTexture());
             bufferSprite.flip(false, true);
             screens[i].setSprite(bufferSprite);
         }
+        // Back to normal projection matrix
+        useStaticCamera();
     }
 
     public PerspectiveCamera getPerspectiveCamera() {

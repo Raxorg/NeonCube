@@ -10,12 +10,12 @@ import com.epicness.fundamentals.assets.SharedAssets;
 import com.epicness.fundamentals.stuff.Sprited;
 import com.epicness.neoncube.game.assets.GameAssets;
 
-public class CubeWorld {
+public class StickmanWorld {
 
     private final Sprited background;
     private final Player player;
 
-    public CubeWorld(SharedAssets sharedAssets, GameAssets assets) {
+    public StickmanWorld(SharedAssets sharedAssets, GameAssets assets) {
         background = new Sprited(sharedAssets.getPixel());
         background.setSize(CAMERA_WIDTH * 4f, CAMERA_HEIGHT);
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.2f));

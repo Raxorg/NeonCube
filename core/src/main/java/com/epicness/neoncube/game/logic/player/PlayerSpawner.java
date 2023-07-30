@@ -8,6 +8,6 @@ public class PlayerSpawner extends GameLogicHandler {
 
     @Override
     protected void init() {
-        stuff.getCubeWorld().getPlayer().setX(PLAYER_STARTING_X);
+        stuff.getStickmanWorld().getPlayer().setX(PLAYER_STARTING_X);
     }
 }
