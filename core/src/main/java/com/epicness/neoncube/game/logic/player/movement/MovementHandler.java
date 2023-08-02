@@ -27,6 +27,5 @@ public class MovementHandler extends GameLogicHandler {
                 logic.get(ClimbingHandler.class).update();
                 break;
         }
-        player.currentAnimation.addTime(delta);
     }
 }

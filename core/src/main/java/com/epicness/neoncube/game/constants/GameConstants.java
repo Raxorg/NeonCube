@@ -22,8 +22,11 @@ public class GameConstants {
     private static final float PLAYER_RATIO = PLAYER_PNG_WIDTH / PLAYER_PNG_HEIGHT;
     public static final float PLAYER_HEIGHT = 200f;
     public static final float PLAYER_WIDTH = PLAYER_HEIGHT * PLAYER_RATIO;
-    public static final float PLAYER_SPEED = 1000f;
+
     public static final float PLAYER_STARTING_X = CAMERA_HALF_WIDTH - PLAYER_WIDTH / 2f;
+
+    public static final float PLAYER_RUNNING_SPEED = 1000f;
+    public static final float PLAYER_CLIMBING_SPEED = 500f;
 
     public static final float GRAVITY = 1000f;
 }

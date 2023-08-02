@@ -1,7 +1,7 @@
 package com.epicness.neoncube.game.logic.player.movement;
 
 import static com.epicness.neoncube.game.constants.GameConstants.LEFT_KEY;
-import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_SPEED;
+import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_RUNNING_SPEED;
 import static com.epicness.neoncube.game.constants.GameConstants.RIGHT_KEY;
 import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
@@ -25,8 +25,10 @@ public class RunningHandler extends GameLogicHandler {
     protected void update(float delta) {
         if (player.getStatus() != RUNNING) return;
 
+        player.currentAnimation.addTime(delta);
         player.currentAnimation.setFlipX(playerSpeed.x < 0f);
         player.translateX(playerSpeed.cpy().scl(delta).x);
+
         if (playerSpeed.x == 0f) {
             player.setStatus(IDLE);
         }
@@ -38,10 +40,10 @@ public class RunningHandler extends GameLogicHandler {
 
         switch (keycode) {
             case LEFT_KEY:
-                playerSpeed.x -= PLAYER_SPEED;
+                playerSpeed.x -= PLAYER_RUNNING_SPEED;
                 break;
             case RIGHT_KEY:
-                playerSpeed.x += PLAYER_SPEED;
+                playerSpeed.x += PLAYER_RUNNING_SPEED;
                 break;
         }
     }
@@ -52,10 +54,10 @@ public class RunningHandler extends GameLogicHandler {
 
         switch (keycode) {
             case LEFT_KEY:
-                playerSpeed.x += PLAYER_SPEED;
+                playerSpeed.x += PLAYER_RUNNING_SPEED;
                 break;
             case RIGHT_KEY:
-                playerSpeed.x -= PLAYER_SPEED;
+                playerSpeed.x -= PLAYER_RUNNING_SPEED;
                 break;
         }
     }

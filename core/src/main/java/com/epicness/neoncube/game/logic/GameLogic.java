@@ -3,6 +3,7 @@ package com.epicness.neoncube.game.logic;
 import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlayerSpawner;
+import com.epicness.neoncube.game.logic.player.movement.ClimbingHandler;
 import com.epicness.neoncube.game.logic.player.movement.IdleHandler;
 import com.epicness.neoncube.game.logic.player.movement.MovementHandler;
 import com.epicness.neoncube.game.logic.player.movement.RunningHandler;
@@ -18,6 +19,7 @@ public class GameLogic extends Logic {
 
     public GameLogic() {
         // Player movement
+        registerHandler(new ClimbingHandler());
         registerHandler(new IdleHandler());
         registerHandler(movementHandler = new MovementHandler());
         registerHandler(new RunningHandler());

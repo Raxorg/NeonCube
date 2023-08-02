@@ -9,7 +9,7 @@ public class LadderDetector extends GameLogicHandler {
 
     private Player player;
     private DelayedRemovalArray<Sprited> ladders;
-    private boolean onLadder;
+    private Sprited detectedLadder;
 
     @Override
     protected void init() {
@@ -19,16 +19,16 @@ public class LadderDetector extends GameLogicHandler {
 
     @Override
     protected void update(float delta) {
-        onLadder = false;
+        detectedLadder = null;
         for (int i = 0; i < ladders.size; i++) {
             if (player.overlaps(ladders.get(i))) {
-                onLadder = true;
+                detectedLadder = ladders.get(i);
                 return;
             }
         }
     }
 
-    public boolean isOnLadder() {
-        return onLadder;
+    public boolean isLadderDetected() {
+        return detectedLadder != null;
     }
 }

@@ -9,6 +9,7 @@ import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.assets.SharedAssets;
+import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 import com.epicness.fundamentals.stuff.Sprited;
 import com.epicness.neoncube.game.assets.GameAssets;
 
@@ -39,5 +40,12 @@ public class StickmanWorld {
             ladders.get(i).draw(spriteBatch);
         }
         player.draw(spriteBatch);
+    }
+
+    public void drawDebug(ShapeRendererPlus shapeRenderer) {
+        for (int i = 0; i < ladders.size; i++) {
+            ladders.get(i).drawDebug(shapeRenderer);
+        }
+        player.drawDebug(shapeRenderer);
     }
 }

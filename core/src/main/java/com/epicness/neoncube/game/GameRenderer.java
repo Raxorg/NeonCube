@@ -1,6 +1,7 @@
 package com.epicness.neoncube.game;
 
 import static com.badlogic.gdx.graphics.Color.BLACK;
+import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
@@ -52,6 +53,7 @@ public class GameRenderer extends Renderer<GameStuff> {
         decalCamera = new OrthographicCamera();
         decalCamera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 
+        shapeRenderer.setColor(GREEN);
         Gdx.gl.glLineWidth(2f);
     }
 
@@ -110,8 +112,7 @@ public class GameRenderer extends Renderer<GameStuff> {
     private void renderDebug() {
         // Debug
         shapeRenderer.begin();
-        shapeRenderer.setProjectionMatrix(decalCamera.combined);
-        stuff.getStickmanWorld().player.drawDebug(shapeRenderer);
+        stuff.getStickmanWorld().drawDebug(shapeRenderer);
         shapeRenderer.end();
     }
 
