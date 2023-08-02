@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
@@ -33,7 +32,7 @@ public class GameRenderer extends Renderer<GameStuff> {
     private final OrthographicCamera decalCamera;
 
     public GameRenderer() {
-        perspectiveCamera = new PerspectiveCamera(90f, CAMERA_WIDTH, CAMERA_HEIGHT);
+        perspectiveCamera = new PerspectiveCamera(67f, CAMERA_WIDTH, CAMERA_HEIGHT);
         perspectiveCamera.far = 100f;
 
         modelBatch = new ModelBatch();
@@ -52,6 +51,8 @@ public class GameRenderer extends Renderer<GameStuff> {
 
         decalCamera = new OrthographicCamera();
         decalCamera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
+
+        Gdx.gl.glLineWidth(2f);
     }
 
     @Override
@@ -59,9 +60,8 @@ public class GameRenderer extends Renderer<GameStuff> {
         ScreenUtils.clear(BLACK, true);
 
         spriteBatch.begin();
-        BitmapFont font = new BitmapFont();
-        font.getData().scale(7f);
-        font.draw(spriteBatch, Gdx.graphics.getFramesPerSecond() + "", 100f, 100f);
+        stuff.getFpsText().setText(Gdx.graphics.getFramesPerSecond() + "");
+        stuff.getFpsText().draw(spriteBatch);
         spriteBatch.end();
 
         modelBatch.begin(perspectiveCamera);
@@ -83,15 +83,8 @@ public class GameRenderer extends Renderer<GameStuff> {
             // Render to frame buffer
             frameBuffer.bind();
             ScreenUtils.clear(Color.RED);
-            // Move the camera and use its new projection matrix
-            spriteBatch.begin();
-            decalCamera.position.x = CAMERA_HALF_WIDTH + i * CAMERA_WIDTH;
-            decalCamera.update();
-            spriteBatch.setProjectionMatrix(decalCamera.combined);
-            stuff.getStickmanWorld().draw(spriteBatch);
-            useStaticCamera(); // For the HUD
-            // Draw HUD
-            spriteBatch.end();
+            renderNormally(i);
+            renderDebug();
             frameBuffer.end();
             // Set the frame buffer's texture as the decal's texture
             bufferSprite.setRegion(frameBuffer.getColorBufferTexture());
@@ -100,6 +93,26 @@ public class GameRenderer extends Renderer<GameStuff> {
         }
         // Back to normal projection matrix
         useStaticCamera();
+    }
+
+    private void renderNormally(int screenIndex) {
+        // Move the camera and use its new projection matrix
+        spriteBatch.begin();
+        decalCamera.position.x = CAMERA_HALF_WIDTH + screenIndex * CAMERA_WIDTH;
+        decalCamera.update();
+        spriteBatch.setProjectionMatrix(decalCamera.combined);
+        stuff.getStickmanWorld().draw(spriteBatch);
+        useStaticCamera(); // For the HUD
+        // Draw HUD
+        spriteBatch.end();
+    }
+
+    private void renderDebug() {
+        // Debug
+        shapeRenderer.begin();
+        shapeRenderer.setProjectionMatrix(decalCamera.combined);
+        stuff.getStickmanWorld().player.drawDebug(shapeRenderer);
+        shapeRenderer.end();
     }
 
     public PerspectiveCamera getPerspectiveCamera() {

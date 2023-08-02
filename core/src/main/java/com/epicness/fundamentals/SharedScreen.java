@@ -23,7 +23,7 @@ public class SharedScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        logic.update(delta);
+        logic.update();
         renderer.render();
     }
 

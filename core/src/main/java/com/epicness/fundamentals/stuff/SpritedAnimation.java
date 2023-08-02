@@ -16,7 +16,7 @@ public class SpritedAnimation implements Buttonable, Movable {
     private final Animation<Sprited> animation;
     private float time;
 
-    public SpritedAnimation(Sprite[] spriteFrames, float frameDuration) {
+    public SpritedAnimation(float frameDuration, Sprite... spriteFrames) {
         Sprited[] animationFrames = new Sprited[spriteFrames.length];
         for (int i = 0; i < spriteFrames.length; i++) {
             animationFrames[i] = new Sprited(spriteFrames[i]);

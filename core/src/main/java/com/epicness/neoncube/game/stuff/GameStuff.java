@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.epicness.fundamentals.stuff.Stuff;
+import com.epicness.fundamentals.stuff.Text;
 import com.epicness.neoncube.game.assets.GameAssets;
 
 public class GameStuff extends Stuff<GameAssets> {
@@ -25,6 +26,7 @@ public class GameStuff extends Stuff<GameAssets> {
     private ModelInstance cube;
     private DecalCube decalCube;
     private StickmanWorld stickmanWorld;
+    private Text fpsText;
 
     @Override
     public void initializeStuff() {
@@ -42,10 +44,14 @@ public class GameStuff extends Stuff<GameAssets> {
         Model model = modelBuilder.createBox(5f, 5f, 5f, material, Position | Normal | TextureCoordinates);
 
         cube = new ModelInstance(model);
-        cube.transform.translate(0f, 5f, 0f);
+        cube.transform.translate(0f, 0f, 0f);
 
         decalCube = new DecalCube();
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
+
+        sharedAssets.getPixelFont().getData().scale(5f);
+        fpsText = new Text(sharedAssets.getPixelFont());
+        fpsText.setY(fpsText.getHeight());
     }
 
     public Environment getEnvironment() {
@@ -62,5 +68,9 @@ public class GameStuff extends Stuff<GameAssets> {
 
     public StickmanWorld getStickmanWorld() {
         return stickmanWorld;
+    }
+
+    public Text getFpsText() {
+        return fpsText;
     }
 }

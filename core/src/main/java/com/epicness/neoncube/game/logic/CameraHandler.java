@@ -1,8 +1,9 @@
 package com.epicness.neoncube.game.logic;
 
 import static com.badlogic.gdx.Input.Keys.F;
+import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
-import static com.epicness.neoncube.game.GameConstants.PLAYER_STARTING_X;
+import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_STARTING_X;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,7 +17,7 @@ public class CameraHandler extends GameLogicHandler {
     private Vector2 pivot;
     private boolean free;
     private Player player;
-    private float lastPlayerX;
+    private float lastPlayerX, lastPlayerY;
 
     @Override
     protected void init() {
@@ -26,17 +27,23 @@ public class CameraHandler extends GameLogicHandler {
 
         pivot = new Vector2();
         free = false;
-        player = stuff.getStickmanWorld().getPlayer();
+        player = stuff.getStickmanWorld().player;
         lastPlayerX = PLAYER_STARTING_X;
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         float deltaX = player.getX() - lastPlayerX;
         deltaX = MathUtils.map(0f, CAMERA_WIDTH, 0f, 90f, deltaX);
         camera.rotateAround(Vector3.Zero, Vector3.Y, deltaX);
+
+        float deltaY = lastPlayerY - player.getY();
+        deltaY = MathUtils.map(0f, CAMERA_HEIGHT, 0f, 45f, deltaY);
+        camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), deltaY);
         camera.update();
+
         lastPlayerX = player.getX();
+        lastPlayerY = player.getY();
     }
 
     @Override

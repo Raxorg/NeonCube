@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game;
+package com.epicness.neoncube.game.constants;
 
 import static com.badlogic.gdx.Input.Keys.A;
 import static com.badlogic.gdx.Input.Keys.D;
@@ -24,4 +24,6 @@ public class GameConstants {
     public static final float PLAYER_WIDTH = PLAYER_HEIGHT * PLAYER_RATIO;
     public static final float PLAYER_SPEED = 1000f;
     public static final float PLAYER_STARTING_X = CAMERA_HALF_WIDTH - PLAYER_WIDTH / 2f;
+
+    public static final float GRAVITY = 1000f;
 }

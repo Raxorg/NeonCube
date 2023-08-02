@@ -19,7 +19,7 @@ public class MenuLogic extends Logic {
     }
 
     @Override
-    public void update(float delta) {
+    public void update() {
         sharedLogic.getTransitionHandler().update();
     }
 }

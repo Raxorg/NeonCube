@@ -1,6 +1,6 @@
 package com.epicness.neoncube.game.stuff;
 
-import static com.epicness.neoncube.game.GameConstants.DECAL_SCREEN_WIDTH;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 

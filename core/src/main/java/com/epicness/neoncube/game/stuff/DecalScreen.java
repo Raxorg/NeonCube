@@ -1,41 +1,28 @@
 package com.epicness.neoncube.game.stuff;
 
-import static com.epicness.neoncube.game.GameConstants.DECAL_SCREEN_HEIGHT;
-import static com.epicness.neoncube.game.GameConstants.DECAL_SCREEN_WIDTH;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_HEIGHT;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 
-public class DecalScreen {
-
-    private final Decal decal;
+public class DecalScreen extends Decal {
 
     public DecalScreen() {
-        decal = Decal.newDecal(DECAL_SCREEN_WIDTH, DECAL_SCREEN_HEIGHT, new Sprite(), true);
+        setTextureRegion(new Sprite());
+        setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA); // Enable transparency
+        dimensions.x = DECAL_SCREEN_WIDTH;
+        dimensions.y = DECAL_SCREEN_HEIGHT;
+        setColor(1, 1, 1, 1);
     }
 
     public void draw(DecalBatch decalBatch) {
-        decalBatch.add(decal);
-    }
-
-    public void translateX(float amount) {
-        decal.translateX(amount);
-    }
-
-    public void translateY(float amount) {
-        decal.translateY(amount);
-    }
-
-    public void translateZ(float amount) {
-        decal.translateZ(amount);
-    }
-
-    public void rotateY(float degrees) {
-        decal.rotateY(degrees);
+        decalBatch.add(this);
     }
 
     public void setSprite(Sprite sprite) {
-        decal.setTextureRegion(sprite);
+        setTextureRegion(sprite);
     }
 }
