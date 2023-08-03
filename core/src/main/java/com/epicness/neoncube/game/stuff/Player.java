@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.epicness.fundamentals.renderer.ShapeRendererPlus;
 import com.epicness.fundamentals.stuff.SpritedAnimation;
 import com.epicness.fundamentals.stuff.interfaces.Movable;
+import com.epicness.fundamentals.utils.CollisionUtils;
 import com.epicness.neoncube.game.assets.GameAssets;
 import com.epicness.neoncube.game.constants.PlayerStatus;
 
@@ -62,6 +63,10 @@ public class Player implements Movable {
         return currentAnimation.getCenterX();
     }
 
+    public float getEndX() {
+        return currentAnimation.getEndX();
+    }
+
     @Override
     public void translateX(float amount) {
         currentAnimation.translateX(amount);
@@ -82,7 +87,7 @@ public class Player implements Movable {
     }
 
     public boolean overlaps(Rectangle other) {
-        return currentAnimation.getBoundingRectangle().overlaps(other);
+        return CollisionUtils.overlaps(currentAnimation.getBoundingRectangle(), other);
     }
 
     public PlayerStatus getStatus() {

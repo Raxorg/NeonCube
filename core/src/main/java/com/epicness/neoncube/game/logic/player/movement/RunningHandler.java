@@ -7,6 +7,7 @@ import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_RUNNING_
 import static com.epicness.neoncube.game.constants.GameConstants.RIGHT_KEY;
 import static com.epicness.neoncube.game.constants.GameConstants.UP_KEY;
 import static com.epicness.neoncube.game.constants.PlayerStatus.CLIMBING;
+import static com.epicness.neoncube.game.constants.PlayerStatus.FALLING;
 import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
@@ -14,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
+import com.epicness.neoncube.game.logic.player.PlatformDetector;
 import com.epicness.neoncube.game.stuff.Ladder;
 import com.epicness.neoncube.game.stuff.Player;
 
@@ -37,6 +39,10 @@ public class RunningHandler extends GameLogicHandler {
         player.translateX(playerSpeed.cpy().scl(delta).x);
 
         checkLadder();
+
+        if (!logic.get(PlatformDetector.class).isGrounded()) {
+            player.setStatus(FALLING);
+        }
 
         if (playerSpeed.x == 0f) {
             player.setStatus(IDLE);

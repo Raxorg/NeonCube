@@ -2,6 +2,7 @@ package com.epicness.neoncube.game.stuff;
 
 import static com.badlogic.gdx.graphics.Color.BLUE;
 import static com.badlogic.gdx.graphics.Color.CLEAR;
+import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
@@ -46,6 +47,7 @@ public class StickmanWorld {
         for (int i = 0; i < ladders.size; i++) {
             ladders.get(i).drawDebug(shapeRenderer);
         }
+        shapeRenderer.setColor(GREEN);
         player.drawDebug(shapeRenderer);
     }
 }

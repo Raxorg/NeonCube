@@ -50,6 +50,10 @@ public class SpritedAnimation implements Buttonable, Movable {
         return getX() + getWidth() / 2f;
     }
 
+    public float getEndX() {
+        return getX() + getWidth();
+    }
+
     @Override
     public void translateX(float amount) {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {

@@ -1,5 +1,6 @@
 package com.epicness.neoncube.game.stuff;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,6 +12,7 @@ public class Ladder {
 
     private final DelayedRemovalArray<Sprited> parts;
     public final Rectangle bounds;
+    public final Color debugColor;
 
     public Ladder(int ladderParts, Sprite ladderSprite) {
         parts = new DelayedRemovalArray<>();
@@ -22,6 +24,8 @@ public class Ladder {
         bounds = new Rectangle();
         bounds.width = 100f;
         bounds.height = ladderParts * 200f;
+
+        debugColor = Color.GREEN.cpy();
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -31,6 +35,7 @@ public class Ladder {
     }
 
     public void drawDebug(ShapeRendererPlus shapeRenderer) {
+        shapeRenderer.setColor(debugColor);
         shapeRenderer.rect(bounds);
     }
 

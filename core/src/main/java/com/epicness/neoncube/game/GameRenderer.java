@@ -54,7 +54,6 @@ public class GameRenderer extends Renderer<GameStuff> {
         decalCamera = new OrthographicCamera();
         decalCamera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 
-        shapeRenderer.setColor(GREEN);
         Gdx.gl.glLineWidth(2f);
     }
 
