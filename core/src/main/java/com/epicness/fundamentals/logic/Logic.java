@@ -32,6 +32,12 @@ public abstract class Logic {
         }
     }
 
+    protected void restart() {
+        for (int i = 0; i < logicHandlers.size(); i++) {
+            logicHandlers.get(i).init();
+        }
+    }
+
     public abstract void update();
 
     public void pause() {
