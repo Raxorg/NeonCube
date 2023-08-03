@@ -3,6 +3,7 @@ package com.epicness.neoncube.game.stuff;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
+import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -26,7 +27,7 @@ public class GameStuff extends Stuff<GameAssets> {
     private ModelInstance cube;
     private DecalCube decalCube;
     private StickmanWorld stickmanWorld;
-    private Text fpsText;
+    private Text debugText;
 
     @Override
     public void initializeStuff() {
@@ -50,8 +51,10 @@ public class GameStuff extends Stuff<GameAssets> {
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
 
         sharedAssets.getPixelFont().getData().scale(5f);
-        fpsText = new Text(sharedAssets.getPixelFont());
-        fpsText.setY(fpsText.getHeight());
+        debugText = new Text(sharedAssets.getPixelFont());
+        debugText.setText("FPS\nSPEED");
+        debugText.setTextTargetWidth(CAMERA_WIDTH);
+        debugText.setY(debugText.getHeight());
     }
 
     public Environment getEnvironment() {
@@ -70,7 +73,7 @@ public class GameStuff extends Stuff<GameAssets> {
         return stickmanWorld;
     }
 
-    public Text getFpsText() {
-        return fpsText;
+    public Text getDebugText() {
+        return debugText;
     }
 }

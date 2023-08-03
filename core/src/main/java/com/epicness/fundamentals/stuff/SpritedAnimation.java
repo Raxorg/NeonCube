@@ -38,12 +38,16 @@ public class SpritedAnimation implements Buttonable, Movable {
     }
 
     public Rectangle getBoundingRectangle() {
-        return animation.getKeyFrames()[0].getBoundingRectangle();
+        return animation.getKeyFrame(time).getBoundingRectangle();
     }
 
     @Override
     public float getX() {
-        return animation.getKeyFrames()[0].getX();
+        return animation.getKeyFrame(time).getX();
+    }
+
+    public float getCenterX() {
+        return getX() + getWidth() / 2f;
     }
 
     @Override
@@ -55,7 +59,11 @@ public class SpritedAnimation implements Buttonable, Movable {
 
     @Override
     public float getY() {
-        return animation.getKeyFrames()[0].getY();
+        return animation.getKeyFrame(time).getY();
+    }
+
+    public float getCenterY() {
+        return getY() + getHeight() / 2f;
     }
 
     @Override
@@ -69,6 +77,14 @@ public class SpritedAnimation implements Buttonable, Movable {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {
             animation.getKeyFrames()[i].setOriginBasedPosition(x, y);
         }
+    }
+
+    public float getWidth() {
+        return animation.getKeyFrame(time).getWidth();
+    }
+
+    public float getHeight() {
+        return animation.getKeyFrame(time).getHeight();
     }
 
     public void setSize(float width, float height) {

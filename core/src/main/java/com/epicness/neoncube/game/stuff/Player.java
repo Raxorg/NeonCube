@@ -4,37 +4,40 @@ import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_HEIGHT;
 import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_WIDTH;
 import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.fundamentals.renderer.ShapeRendererPlus;
-import com.epicness.fundamentals.stuff.Sprited;
 import com.epicness.fundamentals.stuff.SpritedAnimation;
 import com.epicness.fundamentals.stuff.interfaces.Movable;
+import com.epicness.neoncube.game.assets.GameAssets;
 import com.epicness.neoncube.game.constants.PlayerStatus;
 
 public class Player implements Movable {
 
-    private final SpritedAnimation idle, running, climbing;
+    private final SpritedAnimation idle, running, climbing, falling;
     public SpritedAnimation currentAnimation;
     public final Vector2 speed;
     private PlayerStatus status;
 
-    public Player(Sprite idleFrame, Sprite[] runningFrames, Sprite[] climbingFrames) {
-        idle = new SpritedAnimation(1f, idleFrame);
+    public Player(GameAssets assets) {
+        idle = new SpritedAnimation(1f, assets.getStickmanIdle());
         idle.setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
-        idle.enableLooping();
         idle.useBilinearFilter();
 
-        running = new SpritedAnimation(0.05f, runningFrames);
+        running = new SpritedAnimation(0.05f, assets.getStickmanRunning());
         running.setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
         running.enableLooping();
         running.useBilinearFilter();
 
-        climbing = new SpritedAnimation(0.1f, climbingFrames);
+        climbing = new SpritedAnimation(0.1f, assets.getStickmanClimbing());
         climbing.setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
         climbing.enableLooping();
         climbing.useBilinearFilter();
+
+        falling = new SpritedAnimation(1f, assets.getStickmanFalling());
+        falling.setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
+        falling.useBilinearFilter();
 
         currentAnimation = idle;
 
@@ -55,6 +58,10 @@ public class Player implements Movable {
         return currentAnimation.getX();
     }
 
+    public float getCenterX() {
+        return currentAnimation.getCenterX();
+    }
+
     @Override
     public void translateX(float amount) {
         currentAnimation.translateX(amount);
@@ -65,13 +72,17 @@ public class Player implements Movable {
         return currentAnimation.getY();
     }
 
+    public float getCenterY() {
+        return currentAnimation.getCenterY();
+    }
+
     @Override
     public void translateY(float amount) {
         currentAnimation.translateY(amount);
     }
 
-    public boolean overlaps(Sprited other) {
-        return currentAnimation.getBoundingRectangle().overlaps(other.getBoundingRectangle());
+    public boolean overlaps(Rectangle other) {
+        return currentAnimation.getBoundingRectangle().overlaps(other);
     }
 
     public PlayerStatus getStatus() {
@@ -90,6 +101,9 @@ public class Player implements Movable {
                 break;
             case CLIMBING:
                 currentAnimation = climbing;
+                break;
+            case FALLING:
+                currentAnimation = falling;
                 break;
         }
         currentAnimation.setPosition(position);

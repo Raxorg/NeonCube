@@ -22,6 +22,8 @@ public class CameraHandler extends GameLogicHandler {
     @Override
     protected void init() {
         camera = renderer.getPerspectiveCamera();
+        camera.direction.set(0, 0, -1);
+        camera.up.set(0, 1, 0);
         camera.position.set(0f, 0f, 10f);
         camera.update();
 
@@ -34,8 +36,7 @@ public class CameraHandler extends GameLogicHandler {
     @Override
     public void update(float delta) {
         float deltaX = player.getX() - lastPlayerX;
-        deltaX = MathUtils.map(0f, CAMERA_WIDTH, 0f, 90f, deltaX);
-        camera.rotateAround(Vector3.Zero, Vector3.Y, deltaX);
+        rotateX(deltaX);
 
         float deltaY = lastPlayerY - player.getY();
         deltaY = MathUtils.map(0f, CAMERA_HEIGHT, 0f, 45f, deltaY);
@@ -45,6 +46,13 @@ public class CameraHandler extends GameLogicHandler {
         lastPlayerX = player.getX();
         lastPlayerY = player.getY();
     }
+
+    private void rotateX(float delta) {
+        delta = MathUtils.map(0f, CAMERA_WIDTH, 0f, 90f, delta);
+        camera.rotateAround(Vector3.Zero, Vector3.Y, delta);
+    }
+
+
 
     @Override
     public void touchDown(float x, float y) {

@@ -4,6 +4,7 @@ package com.epicness.neoncube.game.assets;
 import static com.epicness.neoncube.game.assets.GameAssetPaths.ASSETS;
 import static com.epicness.neoncube.game.assets.GameAssetPaths.LADDER_SPRITE;
 import static com.epicness.neoncube.game.assets.GameAssetPaths.STICKMAN_CLIMBING_ANIMATION;
+import static com.epicness.neoncube.game.assets.GameAssetPaths.STICKMAN_FALLING_SPRITE;
 import static com.epicness.neoncube.game.assets.GameAssetPaths.STICKMAN_IDLE_SPRITE;
 import static com.epicness.neoncube.game.assets.GameAssetPaths.STICKMAN_RUNNING_ANIMATION;
 
@@ -16,6 +17,7 @@ public class GameAssets extends Assets {
     private Sprite[] stickmanRunning;
     private Sprite ladder;
     private Sprite stickmanIdle;
+    private Sprite stickmanFalling;
 
     public GameAssets() {
         super(ASSETS);
@@ -26,6 +28,7 @@ public class GameAssets extends Assets {
         stickmanClimbing = get(STICKMAN_CLIMBING_ANIMATION);
         stickmanRunning = get(STICKMAN_RUNNING_ANIMATION);
         ladder = get(LADDER_SPRITE);
+        stickmanFalling = get(STICKMAN_FALLING_SPRITE);
         stickmanIdle = get(STICKMAN_IDLE_SPRITE);
     }
 
@@ -39,6 +42,10 @@ public class GameAssets extends Assets {
 
     public Sprite getLadder() {
         return ladder;
+    }
+
+    public Sprite getStickmanFalling() {
+        return stickmanFalling;
     }
 
     public Sprite getStickmanIdle() {

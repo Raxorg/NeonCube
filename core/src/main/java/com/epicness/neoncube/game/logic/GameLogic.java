@@ -1,9 +1,13 @@
 package com.epicness.neoncube.game.logic;
 
+import static com.badlogic.gdx.Input.Keys.R;
+
+import com.badlogic.gdx.Gdx;
 import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlayerSpawner;
 import com.epicness.neoncube.game.logic.player.movement.ClimbingHandler;
+import com.epicness.neoncube.game.logic.player.movement.FallingHandler;
 import com.epicness.neoncube.game.logic.player.movement.IdleHandler;
 import com.epicness.neoncube.game.logic.player.movement.MovementHandler;
 import com.epicness.neoncube.game.logic.player.movement.RunningHandler;
@@ -18,14 +22,15 @@ public class GameLogic extends Logic {
     private final CameraHandler cameraHandler;
 
     public GameLogic() {
-        // Player movement
-        registerHandler(new ClimbingHandler());
-        registerHandler(new IdleHandler());
-        registerHandler(movementHandler = new MovementHandler());
-        registerHandler(new RunningHandler());
         // Player
         registerHandler(ladderDetector = new LadderDetector());
         registerHandler(new PlayerSpawner());
+        // Player movement
+        registerHandler(new ClimbingHandler());
+        registerHandler(new FallingHandler());
+        registerHandler(new IdleHandler());
+        registerHandler(movementHandler = new MovementHandler());
+        registerHandler(new RunningHandler());
         // Other
         registerHandler(cameraHandler = new CameraHandler());
     }
@@ -38,5 +43,8 @@ public class GameLogic extends Logic {
         ladderDetector.update();
         // Other
         cameraHandler.update();
+        if (Gdx.input.isKeyJustPressed(R)) {
+            restart();
+        }
     }
 }

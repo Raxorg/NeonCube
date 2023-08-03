@@ -16,7 +16,7 @@ import com.epicness.neoncube.game.assets.GameAssets;
 public class StickmanWorld {
 
     private final Sprited background;
-    public final DelayedRemovalArray<Sprited> ladders;
+    public final DelayedRemovalArray<Ladder> ladders;
     public final Player player;
 
     public StickmanWorld(SharedAssets sharedAssets, GameAssets assets) {
@@ -25,13 +25,13 @@ public class StickmanWorld {
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.2f));
 
         ladders = new DelayedRemovalArray<>();
-        for (int i = 0; i < 5; i++) {
-            Sprited ladder = new Sprited(assets.getLadder());
-            ladder.setPosition(CAMERA_HALF_WIDTH - 50f, i * 200f);
+        for (int i = 0; i < 7; i++) {
+            Ladder ladder = new Ladder(4, assets.getLadder());
+            ladder.setX(CAMERA_HALF_WIDTH - 50f + i * CAMERA_HALF_WIDTH);
             ladders.add(ladder);
         }
 
-        player = new Player(assets.getStickmanIdle(), assets.getStickmanRunning(), assets.getStickmanClimbing());
+        player = new Player(assets);
     }
 
     public void draw(SpriteBatch spriteBatch) {

@@ -63,8 +63,9 @@ public class GameRenderer extends Renderer<GameStuff> {
         ScreenUtils.clear(BLACK, true);
 
         spriteBatch.begin();
-        stuff.getFpsText().setText(Gdx.graphics.getFramesPerSecond() + "");
-        stuff.getFpsText().draw(spriteBatch);
+        stuff.getDebugText().setText("FPS: " + Gdx.graphics.getFramesPerSecond() + "\n" +
+                "Speed: " + stuff.getStickmanWorld().player.speed);
+        stuff.getDebugText().draw(spriteBatch);
         spriteBatch.end();
 
         modelBatch.begin(perspectiveCamera);

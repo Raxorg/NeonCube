@@ -12,6 +12,7 @@ public class GameAssetPaths {
     public static final AssetDescriptor<Sprite[]> STICKMAN_CLIMBING_ANIMATION;
     public static final AssetDescriptor<Sprite[]> STICKMAN_RUNNING_ANIMATION;
     public static final AssetDescriptor<Sprite> LADDER_SPRITE;
+    public static final AssetDescriptor<Sprite> STICKMAN_FALLING_SPRITE;
     public static final AssetDescriptor<Sprite> STICKMAN_IDLE_SPRITE;
 
     static {
@@ -21,6 +22,7 @@ public class GameAssetPaths {
         ASSETS.add(STICKMAN_RUNNING_ANIMATION = new AssetDescriptor<>(
                 "neoncube/animations/stickmanRunning.anim", Sprite[].class));
         ASSETS.add(LADDER_SPRITE = new AssetDescriptor<>("neoncube/images/ladder.png", Sprite.class));
+        ASSETS.add(STICKMAN_FALLING_SPRITE = new AssetDescriptor<>("neoncube/images/stickmanFalling.png", Sprite.class));
         ASSETS.add(STICKMAN_IDLE_SPRITE = new AssetDescriptor<>("neoncube/images/stickmanIdle.png", Sprite.class));
     }
 }

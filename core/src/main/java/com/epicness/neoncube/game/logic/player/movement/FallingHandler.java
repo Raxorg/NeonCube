@@ -1,23 +1,18 @@
 package com.epicness.neoncube.game.logic.player.movement;
 
-import static com.epicness.neoncube.game.constants.GameConstants.DOWN_KEY;
 import static com.epicness.neoncube.game.constants.GameConstants.LEFT_KEY;
-import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_CLIMBING_SPEED;
 import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_RUNNING_SPEED;
 import static com.epicness.neoncube.game.constants.GameConstants.RIGHT_KEY;
-import static com.epicness.neoncube.game.constants.GameConstants.UP_KEY;
-import static com.epicness.neoncube.game.constants.PlayerStatus.CLIMBING;
+import static com.epicness.neoncube.game.constants.PlayerStatus.FALLING;
 import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.logic.player.LadderDetector;
-import com.epicness.neoncube.game.stuff.Ladder;
 import com.epicness.neoncube.game.stuff.Player;
 
-public class RunningHandler extends GameLogicHandler {
+public class FallingHandler extends GameLogicHandler {
 
     private Player player;
     private Vector2 playerSpeed;
@@ -30,38 +25,22 @@ public class RunningHandler extends GameLogicHandler {
 
     @Override
     protected void update(float delta) {
-        if (player.getStatus() != RUNNING) return;
+        if (player.getStatus() != FALLING) return;
 
-        player.currentAnimation.addTime(delta);
-        player.currentAnimation.setFlipX(playerSpeed.x < 0f);
-        player.translateX(playerSpeed.cpy().scl(delta).x);
+        playerSpeed.y -= 1000f * delta;
+        player.translate(playerSpeed.cpy().scl(delta));
 
-        checkLadder();
-
-        if (playerSpeed.x == 0f) {
-            player.setStatus(IDLE);
-        }
-    }
-
-    private void checkLadder() {
-        Ladder ladder = logic.get(LadderDetector.class).getDetectedLadder();
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        if (ladder != null) {
-            if (pressedKeys.contains(UP_KEY, true) && player.getY() != ladder.getTopY()) {
-                playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
-                playerSpeed.y = PLAYER_CLIMBING_SPEED;
-                player.setStatus(CLIMBING);
-            } else if (pressedKeys.contains(DOWN_KEY, true) && player.getY() != ladder.getY()) {
-                playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
-                playerSpeed.y = -PLAYER_CLIMBING_SPEED;
-                player.setStatus(CLIMBING);
-            }
+        if (player.getY() <= 0f) {
+            player.setY(0f);
+            playerSpeed.y = 0f;
+            if (playerSpeed.x != 0f) player.setStatus(RUNNING);
+            else player.setStatus(IDLE);
         }
     }
 
     @Override
     public void keyDown(int keycode) {
-        if (player.getStatus() != RUNNING) return;
+        if (player.getStatus() != FALLING) return;
 
         DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
         pressedKeys.add(keycode);
@@ -78,7 +57,7 @@ public class RunningHandler extends GameLogicHandler {
 
     @Override
     public void keyUp(int keycode) {
-        if (player.getStatus() != RUNNING) return;
+        if (player.getStatus() != FALLING) return;
 
         DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
         pressedKeys.removeValue(keycode, true);
