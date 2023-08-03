@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.Renderer;
 import com.epicness.neoncube.game.stuff.DecalScreen;
@@ -78,8 +79,8 @@ public class GameRenderer extends Renderer<GameStuff> {
 
     @SuppressWarnings("GDXJavaFlushInsideLoop")
     private void renderDecalCube() {
-        DecalScreen[] screens = stuff.getDecalCube().getFaces();
-        for (int i = 0; i < screens.length; i++) {
+        DelayedRemovalArray<DecalScreen> faces = stuff.getDecalCube().faces;
+        for (int i = 0; i < faces.size; i++) {
             FrameBuffer frameBuffer = frameBuffers[i];
             Sprite bufferSprite = bufferSprites[i];
             // Render to frame buffer
@@ -91,7 +92,7 @@ public class GameRenderer extends Renderer<GameStuff> {
             // Set the frame buffer's texture as the decal's texture
             bufferSprite.setRegion(frameBuffer.getColorBufferTexture());
             bufferSprite.flip(false, true);
-            screens[i].setSprite(bufferSprite);
+            faces.get(i).setSprite(bufferSprite);
         }
         // Back to normal projection matrix
         useStaticCamera();
@@ -112,6 +113,7 @@ public class GameRenderer extends Renderer<GameStuff> {
     private void renderDebug() {
         // Debug
         shapeRenderer.begin();
+        shapeRenderer.setProjectionMatrix(decalCamera.combined);
         stuff.getStickmanWorld().drawDebug(shapeRenderer);
         shapeRenderer.end();
     }

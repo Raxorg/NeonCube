@@ -3,30 +3,28 @@ package com.epicness.neoncube.game.stuff;
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 
 public class DecalCube {
 
-    private final DecalScreen[] faces;
+    public final DelayedRemovalArray<DecalScreen> faces;
 
     public DecalCube() {
-        faces = new DecalScreen[4];
-        for (int i = 0; i < faces.length; i++) {
-            faces[i] = new DecalScreen();
-            faces[i].rotateY(i * 90f);
+        faces = new DelayedRemovalArray<>();
+        for (int i = 0; i < 4; i++) {
+            DecalScreen decalScreen = new DecalScreen();
+            decalScreen.rotateY(i * 90f);
+            faces.add(decalScreen);
         }
-        faces[0].translateZ(DECAL_SCREEN_WIDTH / 2f);
-        faces[1].translateX(DECAL_SCREEN_WIDTH / 2f);
-        faces[2].translateZ(-DECAL_SCREEN_WIDTH / 2f);
-        faces[3].translateX(-DECAL_SCREEN_WIDTH / 2f);
+        faces.get(0).translateZ(DECAL_SCREEN_WIDTH / 2f);
+        faces.get(1).translateX(DECAL_SCREEN_WIDTH / 2f);
+        faces.get(2).translateZ(-DECAL_SCREEN_WIDTH / 2f);
+        faces.get(3).translateX(-DECAL_SCREEN_WIDTH / 2f);
     }
 
     public void draw(DecalBatch decalBatch) {
-        for (int i = 0; i < faces.length; i++) {
-            faces[i].draw(decalBatch);
+        for (int i = 0; i < faces.size; i++) {
+            faces.get(i).draw(decalBatch);
         }
-    }
-
-    public DecalScreen[] getFaces() {
-        return faces;
     }
 }

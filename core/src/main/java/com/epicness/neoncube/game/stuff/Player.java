@@ -31,7 +31,7 @@ public class Player implements Movable {
         running.enableLooping();
         running.useBilinearFilter();
 
-        climbing = new SpritedAnimation(0.2f, climbingFrames);
+        climbing = new SpritedAnimation(0.1f, climbingFrames);
         climbing.setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
         climbing.enableLooping();
         climbing.useBilinearFilter();
