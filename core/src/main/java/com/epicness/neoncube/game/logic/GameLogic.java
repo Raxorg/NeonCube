@@ -33,6 +33,7 @@ public class GameLogic extends Logic {
         registerHandler(new RunningHandler());
         // Other
         registerHandler(cameraHandler = new CameraHandler());
+        registerHandler(0, new KeyHandler());
     }
 
     @Override

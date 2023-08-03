@@ -12,7 +12,6 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.stuff.Ladder;
@@ -71,9 +70,6 @@ public class ClimbingHandler extends GameLogicHandler {
     public void keyDown(int keycode) {
         if (player.getStatus() != CLIMBING) return;
 
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.add(keycode);
-
         switch (keycode) {
             case UP_KEY:
                 playerSpeed.y += PLAYER_CLIMBING_SPEED;
@@ -93,9 +89,6 @@ public class ClimbingHandler extends GameLogicHandler {
     @Override
     public void keyUp(int keycode) {
         if (player.getStatus() != CLIMBING) return;
-
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.removeValue(keycode, true);
 
         switch (keycode) {
             case UP_KEY:

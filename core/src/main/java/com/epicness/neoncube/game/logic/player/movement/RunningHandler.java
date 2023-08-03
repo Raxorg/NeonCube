@@ -11,8 +11,8 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
+import com.epicness.neoncube.game.logic.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.stuff.Ladder;
 import com.epicness.neoncube.game.stuff.Player;
@@ -44,27 +44,25 @@ public class RunningHandler extends GameLogicHandler {
     }
 
     private void checkLadder() {
+        if (!logic.get(LadderDetector.class).isLadderDetected()) return;
+
         Ladder ladder = logic.get(LadderDetector.class).getDetectedLadder();
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        if (ladder != null) {
-            if (pressedKeys.contains(UP_KEY, true) && player.getY() != ladder.getTopY()) {
-                playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
-                playerSpeed.y = PLAYER_CLIMBING_SPEED;
-                player.setStatus(CLIMBING);
-            } else if (pressedKeys.contains(DOWN_KEY, true) && player.getY() != ladder.getY()) {
-                playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
-                playerSpeed.y = -PLAYER_CLIMBING_SPEED;
-                player.setStatus(CLIMBING);
-            }
+        KeyHandler keyHandler = logic.get(KeyHandler.class);
+
+        if (keyHandler.isPressed(UP_KEY) && player.getY() != ladder.getTopY()) {
+            playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
+            playerSpeed.y = PLAYER_CLIMBING_SPEED;
+            player.setStatus(CLIMBING);
+        } else if (keyHandler.isPressed(DOWN_KEY) && player.getY() != ladder.getY()) {
+            playerSpeed.x = playerSpeed.x > 0 ? PLAYER_CLIMBING_SPEED : -PLAYER_CLIMBING_SPEED;
+            playerSpeed.y = -PLAYER_CLIMBING_SPEED;
+            player.setStatus(CLIMBING);
         }
     }
 
     @Override
     public void keyDown(int keycode) {
         if (player.getStatus() != RUNNING) return;
-
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.add(keycode);
 
         switch (keycode) {
             case LEFT_KEY:
@@ -79,9 +77,6 @@ public class RunningHandler extends GameLogicHandler {
     @Override
     public void keyUp(int keycode) {
         if (player.getStatus() != RUNNING) return;
-
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.removeValue(keycode, true);
 
         switch (keycode) {
             case LEFT_KEY:

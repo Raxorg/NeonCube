@@ -27,6 +27,5 @@ public class GameConstants {
 
     public static final float PLAYER_RUNNING_SPEED = 1000f;
     public static final float PLAYER_CLIMBING_SPEED = 500f;
-
-    public static final float GRAVITY = 1000f;
+    public static final float GRAVITY = -1000f;
 }

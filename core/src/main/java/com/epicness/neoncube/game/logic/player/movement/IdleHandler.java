@@ -11,8 +11,8 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
+import com.epicness.neoncube.game.logic.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.stuff.Player;
 
@@ -31,8 +31,7 @@ public class IdleHandler extends GameLogicHandler {
     public void keyDown(int keycode) {
         if (player.getStatus() != IDLE) return;
 
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.add(keycode);
+        KeyHandler keyHandler = logic.get(KeyHandler.class);
         LadderDetector ladderDetector = logic.get(LadderDetector.class);
 
         switch (keycode) {
@@ -47,7 +46,7 @@ public class IdleHandler extends GameLogicHandler {
                 consumeInput();
                 break;
             case UP_KEY:
-                if (pressedKeys.contains(DOWN_KEY, true)) break;
+                if (keyHandler.isPressed(DOWN_KEY)) break;
 
                 if (ladderDetector.isLadderDetected()) {
                     playerSpeed.y += PLAYER_CLIMBING_SPEED;
@@ -56,7 +55,7 @@ public class IdleHandler extends GameLogicHandler {
                 }
                 break;
             case DOWN_KEY:
-                if (pressedKeys.contains(UP_KEY, true)) break;
+                if (keyHandler.isPressed(UP_KEY)) break;
 
                 if (ladderDetector.isLadderDetected() && ladderDetector.getDetectedLadder().getY() != player.getY()) {
                     playerSpeed.y -= PLAYER_CLIMBING_SPEED;
@@ -71,8 +70,7 @@ public class IdleHandler extends GameLogicHandler {
     public void keyUp(int keycode) {
         if (player.getStatus() != IDLE) return;
 
-        DelayedRemovalArray<Integer> pressedKeys = logic.get(MovementHandler.class).getPressedKeys();
-        pressedKeys.removeValue(keycode, true);
+        KeyHandler keyHandler = logic.get(KeyHandler.class);
         LadderDetector ladderDetector = logic.get(LadderDetector.class);
 
         switch (keycode) {
@@ -89,7 +87,7 @@ public class IdleHandler extends GameLogicHandler {
             case UP_KEY:
                 break;
             case DOWN_KEY:
-                if (pressedKeys.contains(UP_KEY, true) && ladderDetector.isLadderDetected()) {
+                if (keyHandler.isPressed(UP_KEY) && ladderDetector.isLadderDetected()) {
                     playerSpeed.y += PLAYER_CLIMBING_SPEED;
                     player.setStatus(CLIMBING);
                     consumeInput();
