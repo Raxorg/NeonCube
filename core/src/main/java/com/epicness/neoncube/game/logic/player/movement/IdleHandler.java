@@ -12,7 +12,7 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.logic.KeyHandler;
+import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.stuff.bidimensional.Player;
 

@@ -17,7 +17,7 @@ import com.epicness.neoncube.game.constants.PlayerStatus;
 public class Player implements Movable {
 
     private final SpritedAnimation idle, running, climbing, falling;
-    public SpritedAnimation currentAnimation;
+    private SpritedAnimation currentAnimation;
     public final Vector2 speed;
     private PlayerStatus status;
 
@@ -88,6 +88,26 @@ public class Player implements Movable {
 
     public boolean overlaps(Rectangle other) {
         return CollisionUtils.overlaps(currentAnimation.getBoundingRectangle(), other);
+    }
+
+    public void addTime(float delta) {
+        currentAnimation.addTime(delta);
+    }
+
+    public boolean isFlipX() {
+        return currentAnimation.isFlipX();
+    }
+
+    public void setFlipX(boolean flipX) {
+        currentAnimation.setFlipX(flipX);
+    }
+
+    public float getTime() {
+        return currentAnimation.getTime();
+    }
+
+    public void setTime(float time) {
+        currentAnimation.setTime(time);
     }
 
     public PlayerStatus getStatus() {

@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game.logic;
+package com.epicness.neoncube.game.logic.other;
 
 import static com.epicness.neoncube.game.constants.GameConstants.DOWN_KEY;
 import static com.epicness.neoncube.game.constants.GameConstants.LEFT_KEY;
@@ -7,6 +7,7 @@ import static com.epicness.neoncube.game.constants.GameConstants.UP_KEY;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.player.movement.IdleHandler;
 
 public class KeyHandler extends GameLogicHandler {

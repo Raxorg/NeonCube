@@ -5,9 +5,9 @@ import static com.badlogic.gdx.graphics.Color.BLUE;
 import static com.badlogic.gdx.graphics.Color.CLEAR;
 import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.CELL_SIZE;
+import static com.epicness.neoncube.game.constants.GameConstants.STICKMAN_WORLD_HEIGHT;
+import static com.epicness.neoncube.game.constants.GameConstants.STICKMAN_WORLD_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.GRID_COLUMNS;
 import static com.epicness.neoncube.game.constants.GameConstants.GRID_ROWS;
 
@@ -24,11 +24,11 @@ public class StickmanWorld {
     private final Sprited background;
     private final CellGrid grid;
     public final DelayedRemovalArray<Ladder> ladders;
-    public final Player player;
+    public final Player player, playerMirror;
 
     public StickmanWorld(SharedAssets sharedAssets, GameAssets assets) {
         background = new Sprited(sharedAssets.getPixel());
-        background.setSize(CAMERA_WIDTH * 4f, CAMERA_HEIGHT);
+        background.setSize(STICKMAN_WORLD_WIDTH, STICKMAN_WORLD_HEIGHT);
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.2f));
 
         grid = new CellGrid(GRID_COLUMNS, GRID_ROWS, assets.getRoundedSquare());
@@ -43,6 +43,7 @@ public class StickmanWorld {
         }
 
         player = new Player(assets);
+        playerMirror = new Player(assets);
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -52,6 +53,7 @@ public class StickmanWorld {
             ladders.get(i).draw(spriteBatch);
         }
         player.draw(spriteBatch);
+        playerMirror.draw(spriteBatch);
     }
 
     public void drawDebug(ShapeRendererPlus shapeRenderer) {
@@ -60,5 +62,6 @@ public class StickmanWorld {
         }
         shapeRenderer.setColor(GREEN);
         player.drawDebug(shapeRenderer);
+        playerMirror.drawDebug(shapeRenderer);
     }
 }

@@ -4,6 +4,9 @@ import static com.badlogic.gdx.Input.Keys.R;
 
 import com.badlogic.gdx.Gdx;
 import com.epicness.fundamentals.logic.Logic;
+import com.epicness.neoncube.game.logic.other.CameraHandler;
+import com.epicness.neoncube.game.logic.other.KeyHandler;
+import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlatformDetector;
 import com.epicness.neoncube.game.logic.player.PlayerSpawner;
@@ -22,6 +25,7 @@ public class GameLogic extends Logic {
     private final PlatformDetector platformDetector;
     // Other
     private final CameraHandler cameraHandler;
+    private final WorldCornerHandler worldCornerHandler;
 
     public GameLogic() {
         // Player
@@ -37,6 +41,7 @@ public class GameLogic extends Logic {
         // Other
         registerHandler(cameraHandler = new CameraHandler());
         registerHandler(0, new KeyHandler());
+        registerHandler(worldCornerHandler = new WorldCornerHandler());
     }
 
     @Override
@@ -48,6 +53,8 @@ public class GameLogic extends Logic {
         platformDetector.update();
         // Other
         cameraHandler.update();
+        worldCornerHandler.update();
+
         if (Gdx.input.isKeyJustPressed(R)) {
             restart();
         }

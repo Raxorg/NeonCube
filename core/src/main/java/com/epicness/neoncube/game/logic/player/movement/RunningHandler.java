@@ -13,7 +13,7 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.logic.KeyHandler;
+import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlatformDetector;
 import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
@@ -40,8 +40,8 @@ public class RunningHandler extends GameLogicHandler {
             return;
         }
 
-        player.currentAnimation.addTime(delta);
-        player.currentAnimation.setFlipX(playerSpeed.x < 0f);
+        player.addTime(delta);
+        player.setFlipX(playerSpeed.x < 0f);
         player.translateX(playerSpeed.cpy().scl(delta).x);
 
         checkLadder();

@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game.logic;
+package com.epicness.neoncube.game.logic.other;
 
 import static com.badlogic.gdx.Input.Keys.F;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class CameraHandler extends GameLogicHandler {
@@ -51,7 +52,6 @@ public class CameraHandler extends GameLogicHandler {
         delta = MathUtils.map(0f, CAMERA_WIDTH, 0f, 90f, delta);
         camera.rotateAround(Vector3.Zero, Vector3.Y, delta);
     }
-
 
 
     @Override

@@ -119,6 +119,10 @@ public class SpritedAnimation implements Buttonable, Movable {
         }
     }
 
+    public boolean isFlipX() {
+        return animation.getKeyFrame(time).isFlipX();
+    }
+
     public void setFlip(boolean flipX, boolean flipY) {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {
             animation.getKeyFrames()[i].setFlip(flipX, flipY);
@@ -145,5 +149,13 @@ public class SpritedAnimation implements Buttonable, Movable {
 
     public void useBilinearFilter() {
         animation.getKeyFrames()[0].useBilinearFilter();
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
     }
 }

@@ -32,7 +32,7 @@ public class ClimbingHandler extends GameLogicHandler {
     protected void update(float delta) {
         if (player.getStatus() != CLIMBING) return;
 
-        if (playerSpeed.y != 0f) player.currentAnimation.addTime(delta);
+        if (playerSpeed.y != 0f) player.addTime(delta);
         player.translate(playerSpeed.cpy().scl(delta));
 
         Ladder ladder = logic.get(LadderDetector.class).getDetectedLadder();
@@ -40,7 +40,7 @@ public class ClimbingHandler extends GameLogicHandler {
         if (ladder == null) {
             leaveLadder();
             player.setStatus(FALLING);
-            player.currentAnimation.setFlipX(playerSpeed.x < 0f);
+            player.setFlipX(playerSpeed.x < 0f);
             return;
         }
         // Player reaches bottom of the ladder
