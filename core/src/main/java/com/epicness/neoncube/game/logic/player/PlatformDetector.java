@@ -6,8 +6,8 @@ import static com.badlogic.gdx.graphics.Color.YELLOW;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.stuff.Ladder;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class PlatformDetector extends GameLogicHandler {
 
@@ -37,7 +37,7 @@ public class PlatformDetector extends GameLogicHandler {
         }
 
         // Check if we're still grounded
-        if (landedPlatform != null) {
+        if (landedPlatform != null && player.getY() == landedPlatform.y + landedPlatform.height) {
             float playerX = player.getX();
             float playerEndX = player.getEndX();
             float platformEndX = landedPlatform.x + landedPlatform.width;
@@ -65,5 +65,9 @@ public class PlatformDetector extends GameLogicHandler {
 
     public boolean isGrounded() {
         return grounded;
+    }
+
+    public Rectangle getLandedPlatform() {
+        return landedPlatform;
     }
 }

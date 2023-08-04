@@ -20,12 +20,16 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.epicness.fundamentals.stuff.Stuff;
 import com.epicness.fundamentals.stuff.Text;
 import com.epicness.neoncube.game.assets.GameAssets;
+import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
+import com.epicness.neoncube.game.stuff.tridimensional.DecalCube;
 
 public class GameStuff extends Stuff<GameAssets> {
 
+    // 3D
     private Environment environment;
     private ModelInstance cube;
     private DecalCube decalCube;
+    // 2D
     private StickmanWorld stickmanWorld;
     private Text debugText;
 
@@ -50,7 +54,7 @@ public class GameStuff extends Stuff<GameAssets> {
         decalCube = new DecalCube();
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
 
-        sharedAssets.getPixelFont().getData().scale(5f);
+        sharedAssets.getPixelFont().getData().scale(4f);
         debugText = new Text(sharedAssets.getPixelFont());
         debugText.setText("FPS\nSPEED");
         debugText.setTextTargetWidth(CAMERA_WIDTH);

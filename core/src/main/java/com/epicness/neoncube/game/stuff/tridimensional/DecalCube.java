@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game.stuff;
+package com.epicness.neoncube.game.stuff.tridimensional;
 
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 

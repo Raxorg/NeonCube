@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class CameraHandler extends GameLogicHandler {
 

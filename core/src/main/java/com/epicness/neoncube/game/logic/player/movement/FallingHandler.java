@@ -12,12 +12,14 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.FALLING;
 import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
-import com.epicness.neoncube.game.stuff.Ladder;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.logic.player.PlatformDetector;
+import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class FallingHandler extends GameLogicHandler {
 
@@ -38,6 +40,18 @@ public class FallingHandler extends GameLogicHandler {
         player.translate(playerSpeed.cpy().scl(delta));
 
         checkLadder();
+
+        PlatformDetector platformDetector = logic.get(PlatformDetector.class);
+        if (platformDetector.isGrounded()) {
+            if (playerSpeed.x != 0f) {
+                player.setStatus(RUNNING);
+            } else {
+                player.setStatus(IDLE);
+            }
+            Rectangle landedPlatform = platformDetector.getLandedPlatform();
+            player.setY(landedPlatform.y + landedPlatform.height);
+            playerSpeed.y = 0f;
+        }
 
         if (player.getY() <= 0f) {
             player.setY(0f);

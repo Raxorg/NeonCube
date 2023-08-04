@@ -16,8 +16,8 @@ import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.KeyHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlatformDetector;
-import com.epicness.neoncube.game.stuff.Ladder;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class RunningHandler extends GameLogicHandler {
 
@@ -34,6 +34,12 @@ public class RunningHandler extends GameLogicHandler {
     protected void update(float delta) {
         if (player.getStatus() != RUNNING) return;
 
+        KeyHandler keyHandler = logic.get(KeyHandler.class);
+        if (!keyHandler.isEitherPressed(LEFT_KEY, RIGHT_KEY)) {
+            player.setStatus(IDLE);
+            return;
+        }
+
         player.currentAnimation.addTime(delta);
         player.currentAnimation.setFlipX(playerSpeed.x < 0f);
         player.translateX(playerSpeed.cpy().scl(delta).x);
@@ -42,10 +48,6 @@ public class RunningHandler extends GameLogicHandler {
 
         if (!logic.get(PlatformDetector.class).isGrounded()) {
             player.setStatus(FALLING);
-        }
-
-        if (playerSpeed.x == 0f) {
-            player.setStatus(IDLE);
         }
     }
 

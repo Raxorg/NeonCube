@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game.stuff;
+package com.epicness.neoncube.game.stuff.bidimensional;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;

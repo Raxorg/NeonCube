@@ -1,7 +1,7 @@
 package com.epicness.neoncube.game;
 
 import static com.badlogic.gdx.graphics.Color.BLACK;
-import static com.badlogic.gdx.graphics.Color.GREEN;
+import static com.badlogic.gdx.graphics.Color.CLEAR;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
@@ -21,7 +21,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.Renderer;
-import com.epicness.neoncube.game.stuff.DecalScreen;
+import com.epicness.neoncube.game.stuff.tridimensional.DecalScreen;
 import com.epicness.neoncube.game.stuff.GameStuff;
 
 public class GameRenderer extends Renderer<GameStuff> {
@@ -85,7 +85,7 @@ public class GameRenderer extends Renderer<GameStuff> {
             Sprite bufferSprite = bufferSprites[i];
             // Render to frame buffer
             frameBuffer.bind();
-            ScreenUtils.clear(Color.RED);
+            ScreenUtils.clear(CLEAR);
             renderNormally(i);
             renderDebug();
             frameBuffer.end();

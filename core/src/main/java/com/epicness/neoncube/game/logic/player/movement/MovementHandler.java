@@ -4,7 +4,7 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 
 import com.epicness.neoncube.game.constants.PlayerStatus;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class MovementHandler extends GameLogicHandler {
 

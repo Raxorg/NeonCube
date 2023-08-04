@@ -1,4 +1,4 @@
-package com.epicness.neoncube.game.stuff;
+package com.epicness.neoncube.game.stuff.bidimensional;
 
 import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_HEIGHT;
 import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_WIDTH;

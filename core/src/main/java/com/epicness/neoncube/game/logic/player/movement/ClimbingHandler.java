@@ -14,8 +14,8 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.RUNNING;
 import com.badlogic.gdx.math.Vector2;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
-import com.epicness.neoncube.game.stuff.Ladder;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class ClimbingHandler extends GameLogicHandler {
 

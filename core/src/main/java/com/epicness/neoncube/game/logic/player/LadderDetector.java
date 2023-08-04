@@ -2,8 +2,8 @@ package com.epicness.neoncube.game.logic.player;
 
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
-import com.epicness.neoncube.game.stuff.Ladder;
-import com.epicness.neoncube.game.stuff.Player;
+import com.epicness.neoncube.game.stuff.bidimensional.Ladder;
+import com.epicness.neoncube.game.stuff.bidimensional.Player;
 
 public class LadderDetector extends GameLogicHandler {
 

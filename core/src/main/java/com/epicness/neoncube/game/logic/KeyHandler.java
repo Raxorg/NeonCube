@@ -41,4 +41,22 @@ public class KeyHandler extends GameLogicHandler {
     public boolean isPressed(int keycode) {
         return pressedKeys.contains(keycode, true);
     }
+
+    public boolean areAllPressed(int... keycodes) {
+        for (int i = 0; i < keycodes.length; i++) {
+            if (!pressedKeys.contains(keycodes[i], true)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isEitherPressed(int... keycodes) {
+        for (int i = 0; i < keycodes.length; i++) {
+            if (pressedKeys.contains(keycodes[i], true)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
