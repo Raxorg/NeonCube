@@ -1,5 +1,8 @@
 package com.epicness.neoncube.game.stuff.bidimensional;
 
+import static com.epicness.neoncube.game.constants.GameConstants.LADDER_PART_HEIGHT;
+import static com.epicness.neoncube.game.constants.GameConstants.LADDER_WIDTH;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,12 +21,13 @@ public class Ladder {
         parts = new DelayedRemovalArray<>();
         for (int i = 0; i < ladderParts; i++) {
             Sprited ladderPart = new Sprited(ladderSprite);
-            ladderPart.setY(i * 200f);
+            ladderPart.setSize(LADDER_WIDTH, LADDER_PART_HEIGHT);
+            ladderPart.setY(i * LADDER_PART_HEIGHT);
             parts.add(ladderPart);
         }
         bounds = new Rectangle();
-        bounds.width = 100f;
-        bounds.height = ladderParts * 200f;
+        bounds.width = LADDER_WIDTH;
+        bounds.height = ladderParts * LADDER_PART_HEIGHT;
 
         debugColor = Color.GREEN.cpy();
     }

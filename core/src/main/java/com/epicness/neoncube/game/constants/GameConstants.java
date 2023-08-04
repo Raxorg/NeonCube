@@ -26,15 +26,18 @@ public class GameConstants {
     public static final int GRID_COLUMNS = (int) (STICKMAN_WORLD_WIDTH / CELL_SIZE);
     public static final int GRID_ROWS = (int) (STICKMAN_WORLD_HEIGHT / CELL_SIZE);
 
+    public static final float LADDER_WIDTH = 75f;
+    public static final float LADDER_PART_HEIGHT = LADDER_WIDTH * 2f;
+
     private static final float PLAYER_PNG_WIDTH = 82f;
     private static final float PLAYER_PNG_HEIGHT = 110f;
     private static final float PLAYER_RATIO = PLAYER_PNG_WIDTH / PLAYER_PNG_HEIGHT;
-    public static final float PLAYER_HEIGHT = 200f;
+    public static final float PLAYER_HEIGHT = 150f;
     public static final float PLAYER_WIDTH = PLAYER_HEIGHT * PLAYER_RATIO;
 
     public static final float PLAYER_STARTING_X = CAMERA_HALF_WIDTH - PLAYER_WIDTH / 2f;
 
-    public static final float PLAYER_RUNNING_SPEED = 1000f;
+    public static final float PLAYER_RUNNING_SPEED = 800f;
     public static final float PLAYER_CLIMBING_SPEED = 500f;
     public static final float GRAVITY = -1000f;
 }

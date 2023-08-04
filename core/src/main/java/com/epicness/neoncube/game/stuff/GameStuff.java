@@ -54,7 +54,7 @@ public class GameStuff extends Stuff<GameAssets> {
         decalCube = new DecalCube();
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
 
-        sharedAssets.getPixelFont().getData().scale(4f);
+        sharedAssets.getPixelFont().getData().scale(3f);
         debugText = new Text(sharedAssets.getPixelFont());
         debugText.setText("FPS\nSPEED");
         debugText.setTextTargetWidth(CAMERA_WIDTH);

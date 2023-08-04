@@ -28,4 +28,9 @@ public class Cell extends Sprited {
     public HashMap<String, Object> getProperties() {
         return properties;
     }
+
+    @SuppressWarnings("unchecked")
+    public <T> T getProperty(String propertyName) {
+        return (T) properties.get(propertyName);
+    }
 }

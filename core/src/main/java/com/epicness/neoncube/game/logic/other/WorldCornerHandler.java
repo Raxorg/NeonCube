@@ -20,7 +20,7 @@ public class WorldCornerHandler extends GameLogicHandler {
         if (player.getEndX() >= STICKMAN_WORLD_WIDTH) {
             player.setX(player.getX() - STICKMAN_WORLD_WIDTH);
         }
-        if (player.getX() <= -STICKMAN_WORLD_WIDTH) {
+        if (player.getEndX() <= 0f) {
             player.setX(player.getX() + STICKMAN_WORLD_WIDTH);
         }
         playerMirror.setPosition(player.getX() + STICKMAN_WORLD_WIDTH, player.getY());

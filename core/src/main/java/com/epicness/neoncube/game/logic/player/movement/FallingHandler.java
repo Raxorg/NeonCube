@@ -39,11 +39,14 @@ public class FallingHandler extends GameLogicHandler {
         playerSpeed.y += GRAVITY * delta;
         player.translate(playerSpeed.cpy().scl(delta));
 
+        if (playerSpeed.x != 0f) player.setFlipX(playerSpeed.x < 0f);
+
         checkLadder();
 
         PlatformDetector platformDetector = logic.get(PlatformDetector.class);
         if (platformDetector.isGrounded()) {
             if (playerSpeed.x != 0f) {
+                playerSpeed.x = PLAYER_RUNNING_SPEED * (playerSpeed.x / Math.abs(playerSpeed.x));
                 player.setStatus(RUNNING);
             } else {
                 player.setStatus(IDLE);

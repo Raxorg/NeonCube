@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CellGrid extends Grid {
 
-    private final Cell[][] cells;
+    public final Cell[][] cells;
 
     public CellGrid(int columns, int rows, Sprite cellSprite) {
         super(columns, rows);
@@ -59,9 +59,5 @@ public class CellGrid extends Grid {
 
     public float getHeight() {
         return rows * cells[0][0].getHeight();
-    }
-
-    public Cell[][] getCells() {
-        return cells;
     }
 }

@@ -60,4 +60,13 @@ public class KeyHandler extends GameLogicHandler {
         }
         return false;
     }
+
+    public boolean isNonePressed(int... keycodes) {
+        for (int i = 0; i < keycodes.length; i++) {
+            if (pressedKeys.contains(keycodes[i], true)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

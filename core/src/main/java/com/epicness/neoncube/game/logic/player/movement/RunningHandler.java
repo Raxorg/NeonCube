@@ -35,7 +35,7 @@ public class RunningHandler extends GameLogicHandler {
         if (player.getStatus() != RUNNING) return;
 
         KeyHandler keyHandler = logic.get(KeyHandler.class);
-        if (!keyHandler.isEitherPressed(LEFT_KEY, RIGHT_KEY)) {
+        if (keyHandler.isNonePressed(LEFT_KEY, RIGHT_KEY) || keyHandler.areAllPressed(LEFT_KEY, RIGHT_KEY)) {
             player.setStatus(IDLE);
             return;
         }

@@ -9,7 +9,6 @@ import static com.epicness.neoncube.Constants.WINDOW_HEIGHT;
 import static com.epicness.neoncube.Constants.WINDOW_WIDTH;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -21,8 +20,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.Renderer;
-import com.epicness.neoncube.game.stuff.tridimensional.DecalScreen;
 import com.epicness.neoncube.game.stuff.GameStuff;
+import com.epicness.neoncube.game.stuff.tridimensional.DecalScreen;
 
 public class GameRenderer extends Renderer<GameStuff> {
 
