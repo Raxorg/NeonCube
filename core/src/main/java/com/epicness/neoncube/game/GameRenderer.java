@@ -34,7 +34,7 @@ public class GameRenderer extends Renderer<GameStuff> {
 
     public GameRenderer() {
         perspectiveCamera = new PerspectiveCamera(67f, CAMERA_WIDTH, CAMERA_HEIGHT);
-        perspectiveCamera.far = 100f;
+        perspectiveCamera.far = 500f;
 
         modelBatch = new ModelBatch();
         decalBatch = new DecalBatch(new CameraGroupStrategy(perspectiveCamera));
@@ -68,12 +68,28 @@ public class GameRenderer extends Renderer<GameStuff> {
 
         modelBatch.begin(perspectiveCamera);
         modelBatch.render(stuff.getCube(), stuff.getEnvironment());
+        stuff.getLine().draw(modelBatch);
+        stuff.getWireframeCube().draw(modelBatch);
+        stuff.getCylinder().draw(modelBatch, stuff.getEnvironment());
         modelBatch.end();
 
         renderDecalCube();
 
         stuff.getDecalCube().draw(decalBatch);
         decalBatch.flush();
+
+        renderDebug();
+    }
+
+    public void renderDebug() {
+        shapeRenderer.setProjectionMatrix(perspectiveCamera.combined);
+        shapeRenderer.begin();
+        // debug shapes (circles, rectangles etc)
+        shapeRenderer.end();
+
+        modelBatch.begin(perspectiveCamera);
+        // debug models (lines etc)
+        modelBatch.end();
     }
 
     @SuppressWarnings("GDXJavaFlushInsideLoop")
@@ -85,8 +101,8 @@ public class GameRenderer extends Renderer<GameStuff> {
             // Render to frame buffer
             frameBuffer.bind();
             ScreenUtils.clear(CLEAR);
-            renderNormally(i);
-            renderDebug();
+            renderDecalNormally(i);
+            renderDecalDebug();
             frameBuffer.end();
             // Set the frame buffer's texture as the decal's texture
             bufferSprite.setRegion(frameBuffer.getColorBufferTexture());
@@ -97,7 +113,7 @@ public class GameRenderer extends Renderer<GameStuff> {
         useStaticCamera();
     }
 
-    private void renderNormally(int screenIndex) {
+    private void renderDecalNormally(int screenIndex) {
         // Move the camera and use its new projection matrix
         spriteBatch.begin();
         decalCamera.position.x = CAMERA_HALF_WIDTH + screenIndex * CAMERA_WIDTH;
@@ -109,7 +125,7 @@ public class GameRenderer extends Renderer<GameStuff> {
         spriteBatch.end();
     }
 
-    private void renderDebug() {
+    private void renderDecalDebug() {
         // Debug
         shapeRenderer.begin();
         shapeRenderer.setProjectionMatrix(decalCamera.combined);

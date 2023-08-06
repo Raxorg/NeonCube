@@ -1,9 +1,11 @@
 package com.epicness.neoncube.game.stuff;
 
+import static com.badlogic.gdx.graphics.Texture.TextureFilter.Linear;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -19,15 +21,21 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.epicness.fundamentals.stuff.Stuff;
 import com.epicness.fundamentals.stuff.Text;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Cylinder;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 import com.epicness.neoncube.game.assets.GameAssets;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 import com.epicness.neoncube.game.stuff.tridimensional.DecalCube;
+import com.epicness.neoncube.game.stuff.tridimensional.WireframeCube;
 
 public class GameStuff extends Stuff<GameAssets> {
 
     // 3D
     private Environment environment;
     private ModelInstance cube;
+    private Cylinder cylinder;
+    private Line3D line;
+    private WireframeCube wireframeCube;
     private DecalCube decalCube;
     // 2D
     private StickmanWorld stickmanWorld;
@@ -46,10 +54,18 @@ public class GameStuff extends Stuff<GameAssets> {
                 IntAttribute.createCullFace(GL20.GL_NONE));
 
         ModelBuilder modelBuilder = new ModelBuilder();
-        Model model = modelBuilder.createBox(5f, 5f, 5f, material, Position | Normal | TextureCoordinates);
+        Model model = modelBuilder.createBox(1f, 1f, 1f, material, Position | Normal | TextureCoordinates);
 
         cube = new ModelInstance(model);
-        cube.transform.translate(0f, 0f, 0f);
+
+        sharedAssets.getWeirdShape().getTexture().setFilter(Linear, Linear);
+        cylinder = Cylinder.buildHalfCylinder(5f, 5f, 5f, 10, sharedAssets.getWeirdShape());
+        cylinder.translate(0f, 5f, 0f);
+
+        line = new Line3D(0f, 0f, 0f, 5f, 5f, 5f);
+
+        wireframeCube = new WireframeCube();
+        wireframeCube.setSize(DECAL_SCREEN_WIDTH, 5f, DECAL_SCREEN_WIDTH);
 
         decalCube = new DecalCube();
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
@@ -67,6 +83,18 @@ public class GameStuff extends Stuff<GameAssets> {
 
     public ModelInstance getCube() {
         return cube;
+    }
+
+    public Cylinder getCylinder() {
+        return cylinder;
+    }
+
+    public Line3D getLine() {
+        return line;
+    }
+
+    public WireframeCube getWireframeCube() {
+        return wireframeCube;
     }
 
     public DecalCube getDecalCube() {

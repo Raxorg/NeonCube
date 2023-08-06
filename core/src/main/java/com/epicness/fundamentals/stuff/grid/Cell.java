@@ -25,12 +25,16 @@ public class Cell extends Sprited {
         return row;
     }
 
-    public HashMap<String, Object> getProperties() {
-        return properties;
-    }
-
     @SuppressWarnings("unchecked")
     public <T> T getProperty(String propertyName) {
         return (T) properties.get(propertyName);
+    }
+
+    public void setProperty(String propertyKey, Object property) {
+        properties.put(propertyKey, property);
+    }
+
+    public void clearProperties() {
+        properties.clear();
     }
 }

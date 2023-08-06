@@ -1,10 +1,8 @@
 package com.epicness.neoncube.game.stuff.bidimensional;
 
-import static com.badlogic.gdx.graphics.Color.BLACK;
 import static com.badlogic.gdx.graphics.Color.BLUE;
 import static com.badlogic.gdx.graphics.Color.CLEAR;
 import static com.badlogic.gdx.graphics.Color.GREEN;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.CELL_SIZE;
 import static com.epicness.neoncube.game.constants.GameConstants.GRID_COLUMNS;
 import static com.epicness.neoncube.game.constants.GameConstants.GRID_ROWS;
@@ -29,18 +27,12 @@ public class StickmanWorld {
     public StickmanWorld(SharedAssets sharedAssets, GameAssets assets) {
         background = new Sprited(sharedAssets.getPixel());
         background.setSize(STICKMAN_WORLD_WIDTH, STICKMAN_WORLD_HEIGHT);
-        background.setColor(BLUE.cpy().lerp(CLEAR, 0.2f));
+        background.setColor(BLUE.cpy().lerp(CLEAR, 0.25f));
 
         grid = new CellGrid(GRID_COLUMNS, GRID_ROWS, assets.getRoundedSquare());
         grid.setCellSize(CELL_SIZE);
-        grid.setColor(BLACK);
 
         ladders = new DelayedRemovalArray<>();
-        for (int i = 0; i < 7; i++) {
-            Ladder ladder = new Ladder(Math.max(7 - i, 1), assets.getLadder());
-            ladder.setX(i * CAMERA_WIDTH / 4f);
-            ladders.add(ladder);
-        }
 
         player = new Player(assets);
         playerMirror = new Player(assets);
