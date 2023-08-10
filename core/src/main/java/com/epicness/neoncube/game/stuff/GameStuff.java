@@ -5,6 +5,7 @@ import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_CUBE_XZ_RADIUS;
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.GL20;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.epicness.fundamentals.stuff.Stuff;
 import com.epicness.fundamentals.stuff.Text;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Cylinder;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Cylinder.CylinderBuilder;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 import com.epicness.neoncube.game.assets.GameAssets;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
@@ -59,8 +61,13 @@ public class GameStuff extends Stuff<GameAssets> {
         cube = new ModelInstance(model);
 
         sharedAssets.getWeirdShape().getTexture().setFilter(Linear, Linear);
-        cylinder = Cylinder.buildHalfCylinder(5f, 5f, 5f, 10, sharedAssets.getWeirdShape());
-        cylinder.translate(0f, 5f, 0f);
+
+        cylinder = new CylinderBuilder()
+                .disableLight()
+                .angleTo(90f)
+                .build();
+
+        cylinder.translate(DECAL_CUBE_XZ_RADIUS, 0f, DECAL_CUBE_XZ_RADIUS - cylinder.getDepth() / 2f);
 
         line = new Line3D(0f, 0f, 0f, 5f, 5f, 5f);
 

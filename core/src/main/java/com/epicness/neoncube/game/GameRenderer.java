@@ -70,13 +70,15 @@ public class GameRenderer extends Renderer<GameStuff> {
         modelBatch.render(stuff.getCube(), stuff.getEnvironment());
         stuff.getLine().draw(modelBatch);
         stuff.getWireframeCube().draw(modelBatch);
-        stuff.getCylinder().draw(modelBatch, stuff.getEnvironment());
         modelBatch.end();
 
-        renderDecalCube();
-
+        renderDecalFaces();
         stuff.getDecalCube().draw(decalBatch);
         decalBatch.flush();
+
+        modelBatch.begin(perspectiveCamera);
+        stuff.getCylinder().draw(modelBatch, stuff.getEnvironment());
+        modelBatch.end();
 
         renderDebug();
     }
@@ -93,7 +95,7 @@ public class GameRenderer extends Renderer<GameStuff> {
     }
 
     @SuppressWarnings("GDXJavaFlushInsideLoop")
-    private void renderDecalCube() {
+    private void renderDecalFaces() {
         DelayedRemovalArray<DecalScreen> faces = stuff.getDecalCube().faces;
         for (int i = 0; i < faces.size; i++) {
             FrameBuffer frameBuffer = frameBuffers[i];
@@ -109,6 +111,7 @@ public class GameRenderer extends Renderer<GameStuff> {
             bufferSprite.flip(false, true);
             faces.get(i).setSprite(bufferSprite);
         }
+        stuff.getCylinder().setSprite(bufferSprites[1]);
         // Back to normal projection matrix
         useStaticCamera();
     }

@@ -53,7 +53,6 @@ public class CameraHandler extends GameLogicHandler {
         camera.rotateAround(Vector3.Zero, Vector3.Y, delta);
     }
 
-
     @Override
     public void touchDown(float x, float y) {
         if (!free) return;
@@ -64,8 +63,8 @@ public class CameraHandler extends GameLogicHandler {
     public void touchDragged(float x, float y) {
         if (!free) return;
 
-        float deltaX = MathUtils.clamp(pivot.x - x, -10f, 10f);
-        float deltaY = MathUtils.clamp(y - pivot.y, -10f, 10f);
+        float deltaX = MathUtils.clamp(pivot.x - x, -10f, 10f) / 3f;
+        float deltaY = MathUtils.clamp(y - pivot.y, -10f, 10f) / 3f;
 
         camera.rotateAround(Vector3.Zero, Vector3.Y, deltaX);
         camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), deltaY);
@@ -79,17 +78,8 @@ public class CameraHandler extends GameLogicHandler {
 
     @Override
     public void keyDown(int keycode) {
-        switch (keycode) {
-            case F:
-                free = !free;
-                break;
-        }
-    }
-
-    @Override
-    public void keyUp(int keycode) {
-        switch (keycode) {
-
+        if (keycode == F) {
+            free = !free;
         }
     }
 }
