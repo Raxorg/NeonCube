@@ -6,7 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.grid.GridHandler;
 import com.epicness.neoncube.game.logic.other.CameraHandler;
+import com.epicness.neoncube.game.logic.other.CylinderScreenSpawner;
 import com.epicness.neoncube.game.logic.other.KeyHandler;
+import com.epicness.neoncube.game.logic.other.PlaneScreenSpawner;
 import com.epicness.neoncube.game.logic.other.RayHandler;
 import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
@@ -46,7 +48,9 @@ public class GameLogic extends Logic {
         registerHandler(new RunningHandler());
         // Other
         registerHandler(cameraHandler = new CameraHandler());
+        registerHandler(new CylinderScreenSpawner());
         registerHandler(0, new KeyHandler());
+        registerHandler(new PlaneScreenSpawner());
         registerHandler(new RayHandler());
         registerHandler(worldCornerHandler = new WorldCornerHandler());
     }

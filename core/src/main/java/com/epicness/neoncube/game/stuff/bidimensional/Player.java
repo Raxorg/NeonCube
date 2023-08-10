@@ -7,7 +7,7 @@ import static com.epicness.neoncube.game.constants.PlayerStatus.IDLE;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.epicness.fundamentals.renderer.ShapeRendererPlus;
+import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.SpritedAnimation;
 import com.epicness.fundamentals.stuff.interfaces.Movable;
 import com.epicness.fundamentals.utils.CollisionUtils;
@@ -50,8 +50,8 @@ public class Player implements Movable {
         currentAnimation.draw(spriteBatch);
     }
 
-    public void drawDebug(ShapeRendererPlus shapeRenderer) {
-        shapeRenderer.rect(currentAnimation.getBoundingRectangle());
+    public void drawDebug(ShapeDrawerPlus shapeDrawer) {
+        shapeDrawer.rectangle(currentAnimation.getBoundingRectangle());
     }
 
     @Override

@@ -7,6 +7,7 @@ import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinate
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -18,22 +19,27 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.math.Vector3;
 
 public class Cylinder {
 
-    private final ModelInstance cylinderInstance;
-    private final float width, depth;
+    private final ModelInstance cylinder;
+    private final float width, height, depth;
+    private final Vector3 translation;
 
     private Cylinder(float width, float height, float depth, int divisions, long attributes,
                      Color color, float angleFrom, float angleTo) {
         this.width = width;
+        this.height = height;
         this.depth = depth;
+        translation = new Vector3();
 
         Material material = new Material(
-                "material",
-                new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
-                FloatAttribute.createAlphaTest(0.5f),
-                IntAttribute.createCullFace(GL20.GL_NONE));
+            "material",
+            new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
+            FloatAttribute.createAlphaTest(0.5f),
+            IntAttribute.createCullFace(GL20.GL_NONE)
+        );
 
         if ((attributes & TextureCoordinates) == 0) {
             material.set(ColorAttribute.createDiffuse(color));
@@ -41,36 +47,103 @@ public class Cylinder {
 
         ModelBuilderPlus modelBuilder = new ModelBuilderPlus();
         Model curveModel = modelBuilder.createCylinder(width, height, depth, divisions,
-                material, attributes, angleFrom, angleTo);
-        cylinderInstance = new ModelInstance(curveModel);
+            material, attributes, angleFrom, angleTo);
+        cylinder = new ModelInstance(curveModel);
+    }
+
+    protected Cylinder(CylinderBuilder builder) {
+        this(builder.width, builder.height, builder.depth, builder.divisions, builder.attributes,
+            builder.color, builder.angleFrom, builder.angleTo);
+    }
+
+    public float[] getVertices() {
+        Mesh mesh = cylinder.model.meshes.get(0);
+
+        float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
+        mesh.getVertices(verticesWithUV);
+
+        float[] vertices = new float[mesh.getNumVertices() * 3];
+        for (int i = 0, v = 0; v < vertices.length; i++) {
+            int i2 = i + 1;
+            if (i2 % 5 == 0 || i2 % 5 == 4) continue;
+            if (i2 % 5 == 1) verticesWithUV[i] += translation.x;
+            if (i2 % 5 == 2) verticesWithUV[i] += translation.y;
+            if (i2 % 5 == 3) verticesWithUV[i] += translation.z;
+            vertices[v] = verticesWithUV[i];
+            v++;
+        }
+
+        return vertices;
+    }
+
+    public short[] getIndices() {
+        Mesh mesh = cylinder.model.meshes.get(0);
+        short[] indices = new short[mesh.getNumIndices()];
+        mesh.getIndices(indices);
+        return indices;
     }
 
     public void draw(ModelBatch modelBatch) {
-        modelBatch.render(cylinderInstance);
+        modelBatch.render(cylinder);
     }
 
     public void draw(ModelBatch modelBatch, Environment environment) {
-        modelBatch.render(cylinderInstance, environment);
-    }
-
-    public void translate(float x, float y, float z) {
-        cylinderInstance.transform.translate(x, y, z);
+        modelBatch.render(cylinder, environment);
     }
 
     public void setSprite(Sprite sprite) {
-        cylinderInstance.getMaterial("material").set(TextureAttribute.createDiffuse(sprite));
-    }
-
-    public void setColor(Color color) {
-        cylinderInstance.getMaterial("material").set(ColorAttribute.createDiffuse(color));
+        cylinder.getMaterial("material").set(TextureAttribute.createDiffuse(sprite));
     }
 
     public float getWidth() {
         return width;
     }
 
+    public float getHeight() {
+        return height;
+    }
+
     public float getDepth() {
         return depth;
+    }
+
+    public float getX() {
+        return translation.x;
+    }
+
+    public float getY() {
+        return translation.y;
+    }
+
+    public float getZ() {
+        return translation.z;
+    }
+
+    public void translate(float x, float y, float z) {
+        cylinder.transform.translate(x, y, z);
+        translation.add(x, y, z);
+    }
+
+    public void rotateX(float degrees) {
+        cylinder.transform.rotate(Vector3.X, degrees);
+    }
+
+    public void rotateY(float degrees) {
+        cylinder.transform.rotate(Vector3.Y, degrees);
+    }
+
+    public void rotateZ(float degrees) {
+        cylinder.transform.rotate(Vector3.Z, degrees);
+    }
+
+    public void rotate(float xDegrees, float yDegrees, float zDegrees) {
+        rotateX(xDegrees);
+        rotateY(yDegrees);
+        rotateX(zDegrees);
+    }
+
+    public void setColor(Color color) {
+        cylinder.getMaterial("material").set(ColorAttribute.createDiffuse(color));
     }
 
     public static final class CylinderBuilder {
@@ -148,6 +221,10 @@ public class Cylinder {
         public CylinderBuilder angleTo(float angleTo) {
             this.angleTo = angleTo;
             return this;
+        }
+
+        public CylinderBuilder angleRange(float angleFrom, float angleTo) {
+            return angleFrom(angleFrom).angleTo(angleTo);
         }
 
         public Cylinder build() {

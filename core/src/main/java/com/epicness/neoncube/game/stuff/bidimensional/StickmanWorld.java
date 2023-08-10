@@ -12,7 +12,7 @@ import static com.epicness.neoncube.game.constants.GameConstants.STICKMAN_WORLD_
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.assets.SharedAssets;
-import com.epicness.fundamentals.renderer.ShapeRendererPlus;
+import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.Sprited;
 import com.epicness.fundamentals.stuff.grid.CellGrid;
 import com.epicness.neoncube.game.assets.GameAssets;
@@ -48,12 +48,12 @@ public class StickmanWorld {
         playerMirror.draw(spriteBatch);
     }
 
-    public void drawDebug(ShapeRendererPlus shapeRenderer) {
+    public void drawDebug(ShapeDrawerPlus shapeDrawer) {
         for (int i = 0; i < ladders.size; i++) {
-            ladders.get(i).drawDebug(shapeRenderer);
+            ladders.get(i).drawDebug(shapeDrawer);
         }
-        shapeRenderer.setColor(GREEN);
-        player.drawDebug(shapeRenderer);
-        playerMirror.drawDebug(shapeRenderer);
+        shapeDrawer.setColor(GREEN);
+        player.drawDebug(shapeDrawer);
+        playerMirror.drawDebug(shapeDrawer);
     }
 }

@@ -8,17 +8,15 @@ import static com.epicness.fundamentals.SharedConstants.STARTING_CUBE_MAX;
 import static com.epicness.fundamentals.SharedConstants.STARTING_CUBE_MIN;
 
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.OrientedBoundingBox;
-import com.badlogic.gdx.math.collision.Ray;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 
 public class WireframeCube {
 
-    private final OrientedBoundingBox orientedBoundingBox;
+    public final OrientedBoundingBox orientedBoundingBox;
     private final Line3D[] lines;
 
     public WireframeCube() {
@@ -47,14 +45,6 @@ public class WireframeCube {
         for (int i = 0; i < lines.length; i++) {
             lines[i].draw(modelBatch);
         }
-    }
-
-    public boolean intersects(Ray ray, Vector3 intersection) {
-        return Intersector.intersectRayOrientedBounds(ray, orientedBoundingBox, intersection);
-    }
-
-    public boolean intersects(Line3D line3D, Vector3 intersection) {
-        return intersects(line3D.getRay(), intersection);
     }
 
     public void translate(float x, float y, float z) {

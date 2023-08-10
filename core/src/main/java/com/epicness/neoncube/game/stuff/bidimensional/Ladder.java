@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
-import com.epicness.fundamentals.renderer.ShapeRendererPlus;
+import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.Sprited;
 
 public class Ladder {
@@ -38,9 +38,9 @@ public class Ladder {
         }
     }
 
-    public void drawDebug(ShapeRendererPlus shapeRenderer) {
-        shapeRenderer.setColor(debugColor);
-        shapeRenderer.rect(bounds);
+    public void drawDebug(ShapeDrawerPlus shapeDrawer) {
+        shapeDrawer.setColor(debugColor);
+        shapeDrawer.rectangle(bounds);
     }
 
     public void setX(float x) {

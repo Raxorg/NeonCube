@@ -1,6 +1,12 @@
 package com.epicness.fundamentals.utils;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Cylinder;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
+import com.epicness.neoncube.game.stuff.tridimensional.WireframeCube;
 
 public class CollisionUtils {
 
@@ -10,5 +16,17 @@ public class CollisionUtils {
 
     public static boolean overlaps(Rectangle a, Rectangle b) {
         return overlaps(a.x, a.y, a.width, a.height, b);
+    }
+
+    public static boolean intersects(Ray ray, WireframeCube wireframeCube, Vector3 intersection) {
+        return Intersector.intersectRayOrientedBounds(ray, wireframeCube.orientedBoundingBox, intersection);
+    }
+
+    public static boolean intersects(Line3D line, WireframeCube wireframeCube, Vector3 intersection) {
+        return intersects(line.getRay(), wireframeCube, intersection);
+    }
+
+    public static boolean intersects(Ray ray, Cylinder cylinder, Vector3 intersection) {
+        return Intersector.intersectRayTriangles(ray, cylinder.getVertices(), cylinder.getIndices(), 3, intersection);
     }
 }

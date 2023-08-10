@@ -16,7 +16,7 @@ public class GameConstants {
     public static final int DOWN_KEY = S;
     public static final int RIGHT_KEY = D;
 
-    public static final float STICKMAN_WORLD_WIDTH = CAMERA_WIDTH * 4f;
+    public static final float STICKMAN_WORLD_WIDTH = CAMERA_WIDTH * 8f;
     public static final float STICKMAN_WORLD_HEIGHT = CAMERA_HEIGHT;
 
     public static final float DECAL_SCREEN_HEIGHT = 5f;
@@ -44,7 +44,7 @@ public class GameConstants {
 
     public static final float PLAYER_STARTING_X = CAMERA_HALF_WIDTH - PLAYER_WIDTH / 2f;
 
-    public static final float PLAYER_RUNNING_SPEED = 800f;
+    public static final float PLAYER_RUNNING_SPEED = 1000f;
     public static final float PLAYER_CLIMBING_SPEED = 500f;
     public static final float GRAVITY = -1000f;
 }

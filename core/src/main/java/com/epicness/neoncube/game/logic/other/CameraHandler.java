@@ -25,7 +25,7 @@ public class CameraHandler extends GameLogicHandler {
         camera = renderer.getPerspectiveCamera();
         camera.direction.set(0, 0, -1);
         camera.up.set(0, 1, 0);
-        camera.position.set(0f, 0f, 10f);
+        camera.position.set(0f, 0f, 15f);
         camera.update();
 
         pivot = new Vector2();
@@ -49,7 +49,7 @@ public class CameraHandler extends GameLogicHandler {
     }
 
     private void rotateX(float delta) {
-        delta = MathUtils.map(0f, CAMERA_WIDTH, 0f, 90f, delta);
+        delta = MathUtils.map(0f, CAMERA_WIDTH, 0f, 45f, delta);
         camera.rotateAround(Vector3.Zero, Vector3.Y, delta);
     }
 
