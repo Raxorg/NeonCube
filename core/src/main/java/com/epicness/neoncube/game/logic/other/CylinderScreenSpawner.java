@@ -1,6 +1,7 @@
 package com.epicness.neoncube.game.logic.other;
 
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_CUBE_XZ_RADIUS;
+import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_HEIGHT;
 import static com.epicness.neoncube.game.constants.GameConstants3D.CYLINDER_DIAMETER;
 
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -21,6 +22,7 @@ public class CylinderScreenSpawner extends GameLogicHandler {
 
         CylinderBuilder builder = new CylinderBuilder()
             .width(CYLINDER_DIAMETER)
+            .height(DECAL_SCREEN_HEIGHT)
             .depth(CYLINDER_DIAMETER)
             .disableLight()
             .angleTo(90f);

@@ -5,9 +5,11 @@ import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
@@ -17,15 +19,20 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.Arrays;
+
 // TODO: scaling
 // TODO: collision
 // TODO: builder
 public class Plane {
 
     private final ModelInstance plane;
+    private final Vector3 translation;
+
+    private final short[] indices;
 
     private Plane(float width, float height, long attributes) {
-        ModelBuilder modelBuilder = new ModelBuilder();
+        translation = new Vector3();
 
         Material material = new Material(
             "material",
@@ -35,18 +42,47 @@ public class Plane {
         );
 
         float hw = width / 2f, hh = height / 2f;
-        plane = new ModelInstance(modelBuilder.createRect(
+        Model model = new ModelBuilder().createRect(
             -hw, -hh, 0f, // v1
             hw, -hh, 0f, // v2
             hw, hh, 0f, // v3
             -hw, hh, 0f, // v4
             1f, 0.8f, 0.2f, // normals
             material, attributes
-        ));
+        );
+        plane = new ModelInstance(model);
+
+        Mesh mesh = model.meshes.first();
+        indices = new short[mesh.getNumIndices()];
+        mesh.getIndices(indices);
     }
 
     protected Plane(PlaneBuilder builder) {
         this(builder.width, builder.height, builder.attributes);
+    }
+
+    public float[] getVertices() {
+        Mesh mesh = plane.model.meshes.first();
+
+        float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
+        mesh.getVertices(verticesWithUV);
+
+        float[] vertices = new float[mesh.getNumVertices() * 3];
+        for (int i = 0, v = 0; v < vertices.length; i++) {
+            int i2 = i + 1;
+            if (i2 % 5 == 0 || i2 % 5 == 4) continue;
+            if (i2 % 5 == 1) verticesWithUV[i] += translation.x;
+            if (i2 % 5 == 2) verticesWithUV[i] += translation.y;
+            if (i2 % 5 == 3) verticesWithUV[i] += translation.z;
+            vertices[v] = verticesWithUV[i];
+            v++;
+        }
+
+        return vertices;
+    }
+
+    public short[] getIndices() {
+        return Arrays.copyOf(indices, indices.length);
     }
 
     public void draw(ModelBatch modelBatch, Environment environment) {
@@ -59,6 +95,7 @@ public class Plane {
 
     public void translate(float xAmount, float yAmount, float zAmount) {
         plane.transform.translate(xAmount, yAmount, zAmount);
+        translation.add(xAmount, yAmount, zAmount);
     }
 
     public void translateX(float amount) {

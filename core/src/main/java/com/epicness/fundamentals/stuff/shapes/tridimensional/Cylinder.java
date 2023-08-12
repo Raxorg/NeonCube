@@ -21,11 +21,15 @@ import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.Arrays;
+
 public class Cylinder {
 
     private final ModelInstance cylinder;
     private final float width, height, depth;
     private final Vector3 translation;
+
+    private final short[] indices;
 
     private Cylinder(float width, float height, float depth, int divisions, long attributes,
                      Color color, float angleFrom, float angleTo) {
@@ -46,9 +50,13 @@ public class Cylinder {
         }
 
         ModelBuilderPlus modelBuilder = new ModelBuilderPlus();
-        Model curveModel = modelBuilder.createCylinder(width, height, depth, divisions,
+        Model model = modelBuilder.createCylinder(width, height, depth, divisions,
             material, attributes, angleFrom, angleTo);
-        cylinder = new ModelInstance(curveModel);
+        cylinder = new ModelInstance(model);
+
+        Mesh mesh = model.meshes.first();
+        indices = new short[mesh.getNumIndices()];
+        mesh.getIndices(indices);
     }
 
     protected Cylinder(CylinderBuilder builder) {
@@ -57,7 +65,7 @@ public class Cylinder {
     }
 
     public float[] getVertices() {
-        Mesh mesh = cylinder.model.meshes.get(0);
+        Mesh mesh = cylinder.model.meshes.first();
 
         float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
         mesh.getVertices(verticesWithUV);
@@ -77,10 +85,7 @@ public class Cylinder {
     }
 
     public short[] getIndices() {
-        Mesh mesh = cylinder.model.meshes.get(0);
-        short[] indices = new short[mesh.getNumIndices()];
-        mesh.getIndices(indices);
-        return indices;
+        return Arrays.copyOf(indices, indices.length);
     }
 
     public void draw(ModelBatch modelBatch) {
@@ -119,9 +124,9 @@ public class Cylinder {
         return translation.z;
     }
 
-    public void translate(float x, float y, float z) {
-        cylinder.transform.translate(x, y, z);
-        translation.add(x, y, z);
+    public void translate(float xAmount, float yAmount, float zAmount) {
+        cylinder.transform.translate(xAmount, yAmount, zAmount);
+        translation.add(xAmount, yAmount, zAmount);
     }
 
     public void rotateX(float degrees) {

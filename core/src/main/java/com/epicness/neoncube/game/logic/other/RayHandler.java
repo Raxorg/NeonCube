@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.stuff.grid.Cell;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.Cylinder;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 import com.epicness.fundamentals.utils.CollisionUtils;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
@@ -54,7 +53,7 @@ public class RayHandler extends GameLogicHandler {
 
         for (int i = 0; i < cylinders.size; i++) {
             intersection.setZero();
-            Cylinder cylinder = cylinders.get(i);
+            CylinderScreen cylinder = cylinders.get(i);
             if (CollisionUtils.intersects(ray, cylinder, intersection)) {
                 System.out.println("Cylinder" + i + " hit: " + intersection);
                 calculateCylinderHit(cylinder, intersection);
@@ -117,13 +116,13 @@ public class RayHandler extends GameLogicHandler {
         }
     }
 
-    private void calculateCylinderHit(Cylinder cylinder, Vector3 intersection) {
+    private void calculateCylinderHit(CylinderScreen cylinder, Vector3 intersection) {
         float minY = cylinder.getY() - cylinder.getHeight() / 2f;
         float maxY = cylinder.getY() + cylinder.getHeight() / 2f;
 
         Vector2 circlePoint = new Vector2(intersection.x - cylinder.getX(), intersection.z - cylinder.getZ());
-        float x = MathUtils.map(90f, 0f, 0f, CAMERA_WIDTH, circlePoint.angleDeg());
-        x += CAMERA_WIDTH;
+        float x = MathUtils.map(90f, 0f, 0f, CAMERA_WIDTH, circlePoint.angleDeg() % 90f);
+        x += CAMERA_WIDTH * cylinder.screenPortionIndex;
         float y = MathUtils.map(minY, maxY, 0f, CAMERA_HEIGHT, intersection.y);
 
         for (int column = 0; column < cells.length; column++) {
