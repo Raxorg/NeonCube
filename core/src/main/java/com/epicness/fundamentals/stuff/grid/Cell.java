@@ -3,18 +3,14 @@ package com.epicness.fundamentals.stuff.grid;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epicness.fundamentals.stuff.Sprited;
 
-import java.util.HashMap;
-
 public class Cell extends Sprited {
 
     private final int column, row;
-    private final HashMap<String, Object> properties;
 
     public Cell(Sprite cellSprite, int column, int row) {
         super(cellSprite);
         this.column = column;
         this.row = row;
-        properties = new HashMap<>();
     }
 
     public int getColumn() {
@@ -23,18 +19,5 @@ public class Cell extends Sprited {
 
     public int getRow() {
         return row;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T> T getProperty(String propertyName) {
-        return (T) properties.get(propertyName);
-    }
-
-    public void setProperty(String propertyKey, Object property) {
-        properties.put(propertyKey, property);
-    }
-
-    public void clearProperties() {
-        properties.clear();
     }
 }

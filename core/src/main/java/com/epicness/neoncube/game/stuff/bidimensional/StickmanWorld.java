@@ -15,12 +15,13 @@ import com.epicness.fundamentals.assets.SharedAssets;
 import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.Sprited;
 import com.epicness.fundamentals.stuff.grid.CellGrid;
+import com.epicness.fundamentals.stuff.grid.CellGridBuilder;
 import com.epicness.neoncube.game.assets.GameAssets;
 
 public class StickmanWorld {
 
     private final Sprited background;
-    public final CellGrid grid;
+    public final CellGrid<ColorCell> grid;
     public final DelayedRemovalArray<Ladder> ladders;
     public final Player player, playerMirror;
 
@@ -29,7 +30,12 @@ public class StickmanWorld {
         background.setSize(STICKMAN_WORLD_WIDTH, STICKMAN_WORLD_HEIGHT);
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.25f));
 
-        grid = new CellGrid(GRID_COLUMNS, GRID_ROWS, assets.getRoundedSquare());
+
+        ColorCellBuilder cellBuilder = new ColorCellBuilder();
+        cellBuilder.sprite(assets.getRoundedSquare());
+        CellGridBuilder<ColorCell> gridBuilder = new CellGridBuilder<>(cellBuilder);
+        gridBuilder.columns(GRID_COLUMNS).rows(GRID_ROWS);
+        grid = new CellGrid<>(gridBuilder);
         grid.setCellSize(CELL_SIZE);
 
         ladders = new DelayedRemovalArray<>();
