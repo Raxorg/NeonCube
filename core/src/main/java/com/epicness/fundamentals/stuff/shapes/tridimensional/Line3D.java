@@ -42,6 +42,10 @@ public class Line3D {
         this(start, end, RED);
     }
 
+    public Line3D() {
+        this(0f, 0f, 0f, 1f, 1f, 1f);
+    }
+
     public void set(float x1, float y1, float z1, float x2, float y2, float z2, Color color) {
         start.set(x1, y1, z1);
         end.set(x2, y2, z2);

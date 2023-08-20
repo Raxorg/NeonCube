@@ -4,7 +4,6 @@ import static com.badlogic.gdx.graphics.Color.BLACK;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
 import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -43,18 +42,18 @@ public class GameRenderer extends Renderer<GameStuff> {
         modelBatch.render(stuff.getCube(), stuff.getEnvironment());
         stuff.getLine().draw(modelBatch);
         stuff.getWireframeCube().draw(modelBatch);
+        for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
+            stuff.getCylinderScreens().get(i).draw(modelBatch);
+            stuff.getCylinderScreens().get(i).drawDebug(modelBatch);
+        }
         for (int i = 0; i < stuff.getPlaneScreens().size; i++) {
             stuff.getPlaneScreens().get(i).draw(modelBatch, stuff.getEnvironment());
-        }
-        for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
-            stuff.getCylinderScreens().get(i).draw(modelBatch, stuff.getEnvironment());
+            stuff.getPlaneScreens().get(i).drawDebug(modelBatch);
         }
         modelBatch.end();
 
         useStaticCamera();
         spriteBatch.begin();
-        stuff.getDebugText().setText("FPS: " + Gdx.graphics.getFramesPerSecond() + "\n" +
-            "Speed: " + stuff.getStickmanWorld().player.speed);
         stuff.getDebugText().draw(spriteBatch);
         spriteBatch.end();
 

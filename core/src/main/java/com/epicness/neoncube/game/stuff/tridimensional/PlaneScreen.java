@@ -22,7 +22,7 @@ public class PlaneScreen extends Plane {
     private final FrameBuffer frameBuffer;
     private final Sprite bufferSprite;
     private final StickmanWorld stickmanWorld;
-    private final int screenPortionIndex;
+    public final int screenPortionIndex;
 
     public PlaneScreen(PlaneBuilder planeBuilder, StickmanWorld stickmanWorld, int screenPortionIndex) {
         super(planeBuilder);

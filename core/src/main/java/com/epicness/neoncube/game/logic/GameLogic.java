@@ -5,11 +5,14 @@ import static com.badlogic.gdx.Input.Keys.R;
 import com.badlogic.gdx.Gdx;
 import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.grid.GridHandler;
+import com.epicness.neoncube.game.logic.hitdetection.CylinderHitCalculator;
+import com.epicness.neoncube.game.logic.hitdetection.PlaneHitCalculator;
 import com.epicness.neoncube.game.logic.other.CameraHandler;
 import com.epicness.neoncube.game.logic.other.CylinderScreenSpawner;
+import com.epicness.neoncube.game.logic.other.DebugInfoHandler;
 import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.other.PlaneScreenSpawner;
-import com.epicness.neoncube.game.logic.other.RayHandler;
+import com.epicness.neoncube.game.logic.hitdetection.RayHitHandler;
 import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlatformDetector;
@@ -31,11 +34,16 @@ public class GameLogic extends Logic {
     private final PlatformDetector platformDetector;
     // Other
     private final CameraHandler cameraHandler;
+    private final DebugInfoHandler debugInfoHandler;
     private final WorldCornerHandler worldCornerHandler;
 
     public GameLogic() {
         // Grid
         registerHandler(gridHandler = new GridHandler());
+        // Hit detection
+        registerHandler(new CylinderHitCalculator());
+        registerHandler(new PlaneHitCalculator());
+        registerHandler(new RayHitHandler());
         // Player
         registerHandler(ladderDetector = new LadderDetector());
         registerHandler(platformDetector = new PlatformDetector());
@@ -49,9 +57,9 @@ public class GameLogic extends Logic {
         // Other
         registerHandler(cameraHandler = new CameraHandler());
         registerHandler(new CylinderScreenSpawner());
+        registerHandler(debugInfoHandler = new DebugInfoHandler());
         registerHandler(0, new KeyHandler());
         registerHandler(new PlaneScreenSpawner());
-        registerHandler(new RayHandler());
         registerHandler(worldCornerHandler = new WorldCornerHandler());
     }
 
@@ -66,6 +74,7 @@ public class GameLogic extends Logic {
         platformDetector.update();
         // Other
         cameraHandler.update();
+        debugInfoHandler.update();
         worldCornerHandler.update();
 
         if (Gdx.input.isKeyJustPressed(R)) {

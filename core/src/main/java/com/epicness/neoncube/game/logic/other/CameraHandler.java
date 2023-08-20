@@ -18,7 +18,7 @@ public class CameraHandler extends GameLogicHandler {
     private Vector2 pivot;
     private boolean free;
     private Player player;
-    private float lastPlayerX, lastPlayerY;
+    private float lastPlayerX, lastPlayerY, deltaX, deltaY, dragDeltaX, dragDeltaY;
 
     @Override
     protected void init() {
@@ -32,14 +32,21 @@ public class CameraHandler extends GameLogicHandler {
         free = false;
         player = stuff.getStickmanWorld().player;
         lastPlayerX = PLAYER_STARTING_X;
+        deltaX = deltaY = dragDeltaX = dragDeltaY = 0f;
     }
 
     @Override
     public void update(float delta) {
-        float deltaX = player.getX() - lastPlayerX;
+        for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
+            stuff.getCylinderScreens().get(i).rotateY(delta);
+        }
+        for (int i = 0; i < stuff.getPlaneScreens().size; i++) {
+            stuff.getPlaneScreens().get(i).rotateY(delta);
+        }
+        deltaX = player.getX() - lastPlayerX;
         rotateX(deltaX);
 
-        float deltaY = lastPlayerY - player.getY();
+        deltaY = lastPlayerY - player.getY();
         deltaY = MathUtils.map(0f, CAMERA_HEIGHT, 0f, 45f, deltaY);
         camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), deltaY);
         camera.update();
@@ -63,14 +70,14 @@ public class CameraHandler extends GameLogicHandler {
     public void touchDragged(float x, float y) {
         if (!free) return;
 
-        float deltaX = MathUtils.clamp(pivot.x - x, -10f, 10f) / 3f;
-        float deltaY = MathUtils.clamp(y - pivot.y, -10f, 10f) / 3f;
+        dragDeltaX = MathUtils.clamp(pivot.x - x, -10f, 10f) / 3f;
+        dragDeltaY = MathUtils.clamp(y - pivot.y, -10f, 10f) / 3f;
 
-        camera.rotateAround(Vector3.Zero, Vector3.Y, deltaX);
-        camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), deltaY);
+        camera.rotateAround(Vector3.Zero, Vector3.Y, dragDeltaX);
+        camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), dragDeltaY);
         if (camera.direction.y < -0.9f || camera.direction.y > 0.9f) {
-            camera.rotateAround(Vector3.Zero, Vector3.Y, -deltaX);
-            camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), -deltaY);
+            camera.rotateAround(Vector3.Zero, Vector3.Y, -dragDeltaX);
+            camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), -dragDeltaY);
         }
         camera.update();
         pivot.set(x, y);

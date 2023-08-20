@@ -4,42 +4,27 @@ import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
 
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.Arrays;
-
-// TODO: scaling
-// TODO: collision
-// TODO: builder
-public class Plane {
+public class Plane extends Shape3D {
 
     private final ModelInstance plane;
-    private final Vector3 translation;
-
-    private final short[] indices;
+    private final float width, height;
+    private final Vector3[] rotationVertices;
+    private final float[] plainVertices;
+    private final Line3D[] debugLines;
 
     private Plane(float width, float height, long attributes) {
-        translation = new Vector3();
-
-        Material material = new Material(
-            "material",
-            new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
-            FloatAttribute.createAlphaTest(0.5f),
-            IntAttribute.createCullFace(GL20.GL_NONE)
-        );
+        this.width = width;
+        this.height = height;
 
         float hw = width / 2f, hh = height / 2f;
         Model model = new ModelBuilder().createRect(
@@ -53,8 +38,22 @@ public class Plane {
         plane = new ModelInstance(model);
 
         Mesh mesh = model.meshes.first();
-        indices = new short[mesh.getNumIndices()];
-        mesh.getIndices(indices);
+        float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
+        mesh.getVertices(verticesWithUV);
+        rotationVertices = new Vector3[verticesWithUV.length / 5];
+        plainVertices = new float[rotationVertices.length * 3];
+        for (int i = 0, v = 0; i < verticesWithUV.length; i += 5, v++) {
+            rotationVertices[v] = new Vector3(verticesWithUV[i], verticesWithUV[i + 1], verticesWithUV[i + 2]);
+            plainVertices[v * 3] = rotationVertices[v].x;
+            plainVertices[v * 3 + 1] = rotationVertices[v].y;
+            plainVertices[v * 3 + 2] = rotationVertices[v].z;
+        }
+        debugLines = new Line3D[rotationVertices.length];
+        for (int i = 0; i < debugLines.length; i++) {
+            debugLines[i] = new Line3D();
+        }
+        updateDebugLines();
+        storeIndices(model);
     }
 
     protected Plane(PlaneBuilder builder) {
@@ -62,40 +61,70 @@ public class Plane {
     }
 
     public float[] getVertices() {
-        Mesh mesh = plane.model.meshes.first();
-
-        float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
-        mesh.getVertices(verticesWithUV);
-
-        float[] vertices = new float[mesh.getNumVertices() * 3];
-        for (int i = 0, v = 0; v < vertices.length; i++) {
-            int i2 = i + 1;
-            if (i2 % 5 == 0 || i2 % 5 == 4) continue;
-            if (i2 % 5 == 1) verticesWithUV[i] += translation.x;
-            if (i2 % 5 == 2) verticesWithUV[i] += translation.y;
-            if (i2 % 5 == 3) verticesWithUV[i] += translation.z;
-            vertices[v] = verticesWithUV[i];
-            v++;
-        }
-
-        return vertices;
+        return plainVertices;
     }
 
-    public short[] getIndices() {
-        return Arrays.copyOf(indices, indices.length);
+    public void draw(ModelBatch modelBatch) {
+        modelBatch.render(plane);
     }
 
     public void draw(ModelBatch modelBatch, Environment environment) {
         modelBatch.render(plane, environment);
     }
 
+    public void drawDebug(ModelBatch modelBatch) {
+        for (int i = 0; i < debugLines.length; i++) {
+            debugLines[i].draw(modelBatch);
+        }
+    }
+
     public void setSprite(Sprite sprite) {
         plane.getMaterial("material").set(TextureAttribute.createDiffuse(sprite));
     }
 
+    private void updateDebugLines() {
+        for (int i = 0; i < rotationVertices.length; i++) {
+            int endIndex = (i + 1) % rotationVertices.length;
+            debugLines[i].set(
+                rotationVertices[i].x + position.x,
+                rotationVertices[i].y + position.y,
+                rotationVertices[i].z + position.z,
+                rotationVertices[endIndex].x + position.x,
+                rotationVertices[endIndex].y + position.y,
+                rotationVertices[endIndex].z + position.z
+            );
+        }
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public float getX() {
+        return position.x;
+    }
+
+    public float getY() {
+        return position.y;
+    }
+
+    public float getZ() {
+        return position.z;
+    }
+
     public void translate(float xAmount, float yAmount, float zAmount) {
         plane.transform.translate(xAmount, yAmount, zAmount);
-        translation.add(xAmount, yAmount, zAmount);
+        position.add(xAmount, yAmount, zAmount);
+        for (int i = 0; i < plainVertices.length; i += 3) {
+            plainVertices[i] += xAmount;
+            plainVertices[i + 1] += yAmount;
+            plainVertices[i + 2] += zAmount;
+        }
+        updateDebugLines();
     }
 
     public void translateX(float amount) {
@@ -110,22 +139,35 @@ public class Plane {
         translate(0f, 0f, amount);
     }
 
-    public void rotateX(float degrees) {
-        plane.transform.rotate(Vector3.X, degrees);
-    }
-
-    public void rotateY(float degrees) {
-        plane.transform.rotate(Vector3.Y, degrees);
-    }
-
-    public void rotateZ(float degrees) {
-        plane.transform.rotate(Vector3.Z, degrees);
+    public float getYRotation() {
+        return plane.transform.getRotation(QUATERNION_HELPER).getAngleAround(Vector3.Y);
     }
 
     public void rotate(float xDegrees, float yDegrees, float zDegrees) {
-        rotateX(xDegrees);
-        rotateY(yDegrees);
-        rotateX(zDegrees);
+        plane.transform.rotate(Vector3.X, xDegrees);
+        plane.transform.rotate(Vector3.Y, yDegrees);
+        plane.transform.rotate(Vector3.Z, zDegrees);
+        for (int i = 0; i < rotationVertices.length; i++) {
+            rotationVertices[i].rotate(Vector3.X, xDegrees);
+            rotationVertices[i].rotate(Vector3.Y, yDegrees);
+            rotationVertices[i].rotate(Vector3.Z, zDegrees);
+            plainVertices[i * 3] = rotationVertices[i].x + position.x;
+            plainVertices[i * 3 + 1] = rotationVertices[i].y + position.y;
+            plainVertices[i * 3 + 2] = rotationVertices[i].z + position.z;
+        }
+        updateDebugLines();
+    }
+
+    public void rotateX(float degrees) {
+        rotate(degrees, 0f, 0f);
+    }
+
+    public void rotateY(float degrees) {
+        rotate(0f, degrees, 0f);
+    }
+
+    public void rotateZ(float degrees) {
+        rotate(0f, 0f, degrees);
     }
 
     public static final class PlaneBuilder {

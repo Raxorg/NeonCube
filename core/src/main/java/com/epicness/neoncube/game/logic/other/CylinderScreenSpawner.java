@@ -30,17 +30,17 @@ public class CylinderScreenSpawner extends GameLogicHandler {
         CylinderScreen cylinder1 = new CylinderScreen(builder, stickmanWorld, 1);
         cylinder1.translate(DECAL_CUBE_XZ_RADIUS, 0f, DECAL_CUBE_XZ_RADIUS);
 
-        builder.angleRange(270f, 360f);
         CylinderScreen cylinder2 = new CylinderScreen(builder, stickmanWorld, 3);
         cylinder2.translate(DECAL_CUBE_XZ_RADIUS, 0f, -DECAL_CUBE_XZ_RADIUS);
+        cylinder2.rotateY(90f);
 
-        builder.angleRange(180f, 270f);
         CylinderScreen cylinder3 = new CylinderScreen(builder, stickmanWorld, 5);
         cylinder3.translate(-DECAL_CUBE_XZ_RADIUS, 0f, -DECAL_CUBE_XZ_RADIUS);
+        cylinder3.rotateY(180f);
 
-        builder.angleRange(90f, 180f);
         CylinderScreen cylinder4 = new CylinderScreen(builder, stickmanWorld, 7);
         cylinder4.translate(-DECAL_CUBE_XZ_RADIUS, 0f, DECAL_CUBE_XZ_RADIUS);
+        cylinder4.rotateY(270f);
 
         cylinderScreens.add(cylinder1);
         cylinderScreens.add(cylinder2);
