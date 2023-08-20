@@ -1,8 +1,8 @@
 package com.epicness.neoncube.game.logic.hitdetection;
 
 import static com.badlogic.gdx.graphics.Color.GREEN;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_HEIGHT;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_CUBE_XZ_RADIUS;
 
 import com.badlogic.gdx.math.MathUtils;

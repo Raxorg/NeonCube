@@ -4,12 +4,12 @@ import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.grid.GridHandler;
 import com.epicness.neoncube.game.logic.hitdetection.CylinderHitCalculator;
 import com.epicness.neoncube.game.logic.hitdetection.PlaneHitCalculator;
+import com.epicness.neoncube.game.logic.hitdetection.RayHitHandler;
 import com.epicness.neoncube.game.logic.other.CameraHandler;
 import com.epicness.neoncube.game.logic.other.CylinderScreenSpawner;
 import com.epicness.neoncube.game.logic.other.DebugHandler;
 import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.other.PlaneScreenSpawner;
-import com.epicness.neoncube.game.logic.hitdetection.RayHitHandler;
 import com.epicness.neoncube.game.logic.other.ShapeRotator;
 import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
@@ -74,7 +74,8 @@ public class GameLogic extends Logic {
         platformDetector.update();
         // Other
         cameraHandler.update();
-        debugInfoHandler.update();
+        debugHandler.update();
+        shapeRotator.update();
         worldCornerHandler.update();
     }
 }

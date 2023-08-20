@@ -3,7 +3,7 @@ package com.epicness.neoncube.game.stuff;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Normal;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.Position;
 import static com.badlogic.gdx.graphics.VertexAttributes.Usage.TextureCoordinates;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.DECAL_SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.GL20;

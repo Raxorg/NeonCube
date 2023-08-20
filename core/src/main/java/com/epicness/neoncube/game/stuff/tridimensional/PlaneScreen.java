@@ -1,9 +1,9 @@
 package com.epicness.neoncube.game.stuff.tridimensional;
 
 import static com.badlogic.gdx.graphics.Color.CLEAR;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_HALF_WIDTH;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_HALF_WIDTH;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_HEIGHT;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.Constants.WINDOW_HEIGHT;
 import static com.epicness.neoncube.Constants.WINDOW_WIDTH;
 
@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.Plane;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.Plane;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneProperties;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneWrapper;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 
 public class PlaneScreen extends Plane {
@@ -24,8 +26,8 @@ public class PlaneScreen extends Plane {
     private final StickmanWorld stickmanWorld;
     public final int screenPortionIndex;
 
-    public PlaneScreen(PlaneBuilder planeBuilder, StickmanWorld stickmanWorld, int screenPortionIndex) {
-        super(planeBuilder);
+    public PlaneScreen(PlaneWrapper wrapper, StickmanWorld stickmanWorld, int screenPortionIndex) {
+        super(wrapper);
 
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, WINDOW_WIDTH, WINDOW_HEIGHT, false);
         bufferSprite = new Sprite();

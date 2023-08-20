@@ -1,5 +1,6 @@
 package com.epicness.neoncube.game.logic.other;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.stuff.tridimensional.CylinderScreen;
@@ -7,15 +8,15 @@ import com.epicness.neoncube.game.stuff.tridimensional.PlaneScreen;
 
 public class ShapeRotator extends GameLogicHandler {
 
-    private int shapeIndex;
     private DelayedRemovalArray<CylinderScreen> cylinderScreens;
     private DelayedRemovalArray<PlaneScreen> planeScreens;
+    private int shapeIndex;
 
     @Override
     protected void init() {
-        shapeIndex = 0;
         cylinderScreens = stuff.getCylinderScreens();
         planeScreens = stuff.getPlaneScreens();
+        shapeIndex = 0;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.epicness.neoncube.game.logic.other;
 
 import static com.badlogic.gdx.Input.Keys.F;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_HEIGHT;
-import static com.epicness.fundamentals.SharedConstants.CAMERA_WIDTH;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_HEIGHT;
+import static com.epicness.fundamentals.constants.SharedConstants.CAMERA_WIDTH;
 import static com.epicness.neoncube.game.constants.GameConstants.PLAYER_STARTING_X;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
