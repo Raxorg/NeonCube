@@ -18,7 +18,6 @@ public class CameraHandler extends GameLogicHandler {
     private Vector3 cameraDirection;
     private Vector2 pivot;
     private boolean free;
-    private int shapeIndex;
     private Player player;
     private float lastPlayerX, lastPlayerY, deltaX, deltaY, dragDeltaX, dragDeltaY;
 
@@ -33,7 +32,6 @@ public class CameraHandler extends GameLogicHandler {
 
         pivot = new Vector2();
         free = false;
-        shapeIndex = 0;
         player = stuff.getStickmanWorld().player;
         lastPlayerX = PLAYER_STARTING_X;
         deltaX = deltaY = dragDeltaX = dragDeltaY = 0f;
@@ -41,12 +39,6 @@ public class CameraHandler extends GameLogicHandler {
 
     @Override
     public void update(float delta) {
-        for (shapeIndex = 0; shapeIndex < stuff.getCylinderScreens().size; shapeIndex++) {
-            stuff.getCylinderScreens().get(shapeIndex).rotateY(delta);
-        }
-        for (shapeIndex = 0; shapeIndex < stuff.getPlaneScreens().size; shapeIndex++) {
-            stuff.getPlaneScreens().get(shapeIndex).rotateY(delta);
-        }
         deltaX = player.getX() - lastPlayerX;
         rotateX(deltaX);
 
