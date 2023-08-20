@@ -15,8 +15,10 @@ import com.epicness.neoncube.game.stuff.bidimensional.Player;
 public class CameraHandler extends GameLogicHandler {
 
     private PerspectiveCamera camera;
+    private Vector3 cameraDirection;
     private Vector2 pivot;
     private boolean free;
+    private int shapeIndex;
     private Player player;
     private float lastPlayerX, lastPlayerY, deltaX, deltaY, dragDeltaX, dragDeltaY;
 
@@ -27,9 +29,11 @@ public class CameraHandler extends GameLogicHandler {
         camera.up.set(0, 1, 0);
         camera.position.set(0f, 0f, 15f);
         camera.update();
+        cameraDirection = new Vector3();
 
         pivot = new Vector2();
         free = false;
+        shapeIndex = 0;
         player = stuff.getStickmanWorld().player;
         lastPlayerX = PLAYER_STARTING_X;
         deltaX = deltaY = dragDeltaX = dragDeltaY = 0f;
@@ -37,18 +41,19 @@ public class CameraHandler extends GameLogicHandler {
 
     @Override
     public void update(float delta) {
-        for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
-            stuff.getCylinderScreens().get(i).rotateY(delta);
+        for (shapeIndex = 0; shapeIndex < stuff.getCylinderScreens().size; shapeIndex++) {
+            stuff.getCylinderScreens().get(shapeIndex).rotateY(delta);
         }
-        for (int i = 0; i < stuff.getPlaneScreens().size; i++) {
-            stuff.getPlaneScreens().get(i).rotateY(delta);
+        for (shapeIndex = 0; shapeIndex < stuff.getPlaneScreens().size; shapeIndex++) {
+            stuff.getPlaneScreens().get(shapeIndex).rotateY(delta);
         }
         deltaX = player.getX() - lastPlayerX;
         rotateX(deltaX);
 
         deltaY = lastPlayerY - player.getY();
         deltaY = MathUtils.map(0f, CAMERA_HEIGHT, 0f, 45f, deltaY);
-        camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), deltaY);
+        cameraDirection.set(camera.direction);
+        camera.rotateAround(Vector3.Zero, cameraDirection.crs(Vector3.Y), deltaY);
         camera.update();
 
         lastPlayerX = player.getX();
@@ -74,10 +79,11 @@ public class CameraHandler extends GameLogicHandler {
         dragDeltaY = MathUtils.clamp(y - pivot.y, -10f, 10f) / 3f;
 
         camera.rotateAround(Vector3.Zero, Vector3.Y, dragDeltaX);
-        camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), dragDeltaY);
+        cameraDirection.set(camera.direction);
+        camera.rotateAround(Vector3.Zero, cameraDirection.crs(Vector3.Y), dragDeltaY);
         if (camera.direction.y < -0.9f || camera.direction.y > 0.9f) {
             camera.rotateAround(Vector3.Zero, Vector3.Y, -dragDeltaX);
-            camera.rotateAround(Vector3.Zero, camera.direction.cpy().crs(Vector3.Y), -dragDeltaY);
+            camera.rotateAround(Vector3.Zero, cameraDirection, -dragDeltaY);
         }
         camera.update();
         pivot.set(x, y);
