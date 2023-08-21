@@ -14,25 +14,21 @@ import com.badlogic.gdx.math.Vector3;
 
 public abstract class Shape3D<M extends ModelCreator<P>, P extends ModelProperties> {
 
-    protected final M modelCreator;
     protected final P properties;
-    protected Model model;
-    protected ModelInstance modelInstance;
-    protected Mesh mesh;
+    private final ModelInstance modelInstance;
     protected final Vector3[] rotationVertices;
-    protected final float[] plainVertices;
+    private final float[] plainVertices;
     protected static int index, extraIndex;
-    protected static final Quaternion QUATERNION_HELPER = new Quaternion();
-    protected final Line3D[] debugLines;
+    private static final Quaternion QUATERNION_HELPER = new Quaternion();
     protected final Vector3 position;
-    protected short[] indices;
+    private final short[] indices;
+    protected final Line3D[] debugLines;
 
     public Shape3D(M modelCreator) {
-        this.modelCreator = modelCreator;
         properties = modelCreator.properties;
-        model = modelCreator.build(properties);
+        Model model = modelCreator.build(properties);
         modelInstance = new ModelInstance(model);
-        mesh = model.meshes.first();
+        Mesh mesh = model.meshes.first();
 
         float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
         mesh.getVertices(verticesWithUV);
@@ -48,22 +44,17 @@ public abstract class Shape3D<M extends ModelCreator<P>, P extends ModelProperti
             plainVertices[extraIndex * 3 + 1] = rotationVertices[extraIndex].y;
             plainVertices[extraIndex * 3 + 2] = rotationVertices[extraIndex].z;
         }
+        position = new Vector3();
+        indices = new short[mesh.getNumIndices()];
+        mesh.getIndices(indices);
         debugLines = new Line3D[rotationVertices.length];
         for (index = 0; index < debugLines.length; index++) {
             debugLines[index] = new Line3D();
         }
         updateDebugLines();
-
-        position = new Vector3();
-        storeIndices();
     }
 
     protected abstract void updateDebugLines();
-
-    protected final void storeIndices() {
-        indices = new short[mesh.getNumIndices()];
-        mesh.getIndices(indices);
-    }
 
     public final void draw(ModelBatch modelBatch) {
         modelBatch.render(modelInstance);

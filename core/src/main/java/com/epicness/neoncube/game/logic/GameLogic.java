@@ -10,7 +10,6 @@ import com.epicness.neoncube.game.logic.other.CylinderScreenSpawner;
 import com.epicness.neoncube.game.logic.other.DebugHandler;
 import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.other.PlaneScreenSpawner;
-import com.epicness.neoncube.game.logic.other.ShapeRotator;
 import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
 import com.epicness.neoncube.game.logic.player.LadderDetector;
 import com.epicness.neoncube.game.logic.player.PlatformDetector;
@@ -33,7 +32,6 @@ public class GameLogic extends Logic {
     // Other
     private final CameraHandler cameraHandler;
     private final DebugHandler debugHandler;
-    private final ShapeRotator shapeRotator;
     private final WorldCornerHandler worldCornerHandler;
 
     public GameLogic() {
@@ -59,7 +57,6 @@ public class GameLogic extends Logic {
         registerHandler(debugHandler = new DebugHandler());
         registerHandler(0, new KeyHandler());
         registerHandler(new PlaneScreenSpawner());
-        registerHandler(shapeRotator = new ShapeRotator());
         registerHandler(worldCornerHandler = new WorldCornerHandler());
     }
 
@@ -75,7 +72,6 @@ public class GameLogic extends Logic {
         // Other
         cameraHandler.update();
         debugHandler.update();
-        shapeRotator.update();
         worldCornerHandler.update();
     }
 }
