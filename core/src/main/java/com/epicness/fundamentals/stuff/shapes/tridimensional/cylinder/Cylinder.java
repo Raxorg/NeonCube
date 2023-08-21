@@ -1,79 +1,49 @@
 package com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder;
 
-import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.math.Vector3;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Shape3D;
 
-public class Cylinder extends Shape3D<CylinderWrapper, CylinderProperties> {
+public class Cylinder extends Shape3D<CylinderCreator, CylinderProperties> {
 
-    private final Vector3[] rotationVertices;
-    private final float[] plainVertices;
-    private final Line3D[] debugLines;
-
-    protected Cylinder(CylinderWrapper wrapper) {
-        super(wrapper);
-        nextVertexIndex = 0;
-
-        Mesh mesh = model.meshes.first();
-        float[] verticesWithUV = new float[mesh.getNumVertices() * mesh.getVertexSize() / 4];
-        mesh.getVertices(verticesWithUV);
-        rotationVertices = new Vector3[verticesWithUV.length / 5];
-        plainVertices = new float[rotationVertices.length * 3];
-        for (int i = 0, v = 0; i < verticesWithUV.length; i += 5, v++) {
-            rotationVertices[v] = new Vector3(verticesWithUV[i], verticesWithUV[i + 1], verticesWithUV[i + 2]);
-            plainVertices[v * 3] = rotationVertices[v].x;
-            plainVertices[v * 3 + 1] = rotationVertices[v].y;
-            plainVertices[v * 3 + 2] = rotationVertices[v].z;
-        }
-        debugLines = new Line3D[rotationVertices.length];
-        for (int i = 0; i < debugLines.length; i++) {
-            debugLines[i] = new Line3D();
-        }
-        updateDebugLines();
-        storeIndices(model);
+    protected Cylinder(CylinderCreator creator) {
+        super(creator);
     }
 
     @Override
     protected void updateDebugLines() {
-        for (vertexIndex = 0; vertexIndex < rotationVertices.length / 2; vertexIndex++) {
-            nextVertexIndex = (vertexIndex + 2) % rotationVertices.length;
-            debugLines[vertexIndex].set(
-                rotationVertices[vertexIndex].x + position.x,
-                rotationVertices[vertexIndex].y + position.y,
-                rotationVertices[vertexIndex].z + position.z,
-                rotationVertices[nextVertexIndex].x + position.x,
-                rotationVertices[nextVertexIndex].y + position.y,
-                rotationVertices[nextVertexIndex].z + position.z
+        for (index = 0; index < rotationVertices.length / 2; index++) {
+            extraIndex = (index + 2) % rotationVertices.length;
+            debugLines[index].set(
+                rotationVertices[index].x + position.x,
+                rotationVertices[index].y + position.y,
+                rotationVertices[index].z + position.z,
+                rotationVertices[extraIndex].x + position.x,
+                rotationVertices[extraIndex].y + position.y,
+                rotationVertices[extraIndex].z + position.z
             );
         }
-        for (vertexIndex = rotationVertices.length / 2; vertexIndex < rotationVertices.length - 2; vertexIndex++) {
-            nextVertexIndex = (vertexIndex + 2) % rotationVertices.length;
-            debugLines[vertexIndex].set(
-                rotationVertices[vertexIndex].x + position.x,
-                rotationVertices[vertexIndex].y + position.y,
-                rotationVertices[vertexIndex].z + position.z,
-                rotationVertices[nextVertexIndex].x + position.x,
-                rotationVertices[nextVertexIndex].y + position.y,
-                rotationVertices[nextVertexIndex].z + position.z
+        for (index = rotationVertices.length / 2; index < rotationVertices.length - 2; index++) {
+            extraIndex = (index + 2) % rotationVertices.length;
+            debugLines[index].set(
+                rotationVertices[index].x + position.x,
+                rotationVertices[index].y + position.y,
+                rotationVertices[index].z + position.z,
+                rotationVertices[extraIndex].x + position.x,
+                rotationVertices[extraIndex].y + position.y,
+                rotationVertices[extraIndex].z + position.z
             );
         }
-        vertexIndex = rotationVertices.length - 2;
-        nextVertexIndex = (vertexIndex + 1) % rotationVertices.length;
-        debugLines[vertexIndex].set(
-            rotationVertices[vertexIndex].x + position.x,
-            rotationVertices[vertexIndex].y + position.y,
-            rotationVertices[vertexIndex].z + position.z,
-            rotationVertices[nextVertexIndex].x + position.x,
-            rotationVertices[nextVertexIndex].y + position.y,
-            rotationVertices[nextVertexIndex].z + position.z
+        index = rotationVertices.length - 2;
+        extraIndex = (index + 1) % rotationVertices.length;
+        debugLines[index].set(
+            rotationVertices[index].x + position.x,
+            rotationVertices[index].y + position.y,
+            rotationVertices[index].z + position.z,
+            rotationVertices[extraIndex].x + position.x,
+            rotationVertices[extraIndex].y + position.y,
+            rotationVertices[extraIndex].z + position.z
         );
-        vertexIndex = rotationVertices.length - 1;
-        debugLines[vertexIndex].set(
+        index = rotationVertices.length - 1;
+        debugLines[index].set(
             rotationVertices[0].x + position.x,
             rotationVertices[0].y + position.y,
             rotationVertices[0].z + position.z,
@@ -81,28 +51,6 @@ public class Cylinder extends Shape3D<CylinderWrapper, CylinderProperties> {
             rotationVertices[1].y + position.y,
             rotationVertices[1].z + position.z
         );
-    }
-
-    public float[] getVertices() {
-        return plainVertices;
-    }
-
-    public void draw(ModelBatch modelBatch) {
-        modelBatch.render(modelInstance);
-    }
-
-    public void draw(ModelBatch modelBatch, Environment environment) {
-        modelBatch.render(modelInstance, environment);
-    }
-
-    public void drawDebug(ModelBatch modelBatch) {
-        for (int i = 0; i < debugLines.length; i++) {
-            debugLines[i].draw(modelBatch);
-        }
-    }
-
-    public void setSprite(Sprite sprite) {
-        modelInstance.getMaterial("material").set(TextureAttribute.createDiffuse(sprite));
     }
 
     public float getWidth() {
@@ -115,33 +63,5 @@ public class Cylinder extends Shape3D<CylinderWrapper, CylinderProperties> {
 
     public float getDepth() {
         return properties.depth;
-    }
-
-    @Override
-    public void translate(float xAmount, float yAmount, float zAmount) {
-        modelInstance.transform.translate(xAmount, yAmount, zAmount);
-        position.add(xAmount, yAmount, zAmount);
-        for (vertexIndex = 0; vertexIndex < plainVertices.length; vertexIndex += 3) {
-            plainVertices[vertexIndex] += xAmount;
-            plainVertices[vertexIndex + 1] += yAmount;
-            plainVertices[vertexIndex + 2] += zAmount;
-        }
-        updateDebugLines();
-    }
-
-    @Override
-    public void rotate(float xDegrees, float yDegrees, float zDegrees) {
-        modelInstance.transform.rotate(Vector3.X, xDegrees);
-        modelInstance.transform.rotate(Vector3.Y, yDegrees);
-        modelInstance.transform.rotate(Vector3.Z, zDegrees);
-        for (vertexIndex = 0; vertexIndex < rotationVertices.length; vertexIndex++) {
-            rotationVertices[vertexIndex].rotate(Vector3.X, xDegrees);
-            rotationVertices[vertexIndex].rotate(Vector3.Y, yDegrees);
-            rotationVertices[vertexIndex].rotate(Vector3.Z, zDegrees);
-            plainVertices[vertexIndex * 3] = rotationVertices[vertexIndex].x + position.x;
-            plainVertices[vertexIndex * 3 + 1] = rotationVertices[vertexIndex].y + position.y;
-            plainVertices[vertexIndex * 3 + 2] = rotationVertices[vertexIndex].z + position.z;
-        }
-        updateDebugLines();
     }
 }

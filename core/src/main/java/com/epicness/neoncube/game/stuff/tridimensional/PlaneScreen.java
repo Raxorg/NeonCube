@@ -15,8 +15,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.Plane;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneProperties;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneCreator;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 
 public class PlaneScreen extends Plane {
@@ -26,8 +25,8 @@ public class PlaneScreen extends Plane {
     private final StickmanWorld stickmanWorld;
     public final int screenPortionIndex;
 
-    public PlaneScreen(PlaneWrapper wrapper, StickmanWorld stickmanWorld, int screenPortionIndex) {
-        super(wrapper);
+    public PlaneScreen(PlaneCreator creator, StickmanWorld stickmanWorld, int screenPortionIndex) {
+        super(creator);
 
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, WINDOW_WIDTH, WINDOW_HEIGHT, false);
         bufferSprite = new Sprite();

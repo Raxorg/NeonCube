@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.renderer.ShapeDrawerPlus;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.Cylinder;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.CylinderWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.CylinderCreator;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 
 public class CylinderScreen extends Cylinder {
@@ -25,8 +25,8 @@ public class CylinderScreen extends Cylinder {
     private final StickmanWorld stickmanWorld;
     public final int screenPortionIndex;
 
-    public CylinderScreen(CylinderWrapper wrapper, StickmanWorld stickmanWorld, int screenPortionIndex) {
-        super(wrapper);
+    public CylinderScreen(CylinderCreator creator, StickmanWorld stickmanWorld, int screenPortionIndex) {
+        super(creator);
 
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, WINDOW_WIDTH, WINDOW_HEIGHT, false);
         bufferSprite = new Sprite();

@@ -1,11 +1,11 @@
 package com.epicness.fundamentals.stuff.shapes.tridimensional.plane;
 
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.ModelWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.ModelCreator;
 
-public class PlaneWrapper extends ModelWrapper<PlaneProperties> {
+public class PlaneCreator extends ModelCreator<PlaneProperties> {
 
-    public PlaneWrapper(PlaneProperties properties) {
+    public PlaneCreator(PlaneProperties properties) {
         super(properties);
     }
 

@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneProperties;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.PlaneCreator;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 import com.epicness.neoncube.game.stuff.tridimensional.PlaneScreen;
@@ -41,20 +41,20 @@ public class PlaneScreenSpawner extends GameLogicHandler {
             material,
             LIGHTLESS_TEXTURED_ATTRIBUTES
         );
-        PlaneWrapper wrapper = new PlaneWrapper(properties);
+        PlaneCreator creator = new PlaneCreator(properties);
 
-        PlaneScreen planeScreen1 = new PlaneScreen(wrapper, stickmanWorld, 0);
+        PlaneScreen planeScreen1 = new PlaneScreen(creator, stickmanWorld, 0);
         planeScreen1.translateZ(DECAL_CUBE_XZ_RADIUS + CYLINDER_RADIUS);
 
-        PlaneScreen planeScreen2 = new PlaneScreen(wrapper, stickmanWorld, 2);
+        PlaneScreen planeScreen2 = new PlaneScreen(creator, stickmanWorld, 2);
         planeScreen2.translateX(DECAL_CUBE_XZ_RADIUS + CYLINDER_RADIUS);
         planeScreen2.rotateY(90f);
 
-        PlaneScreen planeScreen3 = new PlaneScreen(wrapper, stickmanWorld, 4);
+        PlaneScreen planeScreen3 = new PlaneScreen(creator, stickmanWorld, 4);
         planeScreen3.translateZ(-DECAL_CUBE_XZ_RADIUS - CYLINDER_RADIUS);
         planeScreen3.rotateY(180f);
 
-        PlaneScreen planeScreen4 = new PlaneScreen(wrapper, stickmanWorld, 6);
+        PlaneScreen planeScreen4 = new PlaneScreen(creator, stickmanWorld, 6);
         planeScreen4.translateX(-DECAL_CUBE_XZ_RADIUS - CYLINDER_RADIUS);
         planeScreen4.rotateY(270f);
 

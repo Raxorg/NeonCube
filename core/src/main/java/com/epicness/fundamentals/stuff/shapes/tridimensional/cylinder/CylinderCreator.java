@@ -1,11 +1,11 @@
 package com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder;
 
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.ModelWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.ModelCreator;
 
-public class CylinderWrapper extends ModelWrapper<CylinderProperties> {
+public class CylinderCreator extends ModelCreator<CylinderProperties> {
 
-    public CylinderWrapper(CylinderProperties properties) {
+    public CylinderCreator(CylinderProperties properties) {
         super(properties);
     }
 

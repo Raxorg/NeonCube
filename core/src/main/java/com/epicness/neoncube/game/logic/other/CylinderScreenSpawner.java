@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.constants.Constants3D;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.CylinderProperties;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.CylinderWrapper;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.CylinderCreator;
 import com.epicness.neoncube.game.logic.GameLogicHandler;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 import com.epicness.neoncube.game.stuff.tridimensional.CylinderScreen;
@@ -44,20 +44,20 @@ public class CylinderScreenSpawner extends GameLogicHandler {
             material,
             Constants3D.LIGHTLESS_TEXTURED_ATTRIBUTES
         );
-        CylinderWrapper wrapper = new CylinderWrapper(properties);
+        CylinderCreator creator = new CylinderCreator(properties);
 
-        CylinderScreen cylinder1 = new CylinderScreen(wrapper, stickmanWorld, 1);
+        CylinderScreen cylinder1 = new CylinderScreen(creator, stickmanWorld, 1);
         cylinder1.translate(DECAL_CUBE_XZ_RADIUS, 0f, DECAL_CUBE_XZ_RADIUS);
 
-        CylinderScreen cylinder2 = new CylinderScreen(wrapper, stickmanWorld, 3);
+        CylinderScreen cylinder2 = new CylinderScreen(creator, stickmanWorld, 3);
         cylinder2.translate(DECAL_CUBE_XZ_RADIUS, 0f, -DECAL_CUBE_XZ_RADIUS);
         cylinder2.rotateY(90f);
 
-        CylinderScreen cylinder3 = new CylinderScreen(wrapper, stickmanWorld, 5);
+        CylinderScreen cylinder3 = new CylinderScreen(creator, stickmanWorld, 5);
         cylinder3.translate(-DECAL_CUBE_XZ_RADIUS, 0f, -DECAL_CUBE_XZ_RADIUS);
         cylinder3.rotateY(180f);
 
-        CylinderScreen cylinder4 = new CylinderScreen(wrapper, stickmanWorld, 7);
+        CylinderScreen cylinder4 = new CylinderScreen(creator, stickmanWorld, 7);
         cylinder4.translate(-DECAL_CUBE_XZ_RADIUS, 0f, DECAL_CUBE_XZ_RADIUS);
         cylinder4.rotateY(270f);
 
