@@ -106,8 +106,20 @@ public class DualSprited implements Buttonable, Transformable {
     }
 
     @Override
+    public void setWidth(float width) {
+        stretchBackgroundWidth(width - background.getWidth());
+        stretchForegroundWidth(width - foreground.getWidth());
+    }
+
+    @Override
     public float getHeight() {
         return background.getHeight();
+    }
+
+    @Override
+    public void setHeight(float height) {
+        stretchBackgroundHeight(height - background.getHeight());
+        stretchForegroundHeight(height - foreground.getHeight());
     }
 
     public void rotateBackground(float degrees) {

@@ -1,7 +1,7 @@
 package com.epicness.fundamentals.stuff.grid;
 
 import com.badlogic.gdx.graphics.Color;
-import com.epicness.fundamentals.stuff.shapes.Line;
+import com.epicness.fundamentals.stuff.shapes.bidimensional.Line;
 
 import space.earlygrey.shapedrawer.ShapeDrawer;
 

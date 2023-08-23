@@ -1,18 +1,17 @@
-package com.epicness.neoncube.game.stuff.tridimensional;
+package com.epicness.fundamentals.stuff.shapes.tridimensional;
 
 import static com.badlogic.gdx.graphics.Color.BLUE;
 import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.badlogic.gdx.graphics.Color.RED;
-import static com.epicness.fundamentals.constants.SharedConstants.STARTING_CUBE_BOUNDS;
-import static com.epicness.fundamentals.constants.SharedConstants.STARTING_CUBE_MAX;
-import static com.epicness.fundamentals.constants.SharedConstants.STARTING_CUBE_MIN;
+import static com.epicness.fundamentals.constants.Constants3D.STARTING_CUBE_BOUNDS;
+import static com.epicness.fundamentals.constants.Constants3D.STARTING_CUBE_MAX;
+import static com.epicness.fundamentals.constants.Constants3D.STARTING_CUBE_MIN;
 
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.OrientedBoundingBox;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
 
 public class WireframeCube {
 

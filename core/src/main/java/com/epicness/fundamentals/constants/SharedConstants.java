@@ -2,8 +2,6 @@ package com.epicness.fundamentals.constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class SharedConstants {
 
@@ -32,8 +30,4 @@ public class SharedConstants {
     public static final Color GRASS = new Color(0x71aa34ff);
     public static final Color LIGHT_GRASS = new Color(0xb6d53cff);
     public static final Color DARK_GRASS = new Color(0x003000ff);
-    // 3D
-    public static final Vector3 STARTING_CUBE_MIN = new Vector3(-0.5f, -0.5f, -0.5f);
-    public static final Vector3 STARTING_CUBE_MAX = new Vector3(0.5f, 0.5f, 0.5f);
-    public static final BoundingBox STARTING_CUBE_BOUNDS = new BoundingBox(STARTING_CUBE_MIN, STARTING_CUBE_MAX);
 }

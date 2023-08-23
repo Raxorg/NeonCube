@@ -27,7 +27,7 @@ import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
 import com.epicness.neoncube.game.stuff.tridimensional.CylinderScreen;
 import com.epicness.neoncube.game.stuff.tridimensional.DecalCube;
 import com.epicness.neoncube.game.stuff.tridimensional.PlaneScreen;
-import com.epicness.neoncube.game.stuff.tridimensional.WireframeCube;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.WireframeCube;
 
 public class GameStuff extends Stuff<GameAssets> {
 
@@ -73,7 +73,6 @@ public class GameStuff extends Stuff<GameAssets> {
         debugText = new Text(sharedAssets.getPixelFont());
         debugText.setText("FPS\nSPEED");
         debugText.setTextTargetWidth(CAMERA_WIDTH);
-        debugText.setY(debugText.getHeight());
     }
 
     public Environment getEnvironment() {

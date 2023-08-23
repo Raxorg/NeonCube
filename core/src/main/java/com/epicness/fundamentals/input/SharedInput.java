@@ -187,6 +187,10 @@ public class SharedInput implements InputProcessor {
         inputHandlers.add(inputHandler);
     }
 
+    public void removeInputHandler(LogicInputHandler<?, ?, ?, ?> inputHandler) {
+        inputHandlers.remove(inputHandler);
+    }
+
     public void consumeInput() {
         inputConsumed = true;
     }

@@ -123,6 +123,10 @@ public class SpritedAnimation implements Buttonable, Movable {
         return animation.getKeyFrame(time).isFlipX();
     }
 
+    public boolean isFlipY() {
+        return animation.getKeyFrame(time).isFlipY();
+    }
+
     public void setFlip(boolean flipX, boolean flipY) {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {
             animation.getKeyFrames()[i].setFlip(flipX, flipY);
@@ -132,6 +136,12 @@ public class SpritedAnimation implements Buttonable, Movable {
     public void setFlipX(boolean flipX) {
         for (int i = 0; i < animation.getKeyFrames().length; i++) {
             animation.getKeyFrames()[i].setFlipX(flipX);
+        }
+    }
+
+    public void setFlipY(boolean flipY) {
+        for (int i = 0; i < animation.getKeyFrames().length; i++) {
+            animation.getKeyFrames()[i].setFlipY(flipY);
         }
     }
 

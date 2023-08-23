@@ -3,7 +3,7 @@ package com.epicness.fundamentals.stuff.grid;
 public class CellGridBuilder<T extends Cell> {
 
     private final CellBuilder<T> cellBuilder;
-    private int columns, rows;
+    protected int columns, rows;
 
     public CellGridBuilder(CellBuilder<T> cellBuilder) {
         this.cellBuilder = cellBuilder;
@@ -29,6 +29,10 @@ public class CellGridBuilder<T extends Cell> {
             }
         }
         return cells;
+    }
+
+    public CellBuilder<T> getCellBuilder() {
+        return cellBuilder;
     }
 
     public int getColumns() {
