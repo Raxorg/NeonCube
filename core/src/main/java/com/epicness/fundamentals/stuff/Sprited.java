@@ -81,6 +81,11 @@ public class Sprited implements Buttonable, Transformable {
     }
 
     @Override
+    public float getRotation() {
+        return sprite.getRotation();
+    }
+
+    @Override
     public void rotate(float degrees) {
         sprite.rotate(degrees);
     }
@@ -103,6 +108,10 @@ public class Sprited implements Buttonable, Transformable {
 
     public Vector2 getCenter() {
         return new Vector2(getCenterX(), getCenterY());
+    }
+
+    public Vector2 getOrigin() {
+        return new Vector2(sprite.getOriginX(), sprite.getOriginY());
     }
 
     public float getOriginBasedX() {
@@ -133,16 +142,20 @@ public class Sprited implements Buttonable, Transformable {
         return sprite.getOriginY();
     }
 
+    public void setOriginX(float originX) {
+        sprite.setOrigin(originX, sprite.getOriginY());
+    }
+
+    public void setOriginY(float originY) {
+        sprite.setOrigin(sprite.getOriginX(), originY);
+    }
+
     public void setOrigin(float originX, float originY) {
         sprite.setOrigin(originX, originY);
     }
 
     public void setOriginCenter() {
         sprite.setOriginCenter();
-    }
-
-    public float getRotation() {
-        return sprite.getRotation();
     }
 
     public void setRotation(float degrees) {
