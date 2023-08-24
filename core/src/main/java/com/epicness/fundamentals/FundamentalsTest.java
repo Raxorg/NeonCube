@@ -13,9 +13,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.epicness.fundamentals.stuff.DualSprited;
+import com.epicness.fundamentals.utils.TextUtils;
 
-// Use this as the entry point for your game by
-// renaming (refactor) this class to your game's class
+// A Game subclass like this one (not this one) should be the entry point for your game
 public class FundamentalsTest extends Game {
 
     SpriteBatch spriteBatch;
@@ -36,7 +36,7 @@ public class FundamentalsTest extends Game {
     public void render() {
         ScreenUtils.clear(Color.FOREST);
         spriteBatch.begin();
-        font.draw(spriteBatch, "A:B,C.D", 100f, 100f);
+        font.draw(spriteBatch, "F:U,N.D A\"M", 100f, 100f + TextUtils.getTextHeight(font, "F:U,N.D A\"M"));
         x.draw(spriteBatch);
         if (Gdx.input.isKeyPressed(K)) {
             x.stretchWidth(10f);
