@@ -27,7 +27,7 @@ public class GameAssets extends Assets {
     }
 
     @Override
-    public void initializeAssets() {
+    protected void initializeAssets() {
         stickmanClimbing = get(STICKMAN_CLIMBING_ANIMATION);
         stickmanRunning = get(STICKMAN_RUNNING_ANIMATION);
         ladder = get(LADDER_SPRITE);

@@ -4,7 +4,7 @@ import com.epicness.fundamentals.stuff.shapes.tridimensional.Shape3D;
 
 public class Plane extends Shape3D<PlaneCreator, PlaneProperties> {
 
-    protected Plane(PlaneCreator creator) {
+    public Plane(PlaneCreator creator) {
         super(creator);
     }
 

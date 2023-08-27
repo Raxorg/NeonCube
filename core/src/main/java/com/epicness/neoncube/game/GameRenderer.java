@@ -31,10 +31,10 @@ public class GameRenderer extends Renderer<GameStuff> {
 
         spriteBatch.begin();
         for (int i = 0; i < stuff.getPlaneScreens().size; i++) {
-            stuff.getPlaneScreens().get(i).drawToBuffer(spriteBatch, shapeDrawer, screen.getDynamicCamera());
+            stuff.getPlaneScreens().get(i).draw2D(spriteBatch, shapeDrawer, screen.getDynamicCamera());
         }
         for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
-            stuff.getCylinderScreens().get(i).drawToBuffer(spriteBatch, shapeDrawer, screen.getDynamicCamera());
+            stuff.getCylinderScreens().get(i).draw2D(spriteBatch, shapeDrawer, screen.getDynamicCamera());
         }
         spriteBatch.end();
 
@@ -43,12 +43,12 @@ public class GameRenderer extends Renderer<GameStuff> {
         stuff.getLine().draw(modelBatch);
         stuff.getWireframeCube().draw(modelBatch);
         for (int i = 0; i < stuff.getCylinderScreens().size; i++) {
-            stuff.getCylinderScreens().get(i).draw(modelBatch);
-            stuff.getCylinderScreens().get(i).drawDebug(modelBatch);
+            stuff.getCylinderScreens().get(i).draw3D(modelBatch);
+            stuff.getCylinderScreens().get(i).drawDebug3D(modelBatch);
         }
         for (int i = 0; i < stuff.getPlaneScreens().size; i++) {
-            stuff.getPlaneScreens().get(i).draw(modelBatch, stuff.getEnvironment());
-            stuff.getPlaneScreens().get(i).drawDebug(modelBatch);
+            stuff.getPlaneScreens().get(i).draw3D(modelBatch);
+            stuff.getPlaneScreens().get(i).drawDebug3D(modelBatch);
         }
         modelBatch.end();
 

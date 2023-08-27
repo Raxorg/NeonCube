@@ -4,7 +4,7 @@ import com.epicness.fundamentals.stuff.shapes.tridimensional.Shape3D;
 
 public class Cylinder extends Shape3D<CylinderCreator, CylinderProperties> {
 
-    protected Cylinder(CylinderCreator creator) {
+    public Cylinder(CylinderCreator creator) {
         super(creator);
     }
 

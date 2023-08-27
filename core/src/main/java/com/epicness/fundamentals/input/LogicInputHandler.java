@@ -24,7 +24,7 @@ public abstract class LogicInputHandler<A extends Assets, L extends Logic, R ext
     public void scrolled(float amountX, float amountY) {
     }
 
-    public void touchDown(float x, float y) {
+    public void touchDown(float x, float y, int button) {
     }
 
     public void touchDragged(float x, float y) {

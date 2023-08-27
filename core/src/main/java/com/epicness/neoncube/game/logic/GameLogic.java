@@ -1,13 +1,12 @@
 package com.epicness.neoncube.game.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.epicness.fundamentals.logic.Logic;
 import com.epicness.neoncube.game.logic.grid.GridHandler;
-import com.epicness.neoncube.game.logic.hitdetection.CylinderHitCalculator;
-import com.epicness.neoncube.game.logic.hitdetection.PlaneHitCalculator;
-import com.epicness.neoncube.game.logic.hitdetection.RayHitHandler;
 import com.epicness.neoncube.game.logic.other.CameraHandler;
 import com.epicness.neoncube.game.logic.other.CylinderScreenSpawner;
 import com.epicness.neoncube.game.logic.other.DebugHandler;
+import com.epicness.neoncube.game.logic.other.HitHandler;
 import com.epicness.neoncube.game.logic.other.KeyHandler;
 import com.epicness.neoncube.game.logic.other.PlaneScreenSpawner;
 import com.epicness.neoncube.game.logic.other.WorldCornerHandler;
@@ -37,10 +36,6 @@ public class GameLogic extends Logic {
     public GameLogic() {
         // Grid
         registerHandler(gridHandler = new GridHandler());
-        // Hit detection
-        registerHandler(new CylinderHitCalculator());
-        registerHandler(new PlaneHitCalculator());
-        registerHandler(new RayHitHandler());
         // Player
         registerHandler(ladderDetector = new LadderDetector());
         registerHandler(platformDetector = new PlatformDetector());
@@ -53,15 +48,19 @@ public class GameLogic extends Logic {
         registerHandler(new RunningHandler());
         // Other
         registerHandler(cameraHandler = new CameraHandler());
-        registerHandler(new CylinderScreenSpawner());
+        registerHandler(0, new CylinderScreenSpawner());
         registerHandler(debugHandler = new DebugHandler());
+        registerHandler(new HitHandler());
         registerHandler(0, new KeyHandler());
-        registerHandler(new PlaneScreenSpawner());
+        registerHandler(0, new PlaneScreenSpawner());
         registerHandler(worldCornerHandler = new WorldCornerHandler());
     }
 
     @Override
     public void update() {
+        if (Gdx.graphics.getDeltaTime() > 0.3f) {
+            return;
+        }
         // Grid
         gridHandler.update();
         // Player movement

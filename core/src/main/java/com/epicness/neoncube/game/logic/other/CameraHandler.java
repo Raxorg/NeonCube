@@ -58,7 +58,7 @@ public class CameraHandler extends GameLogicHandler {
     }
 
     @Override
-    public void touchDown(float x, float y) {
+    public void touchDown(float x, float y, int button) {
         if (!free) return;
         pivot.set(x, y);
     }

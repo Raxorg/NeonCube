@@ -12,7 +12,7 @@ public class NeonCubeGame extends Game {
         MenuAssets menuAssets = new MenuAssets();
         menuAssets.queueAssetLoading();
         menuAssets.finishLoading();
-        menuAssets.initializeAssets();
+        menuAssets.initAssets();
         new MenuInitializer(menuAssets).initialize(new SharedResources());
     }
 }

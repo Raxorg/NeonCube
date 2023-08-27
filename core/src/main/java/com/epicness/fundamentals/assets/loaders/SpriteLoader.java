@@ -1,5 +1,7 @@
 package com.epicness.fundamentals.assets.loaders;
 
+import static com.epicness.fundamentals.assets.loaders.SpriteLoader.SpriteParameter;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -11,7 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
-import com.epicness.fundamentals.assets.loaders.SpriteLoader.SpriteParameter;
 
 @SuppressWarnings("rawtypes")
 public class SpriteLoader extends AsynchronousAssetLoader<Sprite, SpriteParameter> {

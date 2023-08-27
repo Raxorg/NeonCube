@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.IntAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
@@ -22,23 +21,22 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.epicness.fundamentals.stuff.Stuff;
 import com.epicness.fundamentals.stuff.Text;
 import com.epicness.fundamentals.stuff.shapes.tridimensional.Line3D;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.Screen3D;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.WireframeCube;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.cylinder.Cylinder;
+import com.epicness.fundamentals.stuff.shapes.tridimensional.plane.Plane;
 import com.epicness.neoncube.game.assets.GameAssets;
 import com.epicness.neoncube.game.stuff.bidimensional.StickmanWorld;
-import com.epicness.neoncube.game.stuff.tridimensional.CylinderScreen;
-import com.epicness.neoncube.game.stuff.tridimensional.DecalCube;
-import com.epicness.neoncube.game.stuff.tridimensional.PlaneScreen;
-import com.epicness.fundamentals.stuff.shapes.tridimensional.WireframeCube;
 
 public class GameStuff extends Stuff<GameAssets> {
 
     // 3D
     private Environment environment;
     private ModelInstance cube;
-    private DelayedRemovalArray<PlaneScreen> planeScreens;
-    private DelayedRemovalArray<CylinderScreen> cylinderScreens;
+    private DelayedRemovalArray<Screen3D<Plane>> planeScreens;
+    private DelayedRemovalArray<Screen3D<Cylinder>> cylinderScreens;
     private Line3D line;
     private WireframeCube wireframeCube;
-    private DecalCube decalCube;
     // 2D
     private StickmanWorld stickmanWorld;
     private Text debugText;
@@ -52,7 +50,6 @@ public class GameStuff extends Stuff<GameAssets> {
         Material material = new Material(
             TextureAttribute.createDiffuse(sharedAssets.getSquare32Inverted()),
             new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
-            FloatAttribute.createAlphaTest(0.5f),
             IntAttribute.createCullFace(GL20.GL_NONE));
 
         ModelBuilder modelBuilder = new ModelBuilder();
@@ -66,7 +63,6 @@ public class GameStuff extends Stuff<GameAssets> {
         wireframeCube = new WireframeCube();
         wireframeCube.setSize(DECAL_SCREEN_WIDTH, 5f, DECAL_SCREEN_WIDTH);
 
-        decalCube = new DecalCube();
         stickmanWorld = new StickmanWorld(sharedAssets, assets);
 
         sharedAssets.getPixelFont().getData().scale(3f);
@@ -83,11 +79,11 @@ public class GameStuff extends Stuff<GameAssets> {
         return cube;
     }
 
-    public DelayedRemovalArray<PlaneScreen> getPlaneScreens() {
+    public DelayedRemovalArray<Screen3D<Plane>> getPlaneScreens() {
         return planeScreens;
     }
 
-    public DelayedRemovalArray<CylinderScreen> getCylinderScreens() {
+    public DelayedRemovalArray<Screen3D<Cylinder>> getCylinderScreens() {
         return cylinderScreens;
     }
 
@@ -97,10 +93,6 @@ public class GameStuff extends Stuff<GameAssets> {
 
     public WireframeCube getWireframeCube() {
         return wireframeCube;
-    }
-
-    public DecalCube getDecalCube() {
-        return decalCube;
     }
 
     public StickmanWorld getStickmanWorld() {

@@ -20,7 +20,7 @@ import com.epicness.neoncube.game.assets.GameAssets;
 
 public class StickmanWorld {
 
-    private final Sprited background;
+    public final Sprited background;
     public final CellGrid<ColorCell> grid;
     public final DelayedRemovalArray<Ladder> ladders;
     public final Player player, playerMirror;
@@ -29,7 +29,6 @@ public class StickmanWorld {
         background = new Sprited(sharedAssets.getPixel());
         background.setSize(STICKMAN_WORLD_WIDTH, STICKMAN_WORLD_HEIGHT);
         background.setColor(BLUE.cpy().lerp(CLEAR, 0.25f));
-
 
         ColorCellBuilder cellBuilder = new ColorCellBuilder();
         cellBuilder.sprite(assets.getRoundedSquare());

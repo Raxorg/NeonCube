@@ -30,8 +30,7 @@ public class Line3D {
 
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
-        Material material = new Material("material");
-        material.set(colorAttribute);
+        Material material = new Material("material", colorAttribute);
         MeshPartBuilder meshPartBuilder = modelBuilder.part("line", GL_LINES, Position | ColorUnpacked, material);
         meshPartBuilder.line(start, end);
         Model lineModel = modelBuilder.end();

@@ -11,7 +11,7 @@ public class MenuAssets extends Assets {
     }
 
     @Override
-    public void initializeAssets() {
+    protected void initializeAssets() {
 
     }
 }

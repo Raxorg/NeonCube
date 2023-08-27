@@ -1,5 +1,7 @@
 package com.epicness.fundamentals.assets.loaders;
 
+import static com.epicness.fundamentals.assets.loaders.ShaderProgramLoader.ShaderProgramParameter;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -11,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 import com.epicness.fundamentals.assets.Shader;
-import com.epicness.fundamentals.assets.loaders.ShaderProgramLoader.ShaderProgramParameter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
